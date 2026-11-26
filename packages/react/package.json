@@ -1,6 +1,6 @@
 {
   "name": "@katana-icons/react",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -22,6 +22,14 @@
     "./kanji": {
       "types": "./src/kanji.d.ts",
       "default": "./src/kanji.js"
+    },
+    "./general": {
+      "types": "./src/general/index.d.ts",
+      "default": "./src/general/index.js"
+    },
+    "./general/lucide": {
+      "types": "./src/general/lucide.d.ts",
+      "default": "./src/general/lucide.js"
     }
   },
   "files": [

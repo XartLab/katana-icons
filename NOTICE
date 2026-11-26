@@ -27,3 +27,8 @@ https://github.com/skishore/makemeahanzi, read 2026-11-26), which is derived fro
 Arphic PL UKai and licensed under the Arphic Public License. The four fonts are therefore distributed under the
 Arphic Public License (text in type/APL.txt and packages/fonts/licenses/APL-kt-fonts.txt).
 Subsetting changes no glyph; the Reserved Font Names are kept.
+
+General icons (packages/react/src/general, packages/static/svg/general): 123 icon definitions are taken from
+Kubai Icons icons-line/ and the renderer (vendor/line.js, vendor/line-motion.js) from Kubai Icons packages/core,
+all under the MIT License, Copyright (c) 2026 Kubai087 and the Kubai Icons contributors
+(https://github.com/kubai087/kubai-icons, read 2026-11-26). The 6 icons in line/general/own.mjs are drawn by KATANA.

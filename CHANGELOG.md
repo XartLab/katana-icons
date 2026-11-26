@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.0] - 2026-11-26
+
+### Added
+
+- **General icons.** 129 everyday interface icons in the line style, covering every lucide icon KATANAview and KatanaUI use, with hover motion. Import them by lucide's names from `@katana-icons/react/general/lucide` to switch with one path change.
+
 ## [0.6.0] - 2026-11-26
 
 ### Added

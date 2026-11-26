@@ -24,6 +24,18 @@ import '@katana-icons/react/styles.css'
 
 Set the light colour with `--kti-light` and the two-tone accent with `--kti-accent`. Static files are in `packages/static/svg/<style>/<name>.svg`.
 
+### General icons
+
+Every lucide icon KATANAview and KatanaUI use, in the line style (129 icons). To replace lucide, change only the import path:
+
+```tsx
+import { Trash2, ChevronRight, Settings } from '@katana-icons/react/general/lucide'   // lucide names
+import { Trash, Settings, RefreshCw } from '@katana-icons/react/general'               // our names
+<Settings animated />          // weight light (1.5) by default; variant outline | line-duo | fill | solid-tint
+```
+
+123 come from the Kubai Icons line library (MIT), 6 are ours (`line/general/own.mjs`). Regenerate with `KUBAI_ICONS=<path> node scripts/build-general.mjs`.
+
 ### Trading icons
 
 ```tsx

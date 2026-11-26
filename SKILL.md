@@ -37,6 +37,10 @@ license: MIT
 - 自检：把 `line/set/katana.mjs` 复制到引擎的 `set/` 下，`CHROME=… node check.mjs --only 名字 --out 目录`，Findings 清零；真要豁免就在图标上写 `allow: { 规则: '理由' }`。
 - 发布：`KUBAI_LINE=<引擎路径> node scripts/build-trading.mjs`，出 `@katana-icons/react/trading`、`trading.css`（悬停动效）和 `packages/static/svg/trading/`。
 
+### 2b. 通用图标（129 个）
+
+范围是产品里用到的 lucide 图标（`line/general/names.txt`）。Kubai 线性库（`icons-line/`，MIT）有的直接取，名字不同的写进 `map.json`，库里没有的照 icons-line 的格式在 `own.mjs` 里自己画。`KUBAI_ICONS=<路径> node scripts/build-general.mjs` 出 `@katana-icons/react/general`（我们的名字）和 `general/lucide`（lucide 同名，换库只改 import）。
+
 ### 3. 汉字代号（33 个）
 
 `line/kanji-map.json` 是"图标名 → 汉字"。改完跑 `python3 scripts/kanji-outlines.py <DelaGothicOne-Regular.ttf>` 再 `node scripts/build-kanji.mjs`。最小用 20px。
