@@ -104,7 +104,7 @@ Components use roles, never font names. Body text is the **normal** stack: each 
 | `--kt-font-lcd` | DM Mono | LCD readouts |
 | `--kt-font-code` | KT Stencil Solid (Latin) → Michroma → sans | IDs, readouts, Latin labels |
 | `--kt-font-stencil` | KT Stencil (Latin) → display | Big titles, loading screens |
-| `--kt-font-arcade` | KT Arcade → Silkscreen | Game-feel moments (effects, achievements, countdowns); sizes in multiples of 16 px |
+| `--kt-font-arcade` | KT Arcade → Silkscreen | Pixel type: weight 400 for game-feel moments, 300 for quiet pixel labels; sizes in multiples of 16 px |
 | `--kt-font-pixel` / `--kt-font-dot` | KT Pixel / KT Dot (Latin) → Ark Pixel / Doto → DotGothic16 | Pixel and dot-matrix screens |
 | `--kt-font-mincho` / `--kt-font-eva` | Shippori Mincho / B1 | Hara-style and EVA-style titles |
 
@@ -122,7 +122,7 @@ Components use roles, never font names. Body text is the **normal** stack: each 
 | Ark Pixel 12px | 400 (common CJK subset) | CJK pixel text |
 | Shippori Mincho B1 | 800 | EVA-style title cards (stands in for Matisse EB, with `eva.css`) |
 | Archivo | 100–900, width 62–125% | EVA-style all-caps titles and HUD labels (stands in for Helvetica / Helvetica Condensed) |
-| KT Arcade | 400 | Bold pixel display type, Latin, digits and symbols only; one pixel cell is 1/16 em, so 16/32/48 px stay sharp (ours, OFL) |
+| KT Arcade | 400 / 300 | Pixel type, Latin, digits and symbols only; one pixel cell is 1/16 em, so 16/32/48 px stay sharp (ours, OFL). 400 is bold game-feel type for achievements and countdowns; 300 is the Hara version, one-pixel lines with open spacing, for quiet pixel labels and readouts |
 | KT Pixel / KT Dot | 400 | Pixel-style titles / dot-matrix readouts (ours, same skeleton as KT Stencil) |
 | DotGothic16 | 400 | CJK dot-matrix text |
 | Doto | 100–900 | Latin dot-matrix display |

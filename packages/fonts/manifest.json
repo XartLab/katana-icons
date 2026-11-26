@@ -185,7 +185,14 @@
   "family": "KT Arcade",
   "weight": 400,
   "slices": 1,
-  "bytes": 1876,
+  "bytes": 1880,
   "use": "游戏感时刻（特效、成就、倒计时）的粗像素字，只有拉丁；16/32/48px 最清楚（自绘，OFL）"
+ },
+ {
+  "family": "KT Arcade",
+  "weight": 300,
+  "slices": 1,
+  "bytes": 1824,
+  "use": "原研哉的那一版：一像素细线、字距放开，像素风的标签、读数、说明；只有拉丁（自绘，OFL）"
  }
 ]
