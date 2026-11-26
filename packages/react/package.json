@@ -18,7 +18,11 @@
       "default": "./src/trading.js"
     },
     "./styles.css": "./styles.css",
-    "./trading.css": "./trading.css"
+    "./trading.css": "./trading.css",
+    "./kanji": {
+      "types": "./src/kanji.d.ts",
+      "default": "./src/kanji.js"
+    }
   },
   "files": [
     "src",

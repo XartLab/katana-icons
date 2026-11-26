@@ -1,0 +1,9 @@
+katana-icons
+
+The kanji codes (packages/static/svg/kanji, packages/react/src/kanji.js, line/kanji.json) are
+outlines of glyphs from Dela Gothic One, Copyright 2020 The Dela Gothic Project Authors,
+licensed under the SIL Open Font License 1.1 (https://openfontlicense.org). Source:
+https://github.com/google/fonts/tree/main/ofl/delagothicone (read 2026-11-26).
+
+The squircle corners in line/set/katana.mjs follow the algorithm of figma-squircle
+(https://github.com/phamfoo/figma-squircle, MIT, read 2026-11-26).
