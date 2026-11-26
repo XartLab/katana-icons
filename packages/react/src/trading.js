@@ -11,7 +11,7 @@ export const tradingIconNames = ["trend-line","ray","horizontal-line","vertical-
 export function createTradingIcon(name) {
   const C = forwardRef(function TradingIcon({ size = 24, weight, strokeWidth, variant = 'outline', animated = false, title, className, ...rest }, ref) {
     const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '')
-    const w = weight ?? (strokeWidth != null ? nearest(strokeWidth) : 'regular')
+    const w = weight ?? (strokeWidth != null ? nearest(strokeWidth) : 'light')
     const body = DATA[name][variant + ':' + w].replaceAll('__ID__', 'kt' + uid)
     return createElement('svg', {
       ref, xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: size, height: size,

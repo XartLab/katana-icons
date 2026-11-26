@@ -38,6 +38,20 @@ import '@katana-icons/react/trading.css'
 
 The two-tone accent reads `--kti-accent`; the solid-tint fill reads `--kti-tint`. Static files are in `packages/static/svg/trading/<variant>/<name>.svg`. The trading icons were drawn with the Kubai Line skill (Kubai Icons License §2: the icons are ours); its engine is only used at build time and is not part of this repo.
 
+## Which style when
+
+Default is the Kenya Hara way: paper, ink, thin lines, one point of colour. The Nihei (Knights of Sidonia) way is for special screens only.
+
+| Use | Style | Files |
+| --- | --- | --- |
+| Logo, everyday | Ink K, one red dot as the cockpit light, lots of clear space | `brand/katana.svg`, `brand/katana-lockup.svg` |
+| Logo, 24 px and below | Ink K only, no dot (a dot that small turns to mud) | `brand/katana-small.svg` |
+| App icon | Paper squircle tile, ink K, red dot | `brand/katana-appicon.svg` |
+| Icons in the product | Trading icons, outline, weight `light` (1.5), monochrome; at most one part in the accent colour | `@katana-icons/react/trading` (defaults to `light`) |
+| Titles, loading screens, cockpit/HUD panels | KT Stencil type, stencil icons, dark ground, hazard bands | `type/dist/`, `packages/static/svg/stencil/`, `hud/` |
+
+The red is `--katana-shu` (default `#A8322D`), a deeper red than the trading up/down colours, so it never reads as price movement.
+
 ## Develop
 
 ```bash

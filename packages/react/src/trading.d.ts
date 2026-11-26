@@ -5,7 +5,7 @@ import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 export interface TradingIconProps extends Omit<SVGProps<SVGSVGElement>, 'ref'> {
   /** 像素尺寸，默认 24 */
   size?: number | string
-  /** 字重档：线宽 1.5 / 2 / 2.25 / 2.5，跟旁边文字的字重走；默认 regular */
+  /** 字重档：线宽 1.5 / 2 / 2.25 / 2.5，跟旁边文字的字重走；默认 light（原研哉：细线、克制） */
   weight?: 'light' | 'regular' | 'medium' | 'bold'
   /** 直接给线宽，取最近的一档 */
   strokeWidth?: number

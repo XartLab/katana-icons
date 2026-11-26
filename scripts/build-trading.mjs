@@ -84,7 +84,7 @@ export const tradingIconNames = ${JSON.stringify(names)}
 export function createTradingIcon(name) {
   const C = forwardRef(function TradingIcon({ size = 24, weight, strokeWidth, variant = 'outline', animated = false, title, className, ...rest }, ref) {
     const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '')
-    const w = weight ?? (strokeWidth != null ? nearest(strokeWidth) : 'regular')
+    const w = weight ?? (strokeWidth != null ? nearest(strokeWidth) : 'light')
     const body = DATA[name][variant + ':' + w].replaceAll('__ID__', 'kt' + uid)
     return createElement('svg', {
       ref, xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: size, height: size,
@@ -106,7 +106,7 @@ import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 export interface TradingIconProps extends Omit<SVGProps<SVGSVGElement>, 'ref'> {
   /** 像素尺寸，默认 24 */
   size?: number | string
-  /** 字重档：线宽 1.5 / 2 / 2.25 / 2.5，跟旁边文字的字重走；默认 regular */
+  /** 字重档：线宽 1.5 / 2 / 2.25 / 2.5，跟旁边文字的字重走；默认 light（原研哉：细线、克制） */
   weight?: 'light' | 'regular' | 'medium' | 'bold'
   /** 直接给线宽，取最近的一档 */
   strokeWidth?: number
@@ -128,12 +128,12 @@ fs.writeFileSync(path.join(rd, 'src/trading.js'), js);
 fs.writeFileSync(path.join(rd, 'src/trading.d.ts'), dts);
 fs.writeFileSync(path.join(rd, 'trading.css'), css);
 
-// ---- 静态 SVG：每种变体 regular 一档，currentColor ----
+// ---- 静态 SVG：每种变体 light 一档（线宽 1.5，默认的原研哉风格），currentColor ----
 for (const v of VARIANTS) {
   const dir = path.join(root, 'packages/static/svg/trading', v);
   fs.mkdirSync(dir, { recursive: true });
   for (const n of names) {
-    const body = render(SET[n], { variant: v, s: 2, color: 'currentColor', tones, id: `kt-${n}` });
+    const body = render(SET[n], { variant: v, s: 1.5, color: 'currentColor', tones, id: `kt-${n}` });
     fs.writeFileSync(path.join(dir, `${n}.svg`), body);
   }
 }
