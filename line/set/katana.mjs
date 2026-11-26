@@ -317,5 +317,205 @@ export default {
     },
     light: ['axis'],
     fx: { t: 'draw', on: ['bids', 'asks'], stagger: 100 }
+  },
+  // ---------- 图表类型 ----------
+  candles: {
+    anchor: 'base',
+    label: 'K 线', key: 'square',
+    plan: '主体：两根蜡烛，左边阳线空心、右边阴线实心，各带上下影线（中国习惯红涨绿跌靠颜色，不靠形状）',
+    weights: { [P]: 1 },
+    draw(g) {
+      return [
+        line(g.span(7, 3, 7, 8) + g.span(7, 17, 7, 21), { n: 'wk0', role: P, part: 'c0' }),
+        shell(g.box(3, 8, 8, 9, 1.5), { n: 'bd0', role: P, part: 'c0' }),
+        line(g.span(17, 3, 17, 6) + g.span(17, 15, 17, 19), { n: 'wk1', role: P, part: 'c1' }),
+        solid(g.area(13, 6, 8, 9, 1.5), { n: 'bd1', role: P, part: 'c1' })
+      ];
+    },
+    light: ['wk0', 'bd0'],
+    // 跳一下: the falling candle drops and comes back
+    fx: { t: 'keys', on: ['wk1', 'bd1'], y: [1.5] }
+  },
+  'ohlc-bars': {
+    label: '美国线', key: 'square',
+    plan: '主体：两根竖线（最高到最低）；辅助：左边短横是开盘价，右边短横是收盘价',
+    weights: { [P]: 0.6, [S]: 0.4 },
+    draw(g) {
+      return [
+        line(g.span(7, 3, 7, 17), { n: 'b0', role: P }), line(g.span(17, 7, 17, 21), { n: 'b1', role: P }),
+        line(g.span(3, 13, 7, 13) + g.span(7, 6, 11, 6), { n: 't0', role: S, part: 'b0' }),
+        line(g.span(13, 16, 17, 16) + g.span(17, 10, 21, 10), { n: 't1', role: S, part: 'b1' })
+      ];
+    },
+    light: ['t0', 't1'],
+    fx: { t: 'keys', on: ['b1', 't1'], y: [-1.5] }
+  },
+  'heikin-ashi': {
+    anchor: 'base',
+    label: '平均 K 线', key: 'square',
+    allow: { clear: 'the wicks grow out of the bodies' },
+    plan: '主体：三根实心 K 线一级级抬高，每根从上一根的中间开盘、连成平滑的台阶（没有缺口）；辅助：上影线',
+    weights: { [P]: 0.84, [S]: 0.16 },
+    draw(g) {
+      return [
+        solid(g.area(3, 14, 4, 7, 1) + g.area(10, 10, 4, 7, 1) + g.area(17, 6, 4, 7, 1), { n: 'bodies', role: P }),
+        line(g.span(5, 11, 5, 14) + g.span(12, 7, 12, 10) + g.span(19, 3, 19, 6), { n: 'wicks', role: S, part: 'bodies' })
+      ];
+    },
+    fx: { t: 'keys', on: ['bodies', 'wicks'], y: [-1.5] }
+  },
+  renko: {
+    label: '砖形图', key: 'square',
+    plan: '主体：三块等大的方砖沿对角线一级级上去，角挨着角（砖形图只看价格走够一格，不看时间）',
+    weights: { [P]: 1 },
+    draw(g) {
+      return [shell(g.box(3, 15, 6, 6, 1) + g.box(9, 9, 6, 6, 1) + g.box(15, 3, 6, 6, 1), { n: 'bricks', role: P })];
+    },
+    allow: { optical: 'the bricks climb on a diagonal' },
+    fx: { t: 'keys', on: ['bricks'], y: [-1.5] }
+  },
+  oscillator: {
+    label: '震荡指标', key: 'square',
+    plan: '主体：一条在两条界线之间来回摆的曲线（RSI、KDJ 这一类）；辅助：上下两条超买、超卖线',
+    weights: { [P]: 0.64, [S]: 0.36 },
+    draw(g) {
+      const pts = Array.from({ length: 25 }, (_, i) => { const x = 3 + g.h + i * (18 - g.s) / 24; return [x, 12 - (9 - g.h) * Math.sin((i / 24) * Math.PI * 3 + 0.5)]; });
+      return [
+        line(g.span(3, 8, 21, 8) + g.span(3, 16, 21, 16), { n: 'bands', role: S }),
+        line(g.pl(pts), { n: 'wave', role: P, part: 'bands' })
+      ];
+    },
+    light: ['bands'],
+    fx: { t: 'draw', on: ['wave'] }
+  },
+  // ---------- 订单流 ----------
+  footprint: {
+    label: '足迹图', key: 'square',
+    allow: { sliver: 'in the bold fill the rows of the ladder leave thin rungs between them' },
+    plan: '主体：一根 K 线的外框；细节：中线两边每个价位各一条短横，左边是主动卖、右边是主动买，长短表示成交量',
+    weights: { [P]: 0.72, [D]: 0.28 },
+    draw(g) {
+      const L = 3 + g.s + g.clear;
+      return [
+        shell(g.box(3, 3, 18, 18, 3.5), { n: 'box', role: P }),
+        line(g.span(8.5, 8, 10.5, 8) + g.span(L, 12, 10.5, 12) + g.span(7.5, 16, 10.5, 16), { n: 'bid', role: D, on: 'box' }),
+        line(g.span(13.5, 8, 15.5, 8) + g.span(13.5, 12, 24 - L, 12) + g.span(13.5, 16, 16.5, 16), { n: 'ask', role: D, on: 'box' })
+      ];
+    },
+    light: ['bid'],
+    fx: { t: 'draw', on: ['bid', 'ask'], stagger: 90 }
+  },
+  'volume-profile': {
+    label: '成交量分布', key: 'square',
+    plan: '主体：最长的那一档（成交最多的价位 POC）；辅助：其余各价位的横条，从左边对齐，长短表示成交量',
+    allow: { optical: 'the levels are aligned to the price axis on the left' },
+    weights: { [P]: 0.38, [S]: 0.62 },
+    draw(g) {
+      return [
+        line(g.span(3, 4, 9, 4) + g.span(3, 8, 14, 8) + g.span(3, 16, 12, 16) + g.span(3, 20, 7, 20), { n: 'bars', role: S }),
+        line(g.span(3, 12, 21, 12), { n: 'poc', role: P })
+      ];
+    },
+    light: ['bars'],
+    fx: { t: 'draw', on: ['poc'] }
+  },
+  // ---------- 合约 ----------
+  'funding-rate': {
+    label: '资金费率', key: 'circle',
+    plan: '主体：一圈带箭头的循环（每 8 小时结算一次）；细节：圈里的百分号',
+    weights: { [P]: 0.77, [D]: 0.23 },
+    draw(g) {
+      const r = 10 - g.h, a = (330 * Math.PI) / 180, T = [12 + r * Math.cos(a), 12 + r * Math.sin(a)], d = [-Math.sin(a), Math.cos(a)], m = [Math.cos(a), Math.sin(a)], w = 2.6;
+      return [
+        line(g.arc(12, 12, r, 30, 330) + g.pl([[T[0] - w * d[0] + w * m[0], T[1] - w * d[1] + w * m[1]], T, [T[0] - w * d[0] - w * m[0], T[1] - w * d[1] - w * m[1]]]), { n: 'cycle', role: P }),
+        line(g.seg(14, 10, 10, 14), { n: 'slash', role: D }),
+        solid(g.dot(9, 9, 0.8) + g.dot(15, 15, 0.8), { n: 'dots', role: D })
+      ];
+    },
+    light: ['slash', 'dots'],
+    fx: { t: 'keys', on: ['cycle'], o: [12, 12], r: [20] }
+  },
+  'open-interest': {
+    label: '持仓量', key: 'circle',
+    allow: { sliver: 'in the bold fill the strip between the two arrows is the line between longs and shorts' },
+    plan: '主体：外圈；细节：圈里一上一下两支箭头（多空双方没平的仓）',
+    weights: { [P]: 0.72, [D]: 0.28 },
+    draw(g) {
+      return [
+        shell(g.ring(12, 12, 10), { n: 'ring', role: P }),
+        line(vArrow(g, 9, 15, 9, 1.5), { n: 'long', role: D, on: 'ring' }),
+        line(vArrow(g, 15, 9, 15, 1.5), { n: 'short', role: D, on: 'ring' })
+      ];
+    },
+    light: ['short'],
+    fx: [{ t: 'keys', on: ['long'], y: [-1.5] }, { t: 'keys', on: ['short'], y: [1.5], delay: 80 }]
+  },
+  perpetual: {
+    label: '永续合约', key: 'landscape',
+    plan: '主体：一条伯努利双纽线（∞），没有交割日',
+    weights: { [P]: 1 },
+    draw(g) {
+      const A = 10 - g.h, pts = Array.from({ length: 73 }, (_, i) => { const t = (i / 72) * Math.PI * 2, d = 1 + Math.sin(t) ** 2; return [12 + (A * Math.cos(t)) / d, 12 + (A * Math.sin(t) * Math.cos(t)) / d * ((8 - g.h) / 3.18)]; });
+      return [line(g.pl(pts, true), { n: 'inf', role: P })];
+    },
+    fx: { t: 'draw', on: ['inf'] }
+  },
+  liquidation: {
+    label: '强平', key: 'square',
+    allow: { optical: 'the price falls onto the level at the bottom' },
+    plan: '主体：一路下跌的价格线；辅助：强平价那条线；细节：价格碰到线的地方炸开三道',
+    weights: { [P]: 0.37, [S]: 0.38, [D]: 0.25 },
+    draw(g) {
+      return [
+        line(g.span(3, 20, 21, 20), { n: 'level', role: S }),
+        line(g.pl([[3 + g.h, 4], [8, 9], [11, 7], [14, 15]]), { n: 'price', role: P }),
+        line([-100, -40, 10].map((d) => { const c = Math.cos(d * Math.PI / 180), q = Math.sin(d * Math.PI / 180); return g.seg(14 + 3.4 * c, 15 + 3.4 * q, 14 + 6 * c, 15 + 6 * q); }).join(''), { n: 'burst', role: D })
+      ];
+    },
+    light: ['level'],
+    fx: { t: 'keys', on: ['burst'], o: [14, 15], s: [1.25] }
+  },
+  'price-tag': {
+    label: '标记价格', key: 'landscape',
+    allow: { optical: 'the tag sits on the price axis at the right' },
+    plan: '主体：价格轴上的价签（尖头朝左指着价位）；辅助：伸向左边的价位线',
+    weights: { [P]: 0.88, [S]: 0.12 },
+    draw(g) {
+      const t = 4 + g.h, b = 20 - g.h, r = 22 - g.h, tip = 9.5;
+      return [
+        line(g.span(2, 12, tip - g.h - g.clear, 12), { n: 'level', role: S }),
+        shell(g.polygon([[tip, 12], [14, t], [r, t], [r, b], [14, b]], 1.5), { n: 'tag', role: P })
+      ];
+    },
+    light: ['level'],
+    fx: { t: 'keys', on: ['tag'], x: [-1.5] }
+  },
+  'trailing-stop': {
+    label: '跟踪止损', key: 'square',
+    plan: '主体：上涨的价格线；辅助：下面一级级跟着抬高的止损线（只升不降）',
+    weights: { [P]: 0.45, [S]: 0.55 },
+    draw(g) {
+      return [
+        line(g.pl([[3 + g.h, 12], [8, 7], [11, 8.5], [21 - g.h, 3 + g.h]]), { n: 'price', role: P }),
+        line(g.pl([[3 + g.h, 21 - g.h], [9, 21 - g.h], [9, 16], [15, 16], [15, 11], [21 - g.h, 11]]), { n: 'stop', role: S })
+      ];
+    },
+    light: ['stop'],
+    fx: { t: 'draw', on: ['stop'] }
+  },
+  iceberg: {
+    label: '冰山单', key: 'square',
+    plan: '主体：水面上露出的小尖；辅助：水面线；细节：水下大得多的冰体（挂出来的只是一小部分）',
+    weights: { [P]: 0.28, [S]: 0.3, [D]: 0.42 },
+    draw(g) {
+      const w = 12;
+      return [
+        line(g.span(3, w, 21, w), { n: 'water', role: S }),
+        shell(g.polygon([[7.5, w - g.s - g.clear - 0.5], [12, 3 + g.h * 0.6], [16.5, w - g.s - g.clear - 0.5]], 1), { n: 'tip', role: P }),
+        line(g.pl([[6.5, w + 2 * g.s + g.clear], [4 + g.h, 17], [9, 21 - g.h], [15, 21 - g.h], [20 - g.h, 16.5], [17.5, w + 2 * g.s + g.clear]]), { n: 'body', role: D })
+      ];
+    },
+    light: ['body'],
+    fx: { t: 'keys', on: ['tip'], y: [-1.2] }
   }
 };

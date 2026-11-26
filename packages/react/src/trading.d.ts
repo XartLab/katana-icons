@@ -17,7 +17,7 @@ export interface TradingIconProps extends Omit<SVGProps<SVGSVGElement>, 'ref'> {
   title?: string
 }
 export type TradingIcon = ForwardRefExoticComponent<TradingIconProps & RefAttributes<SVGSVGElement>>
-export type TradingIconName = 'trend-line' | 'ray' | 'horizontal-line' | 'vertical-line' | 'parallel-channel' | 'fib-retracement' | 'price-range' | 'date-range' | 'long-position' | 'short-position' | 'order-limit' | 'order-market' | 'order-stop' | 'order-bracket' | 'leverage' | 'margin-cross' | 'margin-isolated' | 'order-book' | 'depth-chart'
+export type TradingIconName = 'trend-line' | 'ray' | 'horizontal-line' | 'vertical-line' | 'parallel-channel' | 'fib-retracement' | 'price-range' | 'date-range' | 'long-position' | 'short-position' | 'order-limit' | 'order-market' | 'order-stop' | 'order-bracket' | 'leverage' | 'margin-cross' | 'margin-isolated' | 'order-book' | 'depth-chart' | 'candles' | 'ohlc-bars' | 'heikin-ashi' | 'renko' | 'oscillator' | 'footprint' | 'volume-profile' | 'funding-rate' | 'open-interest' | 'perpetual' | 'liquidation' | 'price-tag' | 'trailing-stop' | 'iceberg'
 export declare function createTradingIcon(name: TradingIconName): TradingIcon
 export declare const tradingIconNames: TradingIconName[]
 /** 趋势线 */
@@ -58,3 +58,31 @@ export declare const MarginIsolated: TradingIcon
 export declare const OrderBook: TradingIcon
 /** 深度图 */
 export declare const DepthChart: TradingIcon
+/** K 线 */
+export declare const Candles: TradingIcon
+/** 美国线 */
+export declare const OhlcBars: TradingIcon
+/** 平均 K 线 */
+export declare const HeikinAshi: TradingIcon
+/** 砖形图 */
+export declare const Renko: TradingIcon
+/** 震荡指标 */
+export declare const Oscillator: TradingIcon
+/** 足迹图 */
+export declare const Footprint: TradingIcon
+/** 成交量分布 */
+export declare const VolumeProfile: TradingIcon
+/** 资金费率 */
+export declare const FundingRate: TradingIcon
+/** 持仓量 */
+export declare const OpenInterest: TradingIcon
+/** 永续合约 */
+export declare const Perpetual: TradingIcon
+/** 强平 */
+export declare const Liquidation: TradingIcon
+/** 标记价格 */
+export declare const PriceTag: TradingIcon
+/** 跟踪止损 */
+export declare const TrailingStop: TradingIcon
+/** 冰山单 */
+export declare const Iceberg: TradingIcon

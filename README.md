@@ -6,7 +6,7 @@ Functional icons for the Katana ecosystem, drawn in one style: a 24 grid, 1.5 st
 | --- | --- |
 | Agent skill | `SKILL.md` + `docs/rules.md` (Chinese). Drop the repo into your agent's skills folder and ask for icons. |
 | Icons | 71 OKB-style icons (63 interface + 8 `kt-` product icons), each in 4 styles: line, two-tone line, filled line and solid. |
-| Trading icons | 19 trading icons (drawing tools, order types, leverage and margin, order book and depth) in a rounded line style, 4 variants × 4 stroke weights, each with its own hover motion. |
+| Trading icons | 33 trading icons (drawing tools, order types, leverage and derivatives, chart types, order book and order flow) in a rounded line style, 4 variants × 4 stroke weights, each with its own hover motion. |
 | Packages | `@katana-icons/react` (components + `styles.css` for motion) and `packages/static/svg`. |
 
 ## Use

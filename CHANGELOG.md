@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2026-11-26
+
+### Added
+
+- **14 more trading icons.** Chart types (candles, OHLC bars, Heikin-Ashi, Renko, oscillator), order flow (footprint, volume profile), derivatives (perpetual, funding rate, open interest, liquidation, mark price) and order types (trailing stop, iceberg), each with its own hover motion. The trading set now has 33 icons.
+
 ## [0.1.0] - 2026-11-26
 
 ### Added
