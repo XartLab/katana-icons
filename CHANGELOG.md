@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0] - 2026-11-26
+
+### Added
+
+- **Data visualization.** `@katana-icons/viz` draws sparklines, line charts, bars, candlesticks, order-book depth, heatmaps and stat tiles in the KATANA style, colored from KatanaUI's chart tokens, with hover tooltips and a crosshair.
+- **Pixel effects.** `@katana-icons/fx` plays short pixel animations for trading moments such as an order filled, an alert, a breakout, the market-open countdown or a lost connection, built on pixelfx and recolored in KATANA colors. Sprite sheets of the same effects ship in `@katana-icons/static`.
+
 ## [0.8.0] - 2026-11-26
 
 ### Added

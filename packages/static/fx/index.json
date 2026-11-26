@@ -1,0 +1,102 @@
+{
+  "filled": {
+    "zh": "成交",
+    "source": "pickups/collect-burst",
+    "size": [
+      112,
+      108
+    ],
+    "duration": 1.35,
+    "loop": false
+  },
+  "alert": {
+    "zh": "告警触发",
+    "source": "ui/exclamation",
+    "size": [
+      84,
+      104
+    ],
+    "duration": 1.4,
+    "loop": false
+  },
+  "target": {
+    "zh": "止盈 / 目标达成",
+    "source": "ui/quest-complete",
+    "size": [
+      204,
+      92
+    ],
+    "duration": 2.6,
+    "loop": false
+  },
+  "open": {
+    "zh": "开盘倒计时",
+    "source": "ui/countdown",
+    "size": [
+      152,
+      136
+    ],
+    "duration": 3.1,
+    "loop": false
+  },
+  "breakout": {
+    "zh": "突破",
+    "source": "lightning/zap-hit",
+    "size": [
+      144,
+      112
+    ],
+    "duration": 0.9,
+    "loop": false
+  },
+  "arming": {
+    "zh": "委托排队 / 蓄力",
+    "source": "lightning/charge-up",
+    "size": [
+      272,
+      184
+    ],
+    "duration": 2.7,
+    "loop": false
+  },
+  "locked": {
+    "zh": "交易锁生效",
+    "source": "scifi/force-field",
+    "size": [
+      184,
+      104
+    ],
+    "duration": 2.4,
+    "loop": true
+  },
+  "engine": {
+    "zh": "引擎运行（加载中）",
+    "source": "scifi/energy-core",
+    "size": [
+      112,
+      100
+    ],
+    "duration": 2.4,
+    "loop": true
+  },
+  "offline": {
+    "zh": "断线",
+    "source": "transitions/crt-off",
+    "size": [
+      320,
+      180
+    ],
+    "duration": 2,
+    "loop": false
+  },
+  "reconnect": {
+    "zh": "重连",
+    "source": "transitions/glitch-wipe",
+    "size": [
+      320,
+      180
+    ],
+    "duration": 1.8,
+    "loop": false
+  }
+}

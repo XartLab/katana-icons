@@ -1,0 +1,23 @@
+{
+  "name": "@katana-icons/viz",
+  "version": "0.9.0",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "files": [
+    "src",
+    "viz.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./hover": "./src/hover.js",
+    "./viz.css": "./viz.css"
+  }
+}

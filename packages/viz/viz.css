@@ -1,0 +1,75 @@
+/* SPDX-License-Identifier: MIT
+   KATANA 数据可视化。颜色全部读 KatanaUI 的图表 token（--series-*、--pnl-*、--chart-*、--ink-*），
+   括号里是没有 KatanaUI 时的兜底：默认 Paper（原研哉，纸底），.ktv-dark 是 Graphite（座舱，暗底）。
+   KatanaUI 里用时不要加 .ktv-dark，主题由 KatanaUI 的 data-theme 决定。 */
+.ktv {
+  --ktv-surface: var(--bg-100, #e8e5dd);
+  --ktv-ink: var(--ink-100, #17160f);
+  --ktv-ink-2: var(--ink-300, #6a655a);
+  --ktv-ink-3: var(--ink-400, #a9a497);
+  --ktv-grid: var(--chart-grid, #d6d2c8);
+  --ktv-axis: var(--chart-axis, #8f887a);
+  --ktv-cross: var(--chart-crosshair, #3f3b33);
+  --ktv-up: var(--pnl-up, #2f8a3e);
+  --ktv-down: var(--pnl-down, #c0375f);
+  --ktv-now: var(--katana-shu, #a8322d);
+  --ktv-s1: var(--series-1, #c24a0c);
+  --ktv-s2: var(--series-2, #2a6fc0);
+  --ktv-s3: var(--series-3, #2f8a3e);
+  --ktv-s4: var(--series-4, #7a52c7);
+  --ktv-s5: var(--series-5, #a06d08);
+  --ktv-s6: var(--series-6, #0b8fb0);
+  --ktv-s7: var(--series-7, #c0375f);
+  --ktv-other: var(--series-other, #a9a497);
+  --ktv-font: var(--kt-font-mono, ui-monospace, 'DM Mono', monospace);
+  --ktv-font-num: var(--kt-font-lcd, var(--kt-font-mono, ui-monospace, monospace));
+  color: var(--ktv-ink);
+  font: 11px/1.3 var(--ktv-font);
+  font-variant-numeric: tabular-nums;
+}
+.ktv.ktv-dark {
+  --ktv-surface: var(--bg-100, #070707);
+  --ktv-ink: var(--ink-100, #ffffff);
+  --ktv-ink-2: var(--ink-300, #a0a0a0);
+  --ktv-ink-3: var(--ink-400, #6e6e6e);
+  --ktv-grid: var(--chart-grid, #1c1c1c);
+  --ktv-axis: var(--chart-axis, #a0a0a0);
+  --ktv-cross: var(--chart-crosshair, #cdcdcd);
+  --ktv-up: var(--pnl-up, #5fae8c);
+  --ktv-down: var(--pnl-down, #f2607c);
+  --ktv-s1: var(--series-1, #e85a12);
+  --ktv-s2: var(--series-2, #3c86d8);
+  --ktv-s3: var(--series-3, #3fa652);
+  --ktv-s4: var(--series-4, #9a6fe0);
+  --ktv-s5: var(--series-5, #b5841a);
+  --ktv-s6: var(--series-6, #1fa3bb);
+  --ktv-s7: var(--series-7, #d9527c);
+  --ktv-other: var(--series-other, #6e6e6e);
+}
+.ktv svg { display: block; overflow: visible; }
+.ktv .ktv-grid { stroke: var(--ktv-grid); stroke-width: 1; shape-rendering: crispEdges; }
+.ktv .ktv-base { stroke: var(--ktv-axis); stroke-width: 1; shape-rendering: crispEdges; }
+.ktv .ktv-ref { stroke: var(--ktv-axis); stroke-width: 1; stroke-dasharray: 2 3; }
+.ktv .ktv-tick { fill: var(--ktv-ink-2); }
+.ktv .ktv-label { fill: var(--ktv-ink); }
+.ktv .ktv-line { fill: none; stroke-width: 1.5; stroke-linejoin: miter; stroke-linecap: square; }
+.ktv .ktv-now { fill: var(--ktv-now); }
+.ktv .ktv-cross { stroke: var(--ktv-cross); stroke-width: 1; stroke-dasharray: 3 3; pointer-events: none; }
+.ktv [data-tip] { cursor: crosshair; }
+.ktv .ktv-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px; color: var(--ktv-ink-2); }
+.ktv .ktv-legend i { display: inline-block; width: 10px; height: 2px; margin-right: 6px; vertical-align: middle; }
+/* 数字卡：标签用次级墨色，数字用 LCD 字，涨跌带 ▲▼ 不只靠颜色 */
+.ktv-stat { display: grid; gap: 2px; padding: 10px 12px; min-width: 140px; }
+.ktv-stat-label { color: var(--ktv-ink-2); letter-spacing: .04em; }
+.ktv-stat-value { font: 500 24px/1.1 var(--ktv-font-num); color: var(--ktv-ink); }
+.ktv-stat-delta { color: var(--ktv-ink-2); }
+.ktv-stat-delta b { font-weight: 500; }
+.ktv-stat-delta[data-tone='up'] b { color: var(--ktv-up); }
+.ktv-stat-delta[data-tone='down'] b { color: var(--ktv-down); }
+/* 悬停提示：方角，左上切角，跟图标一个语言 */
+.ktv-tip { position: fixed; z-index: 1000; pointer-events: none; padding: 6px 8px; min-width: 96px;
+  background: var(--ktv-surface); color: var(--ktv-ink); border: 1px solid var(--ktv-axis);
+  clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%, 0 6px); font: 11px/1.4 var(--ktv-font); font-variant-numeric: tabular-nums; }
+.ktv-tip b { font-weight: 500; }
+.ktv-tip i { display: inline-block; width: 8px; height: 8px; margin-right: 6px; vertical-align: -1px; }
+.ktv-tip .ktv-tip-head { color: var(--ktv-ink-2); margin-bottom: 2px; }

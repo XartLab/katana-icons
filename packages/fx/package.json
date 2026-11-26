@@ -1,0 +1,13 @@
+{
+  "name": "@katana-icons/fx",
+  "version": "0.9.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.js",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

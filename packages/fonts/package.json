@@ -1,6 +1,6 @@
 {
   "name": "@katana-icons/fonts",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": "MIT AND OFL-1.1",
   "sideEffects": [
     "*.css"

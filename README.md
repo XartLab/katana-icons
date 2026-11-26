@@ -61,6 +61,51 @@ import '@katana-icons/react/trading.css'
 
 The two-tone accent reads `--kti-accent`; the solid-tint fill reads `--kti-tint`. Static files are in `packages/static/svg/trading/<variant>/<name>.svg`. The trading icons were drawn with the Kubai Line skill (Kubai Icons License §2: the icons are ours); its engine is only used at build time and is not part of this repo.
 
+## Data visualization
+
+`@katana-icons/viz` turns data into SVG/HTML strings with no dependencies: `sparkline`, `line`, `bars`, `candles`, `depth`, `heatmap`, `statTile`, `table`. Colors are roles only (`var(--ktv-*)` in `viz.css`) that read KatanaUI's chart tokens (`--series-*`, `--pnl-*`, `--chart-*`, `--ink-*`); without KatanaUI they fall back to Paper, and `.ktv-dark` to Graphite.
+
+```js
+import { candles, line, statTile } from '@katana-icons/viz'
+import { attachHover } from '@katana-icons/viz/hover'
+el.innerHTML = candles({ ohlc, labels })      // inside an element with class="ktv"
+attachHover(el)                                // tooltips on every mark, crosshair on line charts
+```
+
+The rules, from the dataviz method with KATANA marks:
+- **Lines and marks.** Lines are 1.5 px with sharp joins. Bars and candles have square ends with a 2 px surface gap between them. Point markers are squares.
+- **One axis.** A chart has a single y axis, on the right. Grid lines and axes stay recessive.
+- **Series colors.** Series take `--series-1..7` in fixed order; an eighth series folds into "other" rather than getting a new color.
+- **Up and down.** Up/down use `--pnl-up` / `--pnl-down` and always carry ▲▼ or a sign, so the meaning never rests on color alone.
+- **Labels.** There is a legend whenever there are two or more series, and up to four series are also labelled at the line end. Bars label only the highest and lowest values.
+- **The red point.** Vermilion marks only "now": the last price and the newest point.
+
+KatanaUI's categorical colors pass the palette validator on 2026-11-26. Graphite dark passes every check; its worst adjacent pair for colorblind readers is ΔE 9.8, against a target of at least 8. Paper light passes too, but its cyan sits at 3:1 against the surface, so charts on Paper need direct labels or a table view. Preview: `node scripts/build-viz.mjs` → `preview/viz.html`.
+
+## Pixel effects
+
+`@katana-icons/fx` plays a short pixel animation for the moments that deserve a glance. It is built on [pixelfx](https://github.com/patch-gg/pixelfx) (MIT, vendored at 0.3.1): 10 effects that need no character, recolored with KATANA ramps (`PALETTES`: shu, ink, gold, up, down).
+
+| Moment | Meaning | pixelfx source |
+| --- | --- | --- |
+| `filled` | Order filled | pickups/collect-burst |
+| `alert` | Alert fired | ui/exclamation |
+| `target` | Take-profit / target hit | ui/quest-complete |
+| `open` | Market-open countdown | ui/countdown |
+| `breakout` | Breakout | lightning/zap-hit |
+| `arming` | Order queued / charging | lightning/charge-up |
+| `locked` | Trading lock on (loop) | scifi/force-field |
+| `engine` | Engine running / loading (loop) | scifi/energy-core |
+| `offline` | Disconnected | transitions/crt-off |
+| `reconnect` | Reconnected | transitions/glitch-wipe |
+
+```js
+import { play } from '@katana-icons/fx'
+const stop = play(canvas, 'filled', { scale: 2 })   // pixelated scaling; returns stop()
+```
+
+Without the runtime, the same effects are exported as sprite sheets (PNG + Aseprite JSON) in `packages/static/fx/`. Regenerate them with `PIXELFX=<pixelfx checkout> node scripts/build-fx.mjs`. The Patch Pixel font from pixelfx is not included.
+
 ## Fonts
 
 Every font KATANA uses is self-hosted in `packages/fonts/` (`@katana-icons/fonts`): no Google Fonts at run time.
