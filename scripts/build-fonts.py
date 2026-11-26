@@ -1,0 +1,115 @@
+# SPDX-License-Identifier: MIT
+# 把 KATANA 用到的字体打成可以长期缓存的 WOFF2 分片，放进 packages/fonts/。
+#   python3 scripts/build-fonts.py <源字体目录>
+# 源字体：KT Stencil 来自 type/dist/；其余是 SIL OFL 1.1 的开源字体，从 github.com/google/fonts 取（取用日期见 NOTICE）。
+# 中日文字体按 unicode-range 切片（Google Fonts 的做法）：浏览器只下载页面上真用到的字所在的那几片。
+# 文件名带内容哈希，内容不变名字不变，可以设一年的强缓存（Cache-Control: immutable）。
+import hashlib, json, pathlib, shutil, sys
+from fontTools.ttLib import TTFont
+from fontTools import subset
+
+root = pathlib.Path(__file__).resolve().parent.parent
+src = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else root.parent / 'fonts/src')
+out = root / 'packages/fonts'
+files = out / 'files'
+
+# family, css 字重, 源文件, 是否切片, 用在哪
+FONTS = [
+    ('KT Stencil', 400, root / 'type/dist/KTStencil-Stencil.ttf', False, '标题、加载页、驾驶舱面板（断缝）'),
+    ('KT Stencil Solid', 400, root / 'type/dist/KTStencil-Solid.ttf', False, '小字、数字读数（不断缝）'),
+    ('Michroma', 400, src / 'Michroma-Regular.ttf', False, '拉丁字母和编号，超椭圆字形'),
+    ('Dela Gothic One', 400, src / 'DelaGothicOne-Regular.ttf', True, '汉字代号、粗标题'),
+    ('Shippori Mincho', 400, src / 'ShipporiMincho-Regular.ttf', True, '原研哉风格的标题（明朝体）'),
+    ('Shippori Mincho', 600, src / 'ShipporiMincho-SemiBold.ttf', True, ''),
+    ('Zen Kaku Gothic New', 400, src / 'ZenKakuGothicNew-Regular.ttf', True, '正文黑体'),
+    ('Zen Kaku Gothic New', 700, src / 'ZenKakuGothicNew-Bold.ttf', True, ''),
+    ('Zen Kaku Gothic New', 900, src / 'ZenKakuGothicNew-Black.ttf', True, ''),
+]
+
+
+def common_cjk():
+    """常用字：GB2312 一级字（3755）和 JIS 第一水准（2965）的并集。先切常用字，生僻字放在后面的片里。"""
+    s = set()
+    for hi in range(0xB0, 0xD8):            # GB2312 一级：区 16–55
+        for lo in range(0xA1, 0xFF):
+            try: s.add(ord(bytes([hi, lo]).decode('gb2312')))
+            except UnicodeDecodeError: pass
+    for hi in range(0xB0, 0xD0):            # JIS X 0208 第一水准：区 16–47
+        for lo in range(0xA1, 0xFF):
+            try: s.add(ord(bytes([hi, lo]).decode('euc_jp')))
+            except UnicodeDecodeError: pass
+    return s
+
+
+COMMON = common_cjk()
+LATIN = lambda c: c < 0x0250 or 0x2000 <= c <= 0x206F or 0x20A0 <= c <= 0x20CF or 0x2100 <= c <= 0x22FF
+KANA = lambda c: 0x3000 <= c <= 0x30FF or 0x31F0 <= c <= 0x31FF or 0xFF00 <= c <= 0xFFEF
+CJK = lambda c: 0x3400 <= c <= 0x9FFF or 0xF900 <= c <= 0xFAFF or 0x20000 <= c <= 0x2FFFF
+
+
+def slices(cps):
+    """片：拉丁一片、假名和全角标点一片、常用汉字每 500 字一片、其余每 1500 字一片。"""
+    cps = sorted(cps)
+    lat = [c for c in cps if LATIN(c)]
+    kana = [c for c in cps if KANA(c)]
+    cjk = [c for c in cps if CJK(c)]
+    common = [c for c in cjk if c in COMMON]
+    rare = [c for c in cjk if c not in COMMON]
+    other = [c for c in cps if not (LATIN(c) or KANA(c) or CJK(c))]
+    out = []
+    if lat: out.append(('latin', lat))
+    if kana: out.append(('kana', kana))
+    for i in range(0, len(common), 500): out.append((f'c{i // 500:02d}', common[i:i + 500]))
+    for i in range(0, len(rare), 1500): out.append((f'r{i // 1500:02d}', rare[i:i + 1500]))
+    if other: out.append(('misc', other))
+    return out
+
+
+def urange(cps):
+    """连续的码位合成区间：U+4E00-4E05。"""
+    parts, start, prev = [], None, None
+    for c in sorted(cps):
+        if start is None: start = prev = c; continue
+        if c == prev + 1: prev = c; continue
+        parts.append((start, prev)); start = prev = c
+    if start is not None: parts.append((start, prev))
+    return ','.join(f'U+{a:X}' if a == b else f'U+{a:X}-{b:X}' for a, b in parts)
+
+
+def woff2(path, cps, dest_stem):
+    opts = subset.Options(); opts.flavor = 'woff2'; opts.layout_features = ['*']; opts.name_IDs = ['*']; opts.notdef_outline = True
+    font = TTFont(path)
+    sub = subset.Subsetter(opts); sub.populate(unicodes=cps); sub.subset(font)
+    tmp = files / f'{dest_stem}.tmp.woff2'
+    font.flavor = 'woff2'; font.save(tmp)
+    h = hashlib.sha256(tmp.read_bytes()).hexdigest()[:8]
+    final = files / f'{dest_stem}.{h}.woff2'
+    tmp.rename(final)
+    return final
+
+
+def main():
+    if files.exists(): shutil.rmtree(files)
+    files.mkdir(parents=True)
+    css, manifest = ['/* SPDX-License-Identifier: MIT（CSS）；字体文件各按其许可，见 licenses/ */',
+                     '/* 生成文件，勿手改：python3 scripts/build-fonts.py */'], []
+    for family, weight, path, sliced, use in FONTS:
+        cps = set(TTFont(path).getBestCmap().keys())
+        stem = family.replace(' ', '') + f'-{weight}'
+        parts = slices(cps) if sliced else [('all', sorted(cps))]
+        total = 0
+        for name, chunk in parts:
+            f = woff2(path, chunk, f'{stem}.{name}')
+            total += f.stat().st_size
+            css.append(f"@font-face{{font-family:'{family}';font-style:normal;font-weight:{weight};font-display:swap;"
+                       f"src:url(./files/{f.name}) format('woff2');unicode-range:{urange(chunk)}}}")
+        manifest.append({'family': family, 'weight': weight, 'slices': len(parts), 'bytes': total, 'use': use})
+        print(f'{family} {weight}: {len(parts)} 片, {total // 1024} KB')
+    (out / 'fonts.css').write_text('\n'.join(css) + '\n')
+    (out / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
+    lic = out / 'licenses'; lic.mkdir(exist_ok=True)
+    for t in src.glob('OFL-*.txt'): shutil.copy(t, lic / t.name)
+
+
+if __name__ == '__main__':
+    main()

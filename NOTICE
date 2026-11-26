@@ -12,3 +12,9 @@ KT Stencil (type/dist/*.ttf, *.woff2) and the stencil icons (packages/static/svg
 by KATANA, following the publicly described approach of mecha-cockpit screen type (straight
 strokes, stencil bridges, readability first). No glyphs were copied from any existing font.
 The fonts are released under the SIL Open Font License 1.1.
+
+packages/fonts/ also redistributes, as WOFF2 subsets, these fonts under the SIL Open Font License 1.1
+(sources: https://github.com/google/fonts, read 2026-11-26; licence texts in packages/fonts/licenses/):
+Michroma (The Michroma Project Authors), Dela Gothic One (The Dela Gothic Project Authors),
+Shippori Mincho (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors).
+Subsetting changes no glyph; the Reserved Font Names are kept.

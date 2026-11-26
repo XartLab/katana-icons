@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0] - 2026-11-26
+
+### Added
+
+- **Self-hosted fonts.** Every font KATANA uses ships in `@katana-icons/fonts` as cache-friendly WOFF2 files: KT Stencil, Michroma, Dela Gothic One, Shippori Mincho and Zen Kaku Gothic New. Chinese and Japanese fonts are split so a page only downloads the characters it shows.
+- **KT Stencil type and stencil icons.** Our own straight-line stencil typeface (stencil and solid cuts) and 33 trading icons drawn to the same rules.
+- **Kanji codes.** 33 kanji marks, one per trading icon.
+
+### Changed
+
+- **Hara style by default.** The everyday logo is an ink K with one red dot; trading icons default to the light weight.
+
 ## [0.2.0] - 2026-11-26
 
 ### Added

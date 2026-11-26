@@ -1,0 +1,12 @@
+{
+  "name": "@katana-icons/fonts",
+  "version": "0.3.0",
+  "license": "MIT AND OFL-1.1",
+  "sideEffects": ["*.css"],
+  "files": ["fonts.css", "files", "licenses", "manifest.json"],
+  "exports": {
+    "./fonts.css": "./fonts.css",
+    "./files/*": "./files/*",
+    "./manifest.json": "./manifest.json"
+  }
+}

@@ -38,6 +38,24 @@ import '@katana-icons/react/trading.css'
 
 The two-tone accent reads `--kti-accent`; the solid-tint fill reads `--kti-tint`. Static files are in `packages/static/svg/trading/<variant>/<name>.svg`. The trading icons were drawn with the Kubai Line skill (Kubai Icons License §2: the icons are ours); its engine is only used at build time and is not part of this repo.
 
+## Fonts
+
+Every font KATANA uses is self-hosted in `packages/fonts/` (`@katana-icons/fonts`): no Google Fonts at run time.
+
+```ts
+import '@katana-icons/fonts/fonts.css'
+```
+
+| Family | Weights | Use |
+| --- | --- | --- |
+| KT Stencil / KT Stencil Solid | 400 | Titles, loading screens, cockpit panels / small readouts (ours) |
+| Michroma | 400 | Latin codes and numbers |
+| Dela Gothic One | 400 | Kanji codes, heavy titles |
+| Shippori Mincho | 400, 600 | Hara-style headings |
+| Zen Kaku Gothic New | 400, 700, 900 | Body text |
+
+The CJK fonts are cut into `unicode-range` slices (common characters first, rare ones last), so a page only downloads the slices its text needs. File names carry a content hash: serve `files/` with `Cache-Control: public, max-age=31536000, immutable`. The repo is private, so the files ship inside the app bundle (KatanaUI depends on this repo by git tag) rather than from a public CDN. Rebuild with `python3 scripts/build-fonts.py <dir with the source TTFs>`; sources and licences are listed in `NOTICE` and `packages/fonts/licenses/`.
+
 ## Which style when
 
 Default is the Kenya Hara way: paper, ink, thin lines, one point of colour. The Nihei (Knights of Sidonia) way is for special screens only.

@@ -1,0 +1,65 @@
+[
+ {
+  "family": "KT Stencil",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 3004,
+  "use": "标题、加载页、驾驶舱面板（断缝）"
+ },
+ {
+  "family": "KT Stencil Solid",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 2876,
+  "use": "小字、数字读数（不断缝）"
+ },
+ {
+  "family": "Michroma",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 24716,
+  "use": "拉丁字母和编号，超椭圆字形"
+ },
+ {
+  "family": "Dela Gothic One",
+  "weight": 400,
+  "slices": 14,
+  "bytes": 1280860,
+  "use": "汉字代号、粗标题"
+ },
+ {
+  "family": "Shippori Mincho",
+  "weight": 400,
+  "slices": 19,
+  "bytes": 3530400,
+  "use": "原研哉风格的标题（明朝体）"
+ },
+ {
+  "family": "Shippori Mincho",
+  "weight": 600,
+  "slices": 19,
+  "bytes": 3621964,
+  "use": ""
+ },
+ {
+  "family": "Zen Kaku Gothic New",
+  "weight": 400,
+  "slices": 14,
+  "bytes": 1134424,
+  "use": "正文黑体"
+ },
+ {
+  "family": "Zen Kaku Gothic New",
+  "weight": 700,
+  "slices": 14,
+  "bytes": 1159772,
+  "use": ""
+ },
+ {
+  "family": "Zen Kaku Gothic New",
+  "weight": 900,
+  "slices": 14,
+  "bytes": 1131984,
+  "use": ""
+ }
+]
