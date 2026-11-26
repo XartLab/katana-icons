@@ -19,5 +19,9 @@ Michroma (The Michroma Project Authors), Dela Gothic One (The Dela Gothic Projec
 Shippori Mincho and Shippori Mincho B1 (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors),
 Archivo (The Archivo Project Authors), DotGothic16 (The DotGothic16 Project Authors), Doto (The Doto Project Authors),
 Silkscreen (The Silkscreen Project Authors), Pixelify Sans (The Pixelify Sans Project Authors), VT323 (The VT323 Project Authors).
-KT Pixel and KT Dot (type/dist/) are drawn by KATANA from the KT Stencil skeleton and released under the SIL OFL 1.1.
+KT Stencil, KT Stencil Solid, KT Pixel and KT Dot (type/dist/): Latin glyphs and a few kanji are drawn by KATANA;
+the other CJK glyphs are straightened from the stroke medians of Make Me a Hanzi (graphics.txt,
+https://github.com/skishore/makemeahanzi, read 2026-11-26), which is derived from Arphic PL KaitiM GB and
+Arphic PL UKai and licensed under the Arphic Public License. The four fonts are therefore distributed under the
+Arphic Public License (text in type/APL.txt and packages/fonts/licenses/APL-kt-fonts.txt).
 Subsetting changes no glyph; the Reserved Font Names are kept.

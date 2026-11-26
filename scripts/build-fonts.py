@@ -15,8 +15,8 @@ files = out / 'files'
 
 # family, css 字重, 源文件, 是否切片, 用在哪
 FONTS = [
-    ('KT Stencil', 400, root / 'type/dist/KTStencil-Stencil.ttf', False, '标题、加载页、驾驶舱面板（断缝）'),
-    ('KT Stencil Solid', 400, root / 'type/dist/KTStencil-Solid.ttf', False, '小字、数字读数（不断缝）'),
+    ('KT Stencil', 400, root / 'type/dist/KTStencil-Stencil.ttf', True, '标题、加载页、驾驶舱面板（断缝）'),
+    ('KT Stencil Solid', 400, root / 'type/dist/KTStencil-Solid.ttf', True, '小字、数字读数（不断缝）'),
     ('Michroma', 400, src / 'Michroma-Regular.ttf', False, '拉丁字母和编号，超椭圆字形'),
     ('Dela Gothic One', 400, src / 'DelaGothicOne-Regular.ttf', True, '汉字代号、粗标题'),
     ('Shippori Mincho', 400, src / 'ShipporiMincho-Regular.ttf', True, '原研哉风格的标题（明朝体）'),
@@ -29,8 +29,8 @@ FONTS = [
     # EVA 的英文标题卡和 HUD 用全大写 Helvetica（Rebuild 里还有窄体）；Helvetica 不开源，用带宽度轴的 Archivo 顶替，压窄就是窄体
     ('Archivo', '100 900', src / 'Archivo[wdth,wght].ttf', False, 'EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%'),
     # 像素与点阵：我们自己的两款从 KT Stencil 同一份骨架落格子得到；其余是开源的
-    ('KT Pixel', 400, root / 'type/dist/KTPixel-Regular.ttf', False, '像素风标题、加载页（自绘，骨架同 KT Stencil）'),
-    ('KT Dot', 400, root / 'type/dist/KTDot-Regular.ttf', False, '点阵屏读数（自绘，骨架同 KT Stencil）'),
+    ('KT Pixel', 400, root / 'type/dist/KTPixel-Regular.ttf', True, '像素风标题、加载页（自绘，骨架同 KT Stencil）'),
+    ('KT Dot', 400, root / 'type/dist/KTDot-Regular.ttf', True, '点阵屏读数（自绘，骨架同 KT Stencil）'),
     ('DotGothic16', 400, src / 'DotGothic16-Regular.ttf', True, '中日文点阵正文（16 点阵）'),
     ('Doto', '100 900', src / 'Doto[ROND,wght].ttf', False, '拉丁点阵大字（可调圆点 ROND 轴）'),
     ('Silkscreen', 400, src / 'Silkscreen-Regular.ttf', False, '拉丁小号像素字'),
@@ -123,6 +123,8 @@ def main():
     (out / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
     lic = out / 'licenses'; lic.mkdir(exist_ok=True)
     for t in src.glob('OFL-*.txt'): shutil.copy(t, lic / t.name)
+    apl = root / 'type/APL.txt'
+    if apl.exists(): shutil.copy(apl, lic / 'APL-kt-fonts.txt')   # KT 四款字体的汉字来自 Make Me a Hanzi，按 Arphic Public License
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ from fontTools.ttLib import TTFont
 
 here = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(here))
-from glyphs import LAT, KAN, WIDTH, WEIGHT_K
+from glyphs import LAT, KAN_ALL as KAN, WIDTH, kan_weight
 from stencil import cuts
 
 UPM = 1000
@@ -202,10 +202,10 @@ def build(style: str):
             cmap[ord(ch.lower())] = name   # 小写也给大写字形：屏幕字只有大写
     for ch, strokes in KAN.items():
         name = f'uni{ord(ch):04X}'
-        w = WEIGHT_K.get(ch, 0.115) * 920
+        w = kan_weight(ch) * 920
         to_font = lambda x, y: (40 + x * S_KAN, KAN_TOP - y * S_KAN)
-        if raster:   # 汉字 12 网格按整格取样：13×13 个格子
-            g = tt_glyph(raster_outline(strokes, 13, 13, 1, 0.62, to_font, S_KAN, style == 'Dot'))
+        if raster:   # 汉字按 0.75 格取样：16×16 个格子（16 点阵），线宽一格
+            g = tt_glyph(raster_outline(strokes, 16, 16, 0.75, 0.42, lambda x, y: to_font(x + 0.375, y + 0.375), S_KAN * 0.75, style == 'Dot'))
         else:
             g = tt_glyph(outline(strokes, to_font, w, stencil))
         order.append(name); glyphs[name] = g
@@ -228,7 +228,7 @@ def build(style: str):
         'familyName': family, 'styleName': 'Regular',
         'uniqueFontIdentifier': f'KATANA:{family}:0.1', 'fullName': family, 'psName': family.replace(' ', '') + '-Regular',
         'version': 'Version 0.100', 'copyright': 'Copyright 2026 XartLab (KATANA)',
-        'licenseDescription': 'SIL Open Font License 1.1', 'licenseInfoURL': 'https://openfontlicense.org',
+        'licenseDescription': 'Arphic Public License. CJK glyphs are straightened from the stroke data of Make Me a Hanzi (graphics.txt, derived from Arphic PL KaitiM GB and UKai); Latin and hand-drawn glyphs by KATANA.', 'licenseInfoURL': 'http://ftp.gnu.org/non-gnu/chinese-fonts-truetype/LICENSE',
         'designer': 'KATANA', 'description': 'Straight-line stencil type for the KATANA trading workbench. Glyphs drawn by KATANA.'
     })
     fb.setupOS2(sTypoAscender=900, sTypoDescender=-200, sTypoLineGap=100, usWinAscent=1000, usWinDescent=250, sxHeight=CAP, sCapHeight=CAP, fsType=0)
