@@ -44,7 +44,21 @@ Every font KATANA uses is self-hosted in `packages/fonts/` (`@katana-icons/fonts
 
 ```ts
 import '@katana-icons/fonts/fonts.css'
+import '@katana-icons/fonts/roles.css'   // --kt-font-sans, --kt-font-code, --kt-font-display …
 ```
+
+Components use roles, never font names. Body text is the **normal** stack: each platform's own UI font (SF, Segoe UI Variable, PingFang, Microsoft YaHei) with self-hosted Noto Sans SC as the fallback. Our own fonts (KT Stencil / Solid / Pixel / Dot) appear in the roles only through their Latin cut (`"KT … Latin"`), so Chinese in a label falls back to the normal font: the KT kanji are straightened automatically and are too characterful for running text. Use them on purpose, in titles, with `font-family: "KT Stencil"`.
+
+| Role | Stack | Use |
+| --- | --- | --- |
+| `--kt-font-sans` | system UI → Noto Sans SC | Body text, forms, tables |
+| `--kt-font-mono` | system mono → Maple Mono NF CN | Code, logs |
+| `--kt-font-display` | Barlow Condensed → Noto Sans SC | Panel and page titles |
+| `--kt-font-lcd` | DM Mono | LCD readouts |
+| `--kt-font-code` | KT Stencil Solid (Latin) → Michroma → sans | IDs, readouts, Latin labels |
+| `--kt-font-stencil` | KT Stencil (Latin) → display | Big titles, loading screens |
+| `--kt-font-pixel` / `--kt-font-dot` | KT Pixel / KT Dot (Latin) → Ark Pixel / Doto → DotGothic16 | Pixel and dot-matrix screens |
+| `--kt-font-mincho` / `--kt-font-eva` | Shippori Mincho / B1 | Hara-style and EVA-style titles |
 
 | Family | Weights | Use |
 | --- | --- | --- |
@@ -53,6 +67,11 @@ import '@katana-icons/fonts/fonts.css'
 | Dela Gothic One | 400 | Kanji codes, heavy titles |
 | Shippori Mincho | 400, 600 | Hara-style headings |
 | Zen Kaku Gothic New | 400, 700, 900 | Body text |
+| Noto Sans SC | 100–900 | Normal body text fallback (Simplified Chinese) |
+| Barlow Condensed | 600, 700 | Display titles |
+| DM Mono | 400, 500 | LCD readouts |
+| Maple Mono NF CN | 500 (Latin) | Monospace |
+| Ark Pixel 12px | 400 (common CJK subset) | CJK pixel text |
 | Shippori Mincho B1 | 800 | EVA-style title cards (stands in for Matisse EB, with `eva.css`) |
 | Archivo | 100–900, width 62–125% | EVA-style all-caps titles and HUD labels (stands in for Helvetica / Helvetica Condensed) |
 | KT Pixel / KT Dot | 400 | Pixel-style titles / dot-matrix readouts (ours, same skeleton as KT Stencil) |

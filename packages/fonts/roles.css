@@ -1,0 +1,20 @@
+/* SPDX-License-Identifier: MIT */
+/* 字体角色：组件里只写 var(--kt-font-角色)，不写字体名。先 import fonts.css。 */
+:root {
+  /* 正常字体：界面正文用各平台为屏幕调过的系统字，Noto Sans SC 自托管兜底；数字开 tnum */
+  --kt-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, Ubuntu, "PingFang SC", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  --kt-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Maple Mono NF CN", "PingFang SC", "Microsoft YaHei UI", monospace;
+  --kt-font-display: "Barlow Condensed", "Noto Sans SC", sans-serif;
+  --kt-font-lcd: "DM Mono", "Maple Mono NF CN", monospace;
+  /* 我们自己的字：角色里只用拉丁片（"… Latin"），汉字自动落到正常字体。
+     KT 的汉字是自动拉直的，个性太强，要用就在标题里直接写 font-family: "KT Stencil" */
+  --kt-font-code: "KT Stencil Solid Latin", "Michroma", var(--kt-font-sans);  /* 编号、读数、按钮上的英文 */
+  --kt-font-stencil: "KT Stencil Latin", var(--kt-font-display);             /* 大标题、加载页 */
+  --kt-font-pixel: "KT Pixel Latin", "Ark Pixel 12px Proportional zh_cn", "DotGothic16", var(--kt-font-sans);
+  --kt-font-dot: "KT Dot Latin", "Doto", "DotGothic16", var(--kt-font-sans);
+  --kt-font-term: "VT323", var(--kt-font-mono);
+  /* 风格字 */
+  --kt-font-mincho: "Shippori Mincho", serif;                  /* 原研哉式标题 */
+  --kt-font-kanji-mark: "Dela Gothic One", var(--kt-font-sans); /* 汉字代号、粗标题 */
+  --kt-font-eva: "Shippori Mincho B1", serif;                   /* EVA 式标题卡，配 eva.css */
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0] - 2026-11-26
+
+### Added
+
+- **Normal fonts and font roles.** `roles.css` gives every use a role (`--kt-font-sans`, `--kt-font-code`, `--kt-font-display` and more). Body text uses each platform's own UI font with self-hosted Noto Sans SC as the fallback; Barlow Condensed, DM Mono, Maple Mono and Ark Pixel are now in the package too.
+- **Kanji in KT fonts.** All 1,192 Chinese characters used in the KATANA interface. In the roles our fonts contribute Latin only, so Chinese text stays in the normal font.
+
 ## [0.5.0] - 2026-11-26
 
 ### Added

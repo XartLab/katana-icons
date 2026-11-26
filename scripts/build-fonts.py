@@ -15,6 +15,14 @@ files = out / 'files'
 
 # family, css 字重, 源文件, 是否切片, 用在哪
 FONTS = [
+    # 正常字体：界面正文先用系统自带的界面字（苹方、微软雅黑、SF、Segoe UI），这几款是自托管的兜底和固定角色
+    ('Noto Sans SC', '100 900', src / 'NotoSansSC[wght].ttf', True, '界面正文兜底（系统没有苹方、雅黑时），简体中文'),
+    ('Barlow Condensed', 600, src / 'BarlowCondensed-SemiBold.ttf', False, '窄体大标题、面板标题'),
+    ('Barlow Condensed', 700, src / 'BarlowCondensed-Bold.ttf', False, ''),
+    ('DM Mono', 400, src / 'DMMono-Regular.ttf', False, 'LCD 读数'),
+    ('DM Mono', 500, src / 'DMMono-Medium.ttf', False, ''),
+    ('Maple Mono NF CN', 500, src / 'MapleMonoNFCN-Medium-latin.woff2', False, '等宽（代码、日志），目前只有拉丁子集'),
+    ('Ark Pixel 12px Proportional zh_cn', 400, src / 'ArkPixel12-zh-subset.woff2', False, '中文像素字（12 点阵，常用字子集）'),
     ('KT Stencil', 400, root / 'type/dist/KTStencil-Stencil.ttf', True, '标题、加载页、驾驶舱面板（断缝）'),
     ('KT Stencil Solid', 400, root / 'type/dist/KTStencil-Solid.ttf', True, '小字、数字读数（不断缝）'),
     ('Michroma', 400, src / 'Michroma-Regular.ttf', False, '拉丁字母和编号，超椭圆字形'),
@@ -117,6 +125,10 @@ def main():
             stretch = 'font-stretch:62% 125%;' if family == 'Archivo' else ''
             css.append(f"@font-face{{font-family:'{family}';font-style:normal;font-weight:{weight};{stretch}font-display:swap;"
                        f"src:url(./files/{f.name}) format('woff2');unicode-range:{urange(chunk)}}}")
+            # 自有字体另给一个只含拉丁片的别名：正文、标签里用它，汉字自动落回正常字体（KT 的汉字太个性，只在标题里主动用）
+            if family.startswith('KT ') and name == 'latin':
+                css.append(f"@font-face{{font-family:'{family} Latin';font-style:normal;font-weight:{weight};font-display:swap;"
+                           f"src:url(./files/{f.name}) format('woff2');unicode-range:{urange(chunk)}}}")
         manifest.append({'family': family, 'weight': weight, 'slices': len(parts), 'bytes': total, 'use': use})
         print(f'{family} {weight}: {len(parts)} 片, {total // 1024} KB')
     (out / 'fonts.css').write_text('\n'.join(css) + '\n')

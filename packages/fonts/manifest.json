@@ -1,135 +1,184 @@
 [
  {
+  "family": "Noto Sans SC",
+  "weight": "100 900",
+  "slices": 30,
+  "bytes": 9458576,
+  "use": "界面正文兜底（系统没有苹方、雅黑时），简体中文"
+ },
+ {
+  "family": "Barlow Condensed",
+  "weight": 600,
+  "slices": 1,
+  "bytes": 35472,
+  "use": "窄体大标题、面板标题"
+ },
+ {
+  "family": "Barlow Condensed",
+  "weight": 700,
+  "slices": 1,
+  "bytes": 35836,
+  "use": ""
+ },
+ {
+  "family": "DM Mono",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 19480,
+  "use": "LCD 读数"
+ },
+ {
+  "family": "DM Mono",
+  "weight": 500,
+  "slices": 1,
+  "bytes": 19668,
+  "use": ""
+ },
+ {
+  "family": "Maple Mono NF CN",
+  "weight": 500,
+  "slices": 1,
+  "bytes": 92156,
+  "use": "等宽（代码、日志），目前只有拉丁子集"
+ },
+ {
+  "family": "Ark Pixel 12px Proportional zh_cn",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 128300,
+  "use": "中文像素字（12 点阵，常用字子集）"
+ },
+ {
   "family": "KT Stencil",
   "weight": 400,
   "slices": 5,
-  "bytes": 115368,
+  "bytes": 115508,
   "use": "标题、加载页、驾驶舱面板（断缝）"
  },
  {
   "family": "KT Stencil Solid",
   "weight": 400,
   "slices": 5,
-  "bytes": 111480,
+  "bytes": 111500,
   "use": "小字、数字读数（不断缝）"
  },
  {
   "family": "Michroma",
   "weight": 400,
   "slices": 1,
-  "bytes": 24664,
+  "bytes": 24776,
   "use": "拉丁字母和编号，超椭圆字形"
  },
  {
   "family": "Dela Gothic One",
   "weight": 400,
   "slices": 14,
-  "bytes": 1280680,
+  "bytes": 1280600,
   "use": "汉字代号、粗标题"
  },
  {
   "family": "Shippori Mincho",
   "weight": 400,
   "slices": 19,
-  "bytes": 3530400,
+  "bytes": 3530180,
   "use": "原研哉风格的标题（明朝体）"
  },
  {
   "family": "Shippori Mincho",
   "weight": 600,
   "slices": 19,
-  "bytes": 3621828,
+  "bytes": 3621780,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 400,
   "slices": 14,
-  "bytes": 1134468,
+  "bytes": 1134820,
   "use": "正文黑体"
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 700,
   "slices": 14,
-  "bytes": 1159432,
+  "bytes": 1159000,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 900,
   "slices": 14,
-  "bytes": 1132144,
+  "bytes": 1132096,
   "use": ""
  },
  {
   "family": "Shippori Mincho B1",
   "weight": 800,
   "slices": 19,
-  "bytes": 5160644,
+  "bytes": 5161076,
   "use": "EVA 式标题卡（顶替 Matisse EB，配 eva.css 的机械压扁）"
  },
  {
   "family": "Archivo",
   "weight": "100 900",
   "slices": 1,
-  "bytes": 183860,
+  "bytes": 184360,
   "use": "EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%"
  },
  {
   "family": "KT Pixel",
   "weight": 400,
   "slices": 5,
-  "bytes": 67160,
+  "bytes": 66944,
   "use": "像素风标题、加载页（自绘，骨架同 KT Stencil）"
  },
  {
   "family": "KT Dot",
   "weight": 400,
   "slices": 5,
-  "bytes": 115116,
+  "bytes": 115148,
   "use": "点阵屏读数（自绘，骨架同 KT Stencil）"
  },
  {
   "family": "DotGothic16",
   "weight": 400,
   "slices": 14,
-  "bytes": 580100,
+  "bytes": 580428,
   "use": "中日文点阵正文（16 点阵）"
  },
  {
   "family": "Doto",
   "weight": "100 900",
   "slices": 1,
-  "bytes": 7940,
+  "bytes": 7976,
   "use": "拉丁点阵大字（可调圆点 ROND 轴）"
  },
  {
   "family": "Silkscreen",
   "weight": 400,
   "slices": 1,
-  "bytes": 8644,
+  "bytes": 8620,
   "use": "拉丁小号像素字"
  },
  {
   "family": "Silkscreen",
   "weight": 700,
   "slices": 1,
-  "bytes": 7740,
+  "bytes": 7744,
   "use": ""
  },
  {
   "family": "Pixelify Sans",
   "weight": "400 700",
   "slices": 1,
-  "bytes": 21052,
+  "bytes": 21112,
   "use": "拉丁像素正文（有小写）"
  },
  {
   "family": "VT323",
   "weight": 400,
   "slices": 1,
-  "bytes": 29576,
+  "bytes": 29512,
   "use": "终端 / 命令行风格等宽"
  }
 ]

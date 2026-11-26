@@ -18,6 +18,8 @@ packages/fonts/ also redistributes, as WOFF2 subsets, these fonts under the SIL 
 Michroma (The Michroma Project Authors), Dela Gothic One (The Dela Gothic Project Authors),
 Shippori Mincho and Shippori Mincho B1 (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors),
 Archivo (The Archivo Project Authors), DotGothic16 (The DotGothic16 Project Authors), Doto (The Doto Project Authors),
+Noto Sans SC (Adobe, Reserved Font Name 'Source'), Barlow Condensed (The Barlow Project Authors), DM Mono (The DM Mono Project Authors),
+Maple Mono NF CN (The Maple Mono Project Authors; Latin subset taken from KatanaUI), Ark Pixel Font (TakWolf; CJK subset taken from KatanaUI),
 Silkscreen (The Silkscreen Project Authors), Pixelify Sans (The Pixelify Sans Project Authors), VT323 (The VT323 Project Authors).
 KT Stencil, KT Stencil Solid, KT Pixel and KT Dot (type/dist/): Latin glyphs and a few kanji are drawn by KATANA;
 the other CJK glyphs are straightened from the stroke medians of Make Me a Hanzi (graphics.txt,
