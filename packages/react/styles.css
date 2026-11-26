@@ -1,0 +1,16 @@
+/* SPDX-License-Identifier: MIT */
+/* katana-icons 悬停动作：一个图标只做一个动作，做完回原位。触发：图标本身带 .kti-anim，或祖先带 data-kti-hover。 */
+.kti .kti-part{transform-box:view-box;transition:transform 180ms cubic-bezier(.2,.8,.2,1)}
+.kti-anim:hover .kti-part[data-motion="nudge-right"],[data-kti-hover]:hover .kti .kti-part[data-motion="nudge-right"]{transform:translateX(2px)}
+.kti-anim:hover .kti-part[data-motion="nudge-left"],[data-kti-hover]:hover .kti .kti-part[data-motion="nudge-left"]{transform:translateX(-2px)}
+.kti-anim:hover .kti-part[data-motion="nudge-down"],[data-kti-hover]:hover .kti .kti-part[data-motion="nudge-down"]{transform:translateY(2px)}
+.kti-anim:hover .kti-part[data-motion="nudge-up"],[data-kti-hover]:hover .kti .kti-part[data-motion="nudge-up"]{transform:translateY(-2px)}
+.kti-anim:hover .kti-part[data-motion="nudge-diag"],[data-kti-hover]:hover .kti .kti-part[data-motion="nudge-diag"]{transform:translate(1.5px,-1.5px)}
+.kti-anim:hover .kti-part[data-motion="lift"],[data-kti-hover]:hover .kti .kti-part[data-motion="lift"]{transform:translateY(-2px)}
+.kti-anim:hover .kti-part[data-motion="press"],[data-kti-hover]:hover .kti .kti-part[data-motion="press"]{transform:translateY(1px) scale(.94)}
+.kti-anim:hover .kti-part[data-motion="pop"],[data-kti-hover]:hover .kti .kti-part[data-motion="pop"]{transform:scale(1.12)}
+.kti-anim:hover .kti-part[data-motion="spin"],[data-kti-hover]:hover .kti .kti-part[data-motion="spin"]{transform:rotate(90deg);transition-duration:320ms}
+.kti-anim:hover .kti-part[data-motion="spin-ccw"],[data-kti-hover]:hover .kti .kti-part[data-motion="spin-ccw"]{transform:rotate(-90deg);transition-duration:320ms}
+.kti-anim:hover .kti-part[data-motion="slide"],[data-kti-hover]:hover .kti .kti-part[data-motion="slide"]{transform:translateX(3px)}
+.kti-anim:hover .kti-part[data-motion="swing"],[data-kti-hover]:hover .kti .kti-part[data-motion="swing"]{animation:kti-swing 420ms cubic-bezier(.2,.8,.2,1)}
+@keyframes kti-swing{0%{transform:rotate(0)}25%{transform:rotate(-12deg)}55%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}100%{transform:rotate(0)}}

@@ -1,0 +1,12 @@
+{
+  "name": "katana-icons",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "sheet": "node scripts/check.mjs --sheet out/sheet.html",
+    "build": "node scripts/build.mjs"
+  },
+  "engines": { "node": ">=22.13" }
+}

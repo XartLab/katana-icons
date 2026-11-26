@@ -1,0 +1,803 @@
+[
+  {
+    "name": "arrow-down",
+    "zh": "下箭头",
+    "keywords": [
+      "fall",
+      "sort descending"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-down"
+  },
+  {
+    "name": "arrow-left",
+    "zh": "左箭头",
+    "keywords": [
+      "back"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-left"
+  },
+  {
+    "name": "arrow-right",
+    "zh": "右箭头",
+    "keywords": [
+      "go"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "arrow-up",
+    "zh": "上箭头",
+    "keywords": [
+      "rise",
+      "sort ascending"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "bar-chart",
+    "zh": "柱状图",
+    "keywords": [
+      "chart",
+      "stats",
+      "volume"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "lift"
+  },
+  {
+    "name": "bell",
+    "zh": "提醒",
+    "keywords": [
+      "alert",
+      "notification"
+    ],
+    "group": "ui",
+    "light": true,
+    "motion": "swing"
+  },
+  {
+    "name": "calendar",
+    "zh": "日历",
+    "keywords": [
+      "date",
+      "schedule"
+    ],
+    "group": "ui",
+    "light": true,
+    "motion": "lift"
+  },
+  {
+    "name": "camera",
+    "zh": "截图",
+    "keywords": [
+      "snapshot",
+      "photo",
+      "screenshot"
+    ],
+    "group": "ui",
+    "light": true,
+    "motion": "pop"
+  },
+  {
+    "name": "check",
+    "zh": "确认",
+    "keywords": [
+      "done",
+      "ok"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "chevron-down",
+    "zh": "向下",
+    "keywords": [
+      "open",
+      "dropdown"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-down"
+  },
+  {
+    "name": "chevron-left",
+    "zh": "向左",
+    "keywords": [
+      "back",
+      "previous"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-left"
+  },
+  {
+    "name": "chevron-right",
+    "zh": "向右",
+    "keywords": [
+      "next",
+      "expand"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "chevron-up",
+    "zh": "向上",
+    "keywords": [
+      "collapse"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "clock",
+    "zh": "时间",
+    "keywords": [
+      "time",
+      "schedule",
+      "session"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "copy",
+    "zh": "复制",
+    "keywords": [
+      "duplicate",
+      "clipboard"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "download",
+    "zh": "下载",
+    "keywords": [
+      "save",
+      "export"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-down"
+  },
+  {
+    "name": "ellipsis",
+    "zh": "更多",
+    "keywords": [
+      "more",
+      "menu"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "expand",
+    "zh": "展开",
+    "keywords": [
+      "enlarge",
+      "fullscreen"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "external-link",
+    "zh": "外部链接",
+    "keywords": [
+      "open",
+      "new window"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "eye",
+    "zh": "显示",
+    "keywords": [
+      "show",
+      "visible",
+      "watch"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "file",
+    "zh": "文件",
+    "keywords": [
+      "document",
+      "page"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "lift"
+  },
+  {
+    "name": "filter",
+    "zh": "筛选",
+    "keywords": [
+      "funnel",
+      "screen"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "press"
+  },
+  {
+    "name": "git-branch",
+    "zh": "分支",
+    "keywords": [
+      "version",
+      "fork"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "home",
+    "zh": "首页",
+    "keywords": [
+      "start",
+      "house"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "press"
+  },
+  {
+    "name": "info",
+    "zh": "说明",
+    "keywords": [
+      "about",
+      "help"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "kt-components",
+    "zh": "组件库",
+    "keywords": [
+      "KatanaUI",
+      "design system",
+      "modules"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "kt-executor",
+    "zh": "执行",
+    "keywords": [
+      "qmtcli",
+      "order",
+      "gateway"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "press"
+  },
+  {
+    "name": "kt-lab",
+    "zh": "研究",
+    "keywords": [
+      "katana-lab",
+      "hypothesis",
+      "experiment"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "kt-ledger",
+    "zh": "台账",
+    "keywords": [
+      "k-atana-book",
+      "journal",
+      "positions"
+    ],
+    "group": "katana",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "kt-plugin",
+    "zh": "插件",
+    "keywords": [
+      "widget-sdk",
+      "extension",
+      "pack"
+    ],
+    "group": "katana",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "kt-source",
+    "zh": "数据源",
+    "keywords": [
+      "tdxcli-rs",
+      "ingest",
+      "feed"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "nudge-down"
+  },
+  {
+    "name": "kt-watch",
+    "zh": "盯盘",
+    "keywords": [
+      "always-on",
+      "agent",
+      "monitor"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "kt-workbench",
+    "zh": "工作台",
+    "keywords": [
+      "KATANAview",
+      "console",
+      "cockpit"
+    ],
+    "group": "katana",
+    "light": true,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "layout-grid",
+    "zh": "网格布局",
+    "keywords": [
+      "dashboard",
+      "tiles"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "link",
+    "zh": "链接",
+    "keywords": [
+      "url",
+      "connect"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-left"
+  },
+  {
+    "name": "lock",
+    "zh": "锁定",
+    "keywords": [
+      "secure",
+      "locked",
+      "trading lock"
+    ],
+    "group": "ui",
+    "light": true,
+    "motion": "lift"
+  },
+  {
+    "name": "maximize",
+    "zh": "最大化",
+    "keywords": [
+      "fullscreen",
+      "expand"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "menu",
+    "zh": "菜单",
+    "keywords": [
+      "hamburger",
+      "list"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "slide"
+  },
+  {
+    "name": "minus",
+    "zh": "减少",
+    "keywords": [
+      "remove",
+      "collapse"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "moon",
+    "zh": "深色",
+    "keywords": [
+      "dark mode",
+      "theme"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin-ccw"
+  },
+  {
+    "name": "newspaper",
+    "zh": "新闻",
+    "keywords": [
+      "news",
+      "feed"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "octagon-alert",
+    "zh": "停止",
+    "keywords": [
+      "error",
+      "stop",
+      "danger"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "paperclip",
+    "zh": "附件",
+    "keywords": [
+      "attach",
+      "file"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "lift"
+  },
+  {
+    "name": "pause",
+    "zh": "暂停",
+    "keywords": [
+      "hold"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "press"
+  },
+  {
+    "name": "pencil",
+    "zh": "编辑",
+    "keywords": [
+      "edit",
+      "draw"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "pin",
+    "zh": "固定",
+    "keywords": [
+      "pin",
+      "attach"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "press"
+  },
+  {
+    "name": "play",
+    "zh": "播放",
+    "keywords": [
+      "start",
+      "run"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "plus",
+    "zh": "添加",
+    "keywords": [
+      "add",
+      "new"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "power",
+    "zh": "电源",
+    "keywords": [
+      "on",
+      "off",
+      "shutdown"
+    ],
+    "group": "ui",
+    "light": true,
+    "motion": "press"
+  },
+  {
+    "name": "redo",
+    "zh": "重做",
+    "keywords": [
+      "forward"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "repeat",
+    "zh": "循环",
+    "keywords": [
+      "loop",
+      "cycle"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "rotate-ccw",
+    "zh": "逆时针",
+    "keywords": [
+      "reset",
+      "undo"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin-ccw"
+  },
+  {
+    "name": "rotate-cw",
+    "zh": "刷新",
+    "keywords": [
+      "refresh",
+      "reload",
+      "redo"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "search",
+    "zh": "搜索",
+    "keywords": [
+      "find",
+      "lookup"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "settings",
+    "zh": "设置",
+    "keywords": [
+      "gear",
+      "preferences",
+      "nut"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "sliders",
+    "zh": "参数",
+    "keywords": [
+      "settings",
+      "adjust",
+      "filter"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "slide"
+  },
+  {
+    "name": "sparkles",
+    "zh": "AI",
+    "keywords": [
+      "ai",
+      "magic",
+      "assistant"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "square",
+    "zh": "方块",
+    "keywords": [
+      "stop",
+      "shape"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "press"
+  },
+  {
+    "name": "star",
+    "zh": "收藏",
+    "keywords": [
+      "favorite",
+      "watchlist"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "sun",
+    "zh": "浅色",
+    "keywords": [
+      "light mode",
+      "theme"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "table",
+    "zh": "表格",
+    "keywords": [
+      "grid",
+      "sheet"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": null
+  },
+  {
+    "name": "trash",
+    "zh": "删除",
+    "keywords": [
+      "delete",
+      "remove",
+      "bin"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "lift"
+  },
+  {
+    "name": "trending-down",
+    "zh": "下跌",
+    "keywords": [
+      "fall",
+      "drop",
+      "chart"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-down"
+  },
+  {
+    "name": "trending-up",
+    "zh": "上涨",
+    "keywords": [
+      "rise",
+      "growth",
+      "chart"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-diag"
+  },
+  {
+    "name": "triangle-alert",
+    "zh": "警告",
+    "keywords": [
+      "warning",
+      "caution"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  },
+  {
+    "name": "undo",
+    "zh": "撤销",
+    "keywords": [
+      "back",
+      "revert"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-left"
+  },
+  {
+    "name": "upload",
+    "zh": "上传",
+    "keywords": [
+      "import"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "user",
+    "zh": "用户",
+    "keywords": [
+      "account",
+      "profile",
+      "person"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-up"
+  },
+  {
+    "name": "wallet",
+    "zh": "钱包",
+    "keywords": [
+      "account",
+      "balance",
+      "funds"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "nudge-right"
+  },
+  {
+    "name": "x",
+    "zh": "关闭",
+    "keywords": [
+      "close",
+      "cancel",
+      "remove"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "spin"
+  },
+  {
+    "name": "zap",
+    "zh": "闪电",
+    "keywords": [
+      "fast",
+      "trigger",
+      "power"
+    ],
+    "group": "ui",
+    "light": false,
+    "motion": "pop"
+  }
+]
