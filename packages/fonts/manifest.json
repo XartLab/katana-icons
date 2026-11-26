@@ -194,5 +194,26 @@
   "slices": 1,
   "bytes": 1824,
   "use": "原研哉的那一版：一像素细线、字距放开，像素风的标签、读数、说明；只有拉丁（自绘，OFL）"
+ },
+ {
+  "family": "KT Numeral",
+  "weight": 300,
+  "slices": 1,
+  "bytes": 1640,
+  "use": "价格、数量、百分比：只为数字画的单线等宽数字（自绘，OFL）"
+ },
+ {
+  "family": "KT Numeral",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 1640,
+  "use": ""
+ },
+ {
+  "family": "KT Numeral",
+  "weight": 500,
+  "slices": 1,
+  "bytes": 1632,
+  "use": ""
  }
 ]

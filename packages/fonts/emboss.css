@@ -1,0 +1,35 @@
+/* SPDX-License-Identifier: MIT
+   空押（からおし）：没有墨的字。字的颜色等于底色，只用一道暗边和一道亮边把它「压」进纸里，靠光影才看得见。
+   原研哉做纸张展、做书常用素压；放到界面里，给水印、空状态、背景里的大字标记用——信息在，但不打扰。
+   规矩：
+   - 只用来装饰，不承载要读的信息（对比度故意很低）。真要读的字照常上墨；纯装饰的元素加 aria-hidden="true"。
+   - 光从左上来：压进去（默认）是左上暗、右下亮；凸起（--raised）反过来。
+   - 边宽跟着字号走（约 1/50 em，最少 1px），大字压得深，小字压得浅。
+   - --kt-emboss-bg 要等于它所在的底色；KatanaUI 里自动取 --bg-100。 */
+.kt-emboss {
+  --kt-emboss-bg: var(--bg-100, #f1eee6);
+  --kt-emboss-dark: rgb(0 0 0 / 0.16);
+  --kt-emboss-light: rgb(255 255 255 / 0.85);
+  --kt-emboss-d: max(1px, 0.02em);
+  color: var(--kt-emboss-bg);
+  text-shadow:
+    calc(-1 * var(--kt-emboss-d)) calc(-1 * var(--kt-emboss-d)) 0 var(--kt-emboss-dark),
+    var(--kt-emboss-d) var(--kt-emboss-d) 0 var(--kt-emboss-light);
+  user-select: none;
+}
+.kt-emboss--raised {
+  text-shadow:
+    calc(-1 * var(--kt-emboss-d)) calc(-1 * var(--kt-emboss-d)) 0 var(--kt-emboss-light),
+    var(--kt-emboss-d) var(--kt-emboss-d) 0 var(--kt-emboss-dark);
+}
+/* 暗底：亮边几乎看不见，暗边压得更深 */
+.kt-emboss--dark, [data-theme='graphite'] .kt-emboss, [data-theme='console'] .kt-emboss, [data-theme='midnight'] .kt-emboss {
+  --kt-emboss-bg: var(--bg-100, #070707);
+  --kt-emboss-dark: rgb(0 0 0 / 0.9);
+  --kt-emboss-light: rgb(255 255 255 / 0.07);
+}
+/* SVG（标志、图标）：用 currentColor 画的图形也能压，filter 代替 text-shadow */
+.kt-emboss-svg {
+  color: var(--kt-emboss-bg, var(--bg-100, #f1eee6));
+  filter: drop-shadow(-1px -1px 0 var(--kt-emboss-dark, rgb(0 0 0 / 0.16))) drop-shadow(1px 1px 0 var(--kt-emboss-light, rgb(255 255 255 / 0.85)));
+}

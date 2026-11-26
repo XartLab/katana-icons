@@ -104,6 +104,8 @@ Components use roles, never font names. Body text is the **normal** stack: each 
 | `--kt-font-lcd` | DM Mono | LCD readouts |
 | `--kt-font-code` | KT Stencil Solid (Latin) → Michroma → sans | IDs, readouts, Latin labels |
 | `--kt-font-stencil` | KT Stencil (Latin) → display | Big titles, loading screens |
+| `--kt-font-num` | KT Numeral → system UI | Prices, quantities, percentages |
+| `--kt-font-read` | System UI: PingFang SC / HarmonyOS Sans SC / Microsoft YaHei UI → Noto Sans SC | Long reading, with `reading.css` |
 | `--kt-font-arcade` | KT Arcade → Silkscreen | Pixel type: weight 400 for game-feel moments, 300 for quiet pixel labels; sizes in multiples of 16 px |
 | `--kt-font-pixel` / `--kt-font-dot` | KT Pixel / KT Dot (Latin) → Ark Pixel / Doto → DotGothic16 | Pixel and dot-matrix screens |
 | `--kt-font-mincho` / `--kt-font-eva` | Shippori Mincho / B1 | Hara-style and EVA-style titles |
@@ -122,6 +124,7 @@ Components use roles, never font names. Body text is the **normal** stack: each 
 | Ark Pixel 12px | 400 (common CJK subset) | CJK pixel text |
 | Shippori Mincho B1 | 800 | EVA-style title cards (stands in for Matisse EB, with `eva.css`) |
 | Archivo | 100–900, width 62–125% | EVA-style all-caps titles and HUD labels (stands in for Helvetica / Helvetica Condensed) |
+| KT Numeral | 300 / 400 / 500 | Numerals drawn for prices: monoline, tabular digits, narrow decimal point and comma, a square decimal point with weight; 0 is a stadium and 8 two unequal circles, told apart by shape alone. Digits and price symbols only, other characters fall back (ours, OFL) |
 | KT Arcade | 400 / 300 | Pixel type, Latin, digits and symbols only; one pixel cell is 1/16 em, so 16/32/48 px stay sharp (ours, OFL). 400 is bold game-feel type for achievements and countdowns; 300 is the Hara version, one-pixel lines with open spacing, for quiet pixel labels and readouts |
 | KT Pixel / KT Dot | 400 | Pixel-style titles / dot-matrix readouts (ours, same skeleton as KT Stencil) |
 | DotGothic16 | 400 | CJK dot-matrix text |
@@ -133,6 +136,13 @@ Components use roles, never font names. Body text is the **normal** stack: each 
 `eva.css` adds the Evangelion way of setting type: `.kt-eva-title` squeezes an extra-bold Mincho to 62% width with tight tracking (TV series), `.kt-eva-wide` stretches it instead (1997 films), `.kt-eva-caps` sets narrow all-caps sans. Matisse EB itself is a commercial Fontworks font and is not included.
 
 The CJK fonts are cut into `unicode-range` slices (common characters first, rare ones last), so a page only downloads the slices its text needs. File names carry a content hash: serve `files/` with `Cache-Control: public, max-age=31536000, immutable`. The repo is private, so the files ship inside the app bundle (KatanaUI depends on this repo by git tag) rather than from a public CDN. Rebuild with `python3 scripts/build-fonts.py <dir with the source TTFs>`; sources and licences are listed in `NOTICE` and `packages/fonts/licenses/`.
+
+### Emboss and reading
+
+- `emboss.css`: `.kt-emboss` presses text into the surface with no ink (blind embossing): the text takes the background color and only a dark edge and a light edge show it. `--raised` lifts it instead, `--dark` is for dark surfaces, and `.kt-emboss-svg` does the same for the logo and icons. Use it only for decoration such as watermarks, empty states and large background marks, never for text people must read, and add `aria-hidden="true"`.
+- `reading.css`: `.kt-read` sets long text for reading. It uses the system sans (no Song/Mincho), 16 px with 1.8 line height, about 36 characters per line, 0.02em tracking, a paper surface that is not pure white with ink that is not pure black, automatic spacing between Chinese and Latin text, and KT Numeral for numbers in tables. The values are starting points, to be tuned on real reports.
+
+Preview: `preview/hara.html`.
 
 ## Which style when
 

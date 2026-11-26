@@ -6,6 +6,8 @@
   --kt-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Maple Mono NF CN", "PingFang SC", "Microsoft YaHei UI", monospace;
   --kt-font-display: "Barlow Condensed", "Noto Sans SC", sans-serif;
   --kt-font-lcd: "DM Mono", "Maple Mono NF CN", monospace;
+  --kt-font-num: "KT Numeral", var(--kt-font-sans);  /* 价格、数量、百分比：KT Numeral 只有数字和价格符号，其余字自动落回正常字体；字重 300/400/500 */
+  --kt-font-read: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", sans-serif;  /* 长文阅读，配 reading.css */
   /* 我们自己的字：角色里只用拉丁片（"… Latin"），汉字自动落到正常字体。
      KT 的汉字是自动拉直的，个性太强，要用就在标题里直接写 font-family: "KT Stencil" */
   --kt-font-code: "KT Stencil Solid Latin", "Michroma", var(--kt-font-sans);  /* 编号、读数、按钮上的英文 */

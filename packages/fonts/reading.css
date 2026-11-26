@@ -1,0 +1,56 @@
+/* SPDX-License-Identifier: MIT
+   阅读版式：研报、长文、说明页。大量文字读起来不累眼，靠的是版式，字体只占一小半。
+   字体：系统自带的黑体（苹果苹方、鸿蒙 HarmonyOS Sans、Windows 微软雅黑），都没有时落回自托管的 Noto Sans SC；不用宋体。
+   数值依据（都是起始值，待用真实研报页面实测再调）：
+   - 字号 16px、行高 1.8：中文屏幕正文的常见取值在 1.5–2.0 之间，长读取取偏松的一端（经验值，待核对出处）。
+   - 一行约 36 个汉字（max-inline-size: 36em）：经验上 30–40 字一行读起来最顺（经验值，待核对出处）。
+   - 字距 0.02em：黑体默认偏紧，放一点点；不再多，免得断成一个个方块。
+   - 纸色不用纯白、字色不用纯黑：降低大面积对比带来的眩光，正文对比度仍 > 12:1。
+   - 中西文之间自动留空（text-autospace），不用手打空格。
+   - 段与段之间空一行的 0.9 倍，不缩进；标题只略大，靠上方多留白来分节，不靠字号压人。 */
+.kt-read {
+  --kt-read-paper: #f6f4ee;
+  --kt-read-ink: #26251f;
+  --kt-read-ink-2: #6a665c;
+  --kt-read-rule: #dcd8ce;
+  font-family: var(--kt-font-read, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  color: var(--kt-read-ink);
+  background: var(--kt-read-paper);
+  max-inline-size: 36em;
+  margin-inline: auto;
+  padding: 3em 1.5em 5em;
+  text-align: justify;
+  text-justify: inter-character;
+  text-autospace: normal;
+  hanging-punctuation: allow-end;
+  line-break: strict;
+  overflow-wrap: break-word;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+.kt-read p { margin: 0 0 0.9lh; }
+.kt-read h1, .kt-read h2, .kt-read h3 { font-weight: 600; line-height: 1.4; letter-spacing: 0.01em; text-align: start; }
+.kt-read h1 { font-size: 1.6em; margin: 0 0 1.2lh; }
+.kt-read h2 { font-size: 1.2em; margin: 2lh 0 0.6lh; }
+.kt-read h3 { font-size: 1em; margin: 1.6lh 0 0.4lh; }
+.kt-read small, .kt-read figcaption, .kt-read .kt-read-note { font-size: 0.875em; color: var(--kt-read-ink-2); }
+.kt-read blockquote { margin: 1lh 0; padding-inline-start: 1em; border-inline-start: 2px solid var(--kt-read-rule); color: var(--kt-read-ink-2); }
+.kt-read hr { border: 0; border-block-start: 1px solid var(--kt-read-rule); margin: 2lh 0; }
+.kt-read a { color: inherit; text-decoration-color: var(--kt-read-rule); text-underline-offset: 0.2em; }
+.kt-read a:hover { text-decoration-color: currentColor; }
+/* 正文里的数字跟着正文字；表格里的数字等宽对齐，用 KT Numeral */
+.kt-read table { inline-size: 100%; border-collapse: collapse; font-size: 0.9375em; margin: 1lh 0; }
+.kt-read th { font-weight: 500; color: var(--kt-read-ink-2); text-align: start; border-block-end: 1px solid var(--kt-read-rule); padding: 0.4em 0.6em; }
+.kt-read td { padding: 0.4em 0.6em; border-block-end: 1px solid color-mix(in srgb, var(--kt-read-rule) 50%, transparent); }
+.kt-read td.num, .kt-read th.num { text-align: end; font-family: var(--kt-font-num, inherit); font-variant-numeric: tabular-nums; }
+/* 暗底：底不纯黑、字不纯白 */
+.kt-read--dark, [data-theme='graphite'] .kt-read, [data-theme='console'] .kt-read, [data-theme='midnight'] .kt-read {
+  --kt-read-paper: #141414;
+  --kt-read-ink: #d9d6ce;
+  --kt-read-ink-2: #8f8b82;
+  --kt-read-rule: #2e2d2a;
+  -webkit-font-smoothing: antialiased;
+}

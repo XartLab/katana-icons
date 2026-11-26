@@ -11,13 +11,17 @@
     "licenses",
     "manifest.json",
     "eva.css",
-    "roles.css"
+    "roles.css",
+    "emboss.css",
+    "reading.css"
   ],
   "exports": {
     "./fonts.css": "./fonts.css",
     "./files/*": "./files/*",
     "./manifest.json": "./manifest.json",
     "./eva.css": "./eva.css",
-    "./roles.css": "./roles.css"
+    "./roles.css": "./roles.css",
+    "./emboss.css": "./emboss.css",
+    "./reading.css": "./reading.css"
   }
 }

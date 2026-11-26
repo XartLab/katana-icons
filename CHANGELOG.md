@@ -5,6 +5,8 @@
 ### Added
 
 - **KT Arcade.** A bold pixel display font of our own for game-feel moments, with Latin letters, digits and common symbols. One pixel cell is 1/16 em, so it stays sharp at 16, 32 and 48 px. Use it through `--kt-font-arcade`. Weight 300 is a Hara version, with one-pixel lines and open spacing, for quiet pixel labels and readouts.
+- **KT Numeral.** Numerals drawn for prices, in three weights. The digits are monoline and equal-width, so a column of prices lines up, and the decimal point is a square with weight. Use it through `--kt-font-num`.
+- **Emboss and reading styles.** `emboss.css` presses text and the logo into the surface with no ink, for watermarks and empty states. `reading.css` sets long reports for comfortable reading in the system sans.
 - **Pixel effects.** `@katana-icons/fx` plays short pixel animations for trading moments such as an order filled, an alert, a breakout, the market-open countdown or a lost connection, built on pixelfx and recolored in KATANA colors. Sprite sheets of the same effects ship in `@katana-icons/static`.
 
 ## [0.8.0] - 2026-11-26
