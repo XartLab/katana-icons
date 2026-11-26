@@ -39,6 +39,7 @@ FONTS = [
     # 像素与点阵：我们自己的两款从 KT Stencil 同一份骨架落格子得到；其余是开源的
     ('KT Pixel', 400, root / 'type/dist/KTPixel-Regular.ttf', True, '像素风标题、加载页（自绘，骨架同 KT Stencil）'),
     ('KT Dot', 400, root / 'type/dist/KTDot-Regular.ttf', True, '点阵屏读数（自绘，骨架同 KT Stencil）'),
+    ('KT Arcade', 400, root / 'type/dist/KTArcade-Regular.ttf', False, '游戏感时刻（特效、成就、倒计时）的粗像素字，只有拉丁；16/32/48px 最清楚（自绘，OFL）'),
     ('DotGothic16', 400, src / 'DotGothic16-Regular.ttf', True, '中日文点阵正文（16 点阵）'),
     ('Doto', '100 900', src / 'Doto[ROND,wght].ttf', False, '拉丁点阵大字（可调圆点 ROND 轴）'),
     ('Silkscreen', 400, src / 'Silkscreen-Regular.ttf', False, '拉丁小号像素字'),
@@ -99,7 +100,8 @@ def urange(cps):
 
 def woff2(path, cps, dest_stem):
     opts = subset.Options(); opts.flavor = 'woff2'; opts.layout_features = ['*']; opts.name_IDs = ['*']; opts.notdef_outline = True
-    font = TTFont(path)
+    font = TTFont(path, recalcTimestamp=False)
+    if 'head' in font: font['head'].modified = font['head'].created   # 不写当前时间：同样的输入每次出同样的文件，哈希不变，git 里不白白翻新几十 MB
     sub = subset.Subsetter(opts); sub.populate(unicodes=cps); sub.subset(font)
     tmp = files / f'{dest_stem}.tmp.woff2'
     font.flavor = 'woff2'; font.save(tmp)

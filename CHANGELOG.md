@@ -4,6 +4,7 @@
 
 ### Added
 
+- **KT Arcade.** A bold pixel display font of our own for game-feel moments, with Latin letters, digits and common symbols. One pixel cell is 1/16 em, so it stays sharp at 16, 32 and 48 px. Use it through `--kt-font-arcade`.
 - **Pixel effects.** `@katana-icons/fx` plays short pixel animations for trading moments such as an order filled, an alert, a breakout, the market-open countdown or a lost connection, built on pixelfx and recolored in KATANA colors. Sprite sheets of the same effects ship in `@katana-icons/static`.
 
 ## [0.8.0] - 2026-11-26

@@ -16,6 +16,7 @@ license: MIT
 | 界面通用图标 | ОКБ 机加工：方头、尖角、一道 45° 切角 | `icons/*.mjs` + `scripts/build.mjs` |
 | 标题、加载页、驾驶舱面板 | 弐瓶勉：模板字、断缝、暗底斜纹 | `type/`（KT Stencil）、`hud/` |
 | 像素风、点阵屏读数 | 像素 / 点阵 | KT Pixel、KT Dot，开源像素字 |
+| 游戏感时刻（特效、成就、倒计时） | 粗像素 | KT Arcade（只有拉丁，字号 16 的倍数） |
 | EVA 式标题卡 | 特粗明朝压扁 + 窄体大写 | `packages/fonts/eva.css` |
 
 ## 轮子
@@ -58,6 +59,10 @@ license: MIT
 - 断缝规则在 `type/stencil.py` 的 `cuts`：端点碰到别的笔就断，交叉断后画的那笔，闭合的框断两处。
 - 同规则的模板字图标：`python3 type/icons_stencil.py`，出 `packages/static/svg/stencil/`。
 - 看效果：`type/dist/specimen.html`。
+
+### 4b. KT Arcade（粗像素游戏字）
+
+点阵直接画在 `type/arcade.py`：笔画 2 格，大写 10 格高，小写 x 高 8 格，降部 3 格；横竖笔相交的左上角切 45° 两格，其余圆角切一格。只做拉丁、数字、常用符号。改完跑 `python3 type/build_arcade.py`，再跑 `scripts/build-fonts.py`。一格是 1/16 em，所以字号用 16 的倍数，像素才对得齐。
 
 ### 5. 字体打包（自托管）
 
