@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KATANA 宠物</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<!-- 由 scripts/build-pets.py 生成：运行时 @katana-icons/pets 内联在下面，file:// 直接打开就能看 -->
+<style>
+/* VOICE: meme-RPG desk pets inside a serious trading terminal; deadpan Japanese one-liners.
+   IDEA: an old console RPG battle screen where the enemy is the K-line.
+   PICTURE: black stage, user's four pixel girls, hollow white candles, banner box and name-tab dialog.
+   COLOUR and TYPE: pure black stage, white 3px strokes; graphite page; DotGothic16 for the game, Inter for UI.
+   LAYOUT: stage first and large, controls beside it, then roster and sprite sheet.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#e7e9ec,#0f1114);--ink:light-dark(#121418,#e9ecf0);--mute:light-dark(#5b6270,#8a93a1);--line:light-dark(#c8ccd3,#262a31);--card:light-dark(#f4f5f7,#16191d);--acc:#e04b4b}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(20px,3.5vw,48px) max(4vw,16px);max-width:1240px;margin:0 auto}
+h1{font:600 clamp(28px,4vw,40px)/1.05 Inter,sans-serif;margin:0 0 6px;text-wrap:balance}
+h2{font:600 22px/1.2 Inter,sans-serif;margin:0 0 14px}
+.sub{color:var(--mute);margin:0 0 22px;max-width:68ch}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
+.stage{position:relative;aspect-ratio:1/1;background:#000;border-radius:6px;overflow:hidden;font-family:'DotGothic16',monospace;color:#fff}
+.stage canvas{position:absolute;image-rendering:pixelated}
+#bg{inset:0;width:100%;height:100%}
+#pet{left:0;width:100%;top:24%;height:auto;aspect-ratio:120/58}
+.box{position:absolute;background:#262626;border:3px solid #fff;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 4%}
+#banner{left:8%;right:8%;top:7%;height:17%;font-size:clamp(13px,3.3vw,28px);letter-spacing:.04em;white-space:nowrap}
+#dlg{left:5%;right:5%;bottom:6%;height:17%;font-size:clamp(14px,3.4vw,28px)}
+#tab{position:absolute;left:10%;bottom:21.5%;width:25%;height:6%;background:#262626;border:3px solid #fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:clamp(13px,2.8vw,22px);z-index:2}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px}
+.lbl{font-size:13px;color:var(--mute);margin:0 0 8px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+button{font:inherit;font-size:15px;min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.pnl{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.pnl b{font:600 clamp(28px,5vw,40px)/1 Inter,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{width:100%;height:44px;accent-color:var(--acc)}
+.note{font-size:13px;color:var(--mute);margin:8px 0 0}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.pc{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;text-align:left;padding:12px;min-height:110px;background:var(--card)}
+.pc img{width:72px;height:96px;object-fit:contain;image-rendering:pixelated;background:#000;border-radius:4px;padding:6px}
+.pc strong{display:block;font-size:16px}.pc span{font-size:13px;color:var(--mute);line-height:1.45;display:block}
+.sheet{overflow-x:auto}.scroll{overflow-x:auto}.smt{border-collapse:collapse;font-size:14px;min-width:640px}.smt th,.smt td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}.smt th{color:var(--mute);font-weight:600}
+.sheet table{border-collapse:collapse;font-size:13px}
+.sheet th{font-weight:600;color:var(--mute);padding:6px 8px;text-align:center;white-space:nowrap}
+.sheet th[scope=row]{text-align:left}
+.sheet td{padding:4px}.sheet td canvas{display:block;width:96px;height:112px;background:#000;border-radius:3px;image-rendering:pixelated}
+</style>
+</head>
+<body>
+<section class="band">
+<h1>KATANA 宠物：くるみ、芽吹、やす子、萌智子</h1>
+<p class="sub">每人 9 种状态、28 个动作：手会动、头会歪、会走来走去、会坐下。每个人有自己的状态机，同一种情绪下四个人的反应不一样。右边的盈亏是演示数据。</p>
+<div class="top">
+  <div class="stage" id="stage" aria-label="宠物舞台">
+    <canvas id="bg"></canvas>
+    <div class="box" id="banner"></div>
+    <canvas id="pet"></canvas>
+    <div id="tab"></div>
+    <div class="box" id="dlg"></div>
+  </div>
+  <div class="panel">
+    <p class="lbl">今日盈亏（拖动，或开自动行情）</p>
+    <div class="pnl"><b id="pv">0.0%</b><span id="pm" class="lbl"></span></div><p class="lbl">当前：<span id="act"></span></p>
+    <input type="range" id="sl" min="-12" max="8" step="0.1" value="-7" aria-label="今日盈亏百分比">
+    <div class="row"><button id="auto" aria-pressed="false">自动行情</button><button id="agent" aria-pressed="false">Agent 盯盘</button><button id="closed" aria-pressed="false">休市</button></div>
+    <p class="lbl">手动状态（会暂停跟随盈亏，再拖一下滑块恢复）</p>
+    <div class="row" id="moods"></div>
+    <p class="lbl">当前角色</p>
+    <div class="row" id="pick"></div>
+    <p class="note">规则：≥ +4% 狂喜，+2%～+4% 得意，-1%～+2% 平静（开 Agent 盯盘时变成盯盘），-3%～-1% 冒汗，-6%～-3% 绝叫，更低爆仓；自动行情里单次急跌超过 1.5% 会先惊呆 2 秒；休市时打盹。原图那四张脸和四句台词都保留在各自的状态里。</p>
+  </div>
+</div>
+</section>
+<section class="band">
+<h2>角色</h2>
+<div class="roster" id="roster"></div>
+</section>
+<section class="band">
+<h2>状态机</h2>
+<p class="sub">结构：状态（由盈亏决定）→ 进入时先播过渡动作 → 再在这个状态的动作池里按权重循环。坐下、捂脸这些姿势会被记住，离开时必须先播对应的过渡（比如先爬起来），不会瞬移。惊呆可以随时打断。</p>
+<div class="scroll"><table class="smt" id="tr"></table></div>
+<h2 style="margin-top:28px">每个人在每种状态下的动作池（×权重）</h2>
+<div class="scroll"><table class="smt" id="sm"></table></div>
+</section>
+<section class="band">
+<h2>精灵表：4 人 × 9 种状态</h2>
+<div class="sheet"><table id="sheet"></table></div>
+<div class="row" style="margin-top:14px"><button id="copy">复制精灵数据 JSON</button><span class="note" id="cmsg"></span></div>
+<p class="note">精灵是从原图还原出的原生像素网格（约 22×34），JSON 里是四张透明 PNG（data URI）、状态规则和全部台词，可以直接搬进 KatanaUI。</p>
+</section>

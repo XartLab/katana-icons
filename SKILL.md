@@ -1,6 +1,6 @@
 ---
 name: katana-icons
-description: 做 KATANA 的视觉资产：功能图标（ОКБ 机加工风格、线性交易图标、模板字图标）、汉字代号、自有字体（KT Stencil / Solid / Pixel / Dot）、字体打包自托管、驾驶舱 HUD 部件、标志。要给 KATANAview、KatanaUI 或其他 Katana 项目加图标、加字、换掉 lucide、出新的字体文件或品牌图时使用。
+description: 做 KATANA 的视觉资产（含桌面宠物玩具）：功能图标（ОКБ 机加工风格、线性交易图标、模板字图标）、汉字代号、自有字体（KT Stencil / Solid / Pixel / Dot）、字体打包自托管、驾驶舱 HUD 部件、标志。要给 KATANAview、KatanaUI 或其他 Katana 项目加图标、加字、换掉 lucide、出新的字体文件或品牌图时使用。
 license: MIT
 ---
 
@@ -103,6 +103,17 @@ license: MIT
 - **要新特效：** 照 pixelfx 的 `docs/AUTHORING.md` 写，以它的特效为参照（细节、光、节奏要跟它的一样足）。同样的输入每次画出一样的结果，不用 `Math.random`。
 - **不要复制：** 它的 Patch Pixel 字体文件不能拿。
 
+### 8. 宠物（玩具）@katana-icons/pets
+
+四个像素角色（くるみ、芽吹、やす子、萌智子）住在工作台角落，跟着盈亏换表情、动作和台词。是玩具，不承载信息，别拿它报警。
+- **原图：** `pets/source/<id>.png`，团队用 GPT 生成的 1200×1200 图（黑底、白色空心 K 线、居中角色）。`python3 scripts/build-pets.py` 还原原生像素（约 22×34），出 `packages/static/pets/`、`packages/pets/src/sprites.js` 和 `preview/pets.html`。
+- **脸：** 每格重画，不换画风。`T10`（眼 3 宽）/`T11`（眼 4 宽，萌智子）是 7 行的脸模板，`PETS[].mask` 圈出能改的格子（刘海、发丝不动），`pal` 用角色自己的颜色。原图那张脸留在 `PETS[].orig` 那个状态里。
+- **身体：** `RIG` 定头身分界、腿、肩点和要擦掉的原手。手是代码画的（`ARM_POSES`，左手坐标，右手镜像），袖子、手、袖口用角色自己的颜色。角色招牌手势（くるみ捂脸）用原图的手（`{ orig: 1 }`），别用画的手代替，会飘。
+- **状态机：** 盈亏 → 状态（`moodFromPnl`），进状态先播过渡（`transitions()`：愣住、越想越慌、腿软坐下、爬起来、打哈欠、伸懒腰），再在 `REPERTOIRE[角色][状态]` 里按权重循环动作。坐下和原图手会被记住，离开时先播对应过渡。惊呆（`pet.shock()`）随时打断。
+- **加动作：** 在 `ACTS` 里写 `f(t, 参数, 时长)` 返回姿势（`dyAll/dyBody/dyHead/tilt/sit/lift/dx/L/R`），挂进角色的动作池。不 OOC：先想这个角色在这个状态下会不会这么做。
+- **加角色：** 原图放进 `pets/source/`，`build-pets.py` 的 `IDS` 加上，再在 `index.js` 补 `PETS`、`RIG`、`REP`、`L`（9 个状态各一句）。
+- **自检：** `node scripts/check-pets.mjs`（模板尺寸、动作和手势都存在、台词齐、盈亏分档），然后开 `preview/pets.html` 每个状态看一眼。
+
 ## 用
 
 ```tsx
@@ -124,6 +135,6 @@ import '@katana-icons/fonts/eva.css'                        // 可选：EVA 式�
 
 ## 交付前
 
-- 自检清零（ОКБ：`scripts/check.mjs`；线性：Kubai `check.mjs`）。
+- 自检清零（ОКБ：`scripts/check.mjs`；线性：Kubai `check.mjs`；宠物：`scripts/check-pets.mjs`）。
 - 在浏览器里真看一眼：图标截图、字体用 `type/dist/specimen.html` 或打包后的 `fonts.css` 排一页。
 - 改了生成物就重跑对应生成器，生成文件不手改；`CHANGELOG.md` 写一条，按批打 `vX.Y.Z` 标签。

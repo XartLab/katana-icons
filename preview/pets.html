@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KATANA 宠物</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<!-- 由 scripts/build-pets.py 生成：运行时 @katana-icons/pets 内联在下面，file:// 直接打开就能看 -->
+<style>
+/* VOICE: meme-RPG desk pets inside a serious trading terminal; deadpan Japanese one-liners.
+   IDEA: an old console RPG battle screen where the enemy is the K-line.
+   PICTURE: black stage, user's four pixel girls, hollow white candles, banner box and name-tab dialog.
+   COLOUR and TYPE: pure black stage, white 3px strokes; graphite page; DotGothic16 for the game, Inter for UI.
+   LAYOUT: stage first and large, controls beside it, then roster and sprite sheet.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#e7e9ec,#0f1114);--ink:light-dark(#121418,#e9ecf0);--mute:light-dark(#5b6270,#8a93a1);--line:light-dark(#c8ccd3,#262a31);--card:light-dark(#f4f5f7,#16191d);--acc:#e04b4b}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(20px,3.5vw,48px) max(4vw,16px);max-width:1240px;margin:0 auto}
+h1{font:600 clamp(28px,4vw,40px)/1.05 Inter,sans-serif;margin:0 0 6px;text-wrap:balance}
+h2{font:600 22px/1.2 Inter,sans-serif;margin:0 0 14px}
+.sub{color:var(--mute);margin:0 0 22px;max-width:68ch}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
+.stage{position:relative;aspect-ratio:1/1;background:#000;border-radius:6px;overflow:hidden;font-family:'DotGothic16',monospace;color:#fff}
+.stage canvas{position:absolute;image-rendering:pixelated}
+#bg{inset:0;width:100%;height:100%}
+#pet{left:0;width:100%;top:24%;height:auto;aspect-ratio:120/58}
+.box{position:absolute;background:#262626;border:3px solid #fff;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 4%}
+#banner{left:8%;right:8%;top:7%;height:17%;font-size:clamp(13px,3.3vw,28px);letter-spacing:.04em;white-space:nowrap}
+#dlg{left:5%;right:5%;bottom:6%;height:17%;font-size:clamp(14px,3.4vw,28px)}
+#tab{position:absolute;left:10%;bottom:21.5%;width:25%;height:6%;background:#262626;border:3px solid #fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:clamp(13px,2.8vw,22px);z-index:2}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px}
+.lbl{font-size:13px;color:var(--mute);margin:0 0 8px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+button{font:inherit;font-size:15px;min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.pnl{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.pnl b{font:600 clamp(28px,5vw,40px)/1 Inter,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{width:100%;height:44px;accent-color:var(--acc)}
+.note{font-size:13px;color:var(--mute);margin:8px 0 0}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.pc{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;text-align:left;padding:12px;min-height:110px;background:var(--card)}
+.pc img{width:72px;height:96px;object-fit:contain;image-rendering:pixelated;background:#000;border-radius:4px;padding:6px}
+.pc strong{display:block;font-size:16px}.pc span{font-size:13px;color:var(--mute);line-height:1.45;display:block}
+.sheet{overflow-x:auto}.scroll{overflow-x:auto}.smt{border-collapse:collapse;font-size:14px;min-width:640px}.smt th,.smt td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}.smt th{color:var(--mute);font-weight:600}
+.sheet table{border-collapse:collapse;font-size:13px}
+.sheet th{font-weight:600;color:var(--mute);padding:6px 8px;text-align:center;white-space:nowrap}
+.sheet th[scope=row]{text-align:left}
+.sheet td{padding:4px}.sheet td canvas{display:block;width:96px;height:112px;background:#000;border-radius:3px;image-rendering:pixelated}
+</style>
+</head>
+<body>
+<section class="band">
+<h1>KATANA 宠物：くるみ、芽吹、やす子、萌智子</h1>
+<p class="sub">每人 9 种状态、28 个动作：手会动、头会歪、会走来走去、会坐下。每个人有自己的状态机，同一种情绪下四个人的反应不一样。右边的盈亏是演示数据。</p>
+<div class="top">
+  <div class="stage" id="stage" aria-label="宠物舞台">
+    <canvas id="bg"></canvas>
+    <div class="box" id="banner"></div>
+    <canvas id="pet"></canvas>
+    <div id="tab"></div>
+    <div class="box" id="dlg"></div>
+  </div>
+  <div class="panel">
+    <p class="lbl">今日盈亏（拖动，或开自动行情）</p>
+    <div class="pnl"><b id="pv">0.0%</b><span id="pm" class="lbl"></span></div><p class="lbl">当前：<span id="act"></span></p>
+    <input type="range" id="sl" min="-12" max="8" step="0.1" value="-7" aria-label="今日盈亏百分比">
+    <div class="row"><button id="auto" aria-pressed="false">自动行情</button><button id="agent" aria-pressed="false">Agent 盯盘</button><button id="closed" aria-pressed="false">休市</button></div>
+    <p class="lbl">手动状态（会暂停跟随盈亏，再拖一下滑块恢复）</p>
+    <div class="row" id="moods"></div>
+    <p class="lbl">当前角色</p>
+    <div class="row" id="pick"></div>
+    <p class="note">规则：≥ +4% 狂喜，+2%～+4% 得意，-1%～+2% 平静（开 Agent 盯盘时变成盯盘），-3%～-1% 冒汗，-6%～-3% 绝叫，更低爆仓；自动行情里单次急跌超过 1.5% 会先惊呆 2 秒；休市时打盹。原图那四张脸和四句台词都保留在各自的状态里。</p>
+  </div>
+</div>
+</section>
+<section class="band">
+<h2>角色</h2>
+<div class="roster" id="roster"></div>
+</section>
+<section class="band">
+<h2>状态机</h2>
+<p class="sub">结构：状态（由盈亏决定）→ 进入时先播过渡动作 → 再在这个状态的动作池里按权重循环。坐下、捂脸这些姿势会被记住，离开时必须先播对应的过渡（比如先爬起来），不会瞬移。惊呆可以随时打断。</p>
+<div class="scroll"><table class="smt" id="tr"></table></div>
+<h2 style="margin-top:28px">每个人在每种状态下的动作池（×权重）</h2>
+<div class="scroll"><table class="smt" id="sm"></table></div>
+</section>
+<section class="band">
+<h2>精灵表：4 人 × 9 种状态</h2>
+<div class="sheet"><table id="sheet"></table></div>
+<div class="row" style="margin-top:14px"><button id="copy">复制精灵数据 JSON</button><span class="note" id="cmsg"></span></div>
+<p class="note">精灵是从原图还原出的原生像素网格（约 22×34），JSON 里是四张透明 PNG（data URI）、状态规则和全部台词，可以直接搬进 KatanaUI。</p>
+</section>
+<script>
+{
+// SPDX-License-Identifier: MIT
+// 由 scripts/build-pets.py 生成，别手改。四个角色的原生像素精灵（透明 PNG，data URI）。
+const SPRITES = {
+ "kurumi": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAhCAYAAADdy1suAAAD9klEQVR4Xp1WXUxURxT+LoKgBY0smyiWvUmVF5UuWkTiA9uoaVp/YkBrQw3amrimxtiY2BpdiCGCFEJsTY2FLQ/ERo3G+KJC05ZaaqJAIqkiNDUogboLKbtrtKgQf8acc3cu3Lt3d2m/ZDJn7jnnmzPnzJ0ZBVPAG0nJYrLZk+fjSjy3mAZpYcJmd5mBZ623EjTTaIwJLIllhD+6y5A+f65lcCHfMN73VrLOagURxEQai9AMOYGZPMEqnGhR/hdbAzHltLPiBOyrCnWOybKEWU8+sh4SBuJX4a8jv/7OxQk+GMbI1WsRgZKedGRDshV0YsotzSwR8A3h5v0OBB74gelJhhbwD2s635Bu315xwrAtLXNMUMJ1TRACM2zphgaOFUiAAnVviWXEifQ1NSlFdFR8qxlQdADWhfeq0voz7m1s152Jcp37Q+5J1/FWVnTi0edjSv7hPaKzugHJKTPh3FeKmgsa2RKHDWcO7sbH+47w+OzX5bjceRd3BkM8zt9cAPIzg1NBFaW9G+wfxNCff7FNTtYcpH7RBJdTi+j0N+XcCC6ng3U5jnQeh/r/Rqh/EC1uD1LDf2siFe2K24N8TzEbdVZdxLG8HShcqmLe9uWUbGTnOY0BKQIrty9Hdq6DbTlyzybumwF84K0SHHFPl0937O3yw339JI+zD21Fe2MDbGoWHra0cCO5vdHLOgLZko+E5OLiKQKwOZYiONjF+t7qRjyyv4SgEgngfsP3umNfvRcLdu3E9cZ63jmzR6axTuAVMtR3UJf3KY/5rKC8BAc00nR1Gff+Gz+xNmWeDec3bMOCxYv5+72eHmy5dApjQ0HeGfML3tPyHPa3qcsmTj0iHvf3cLtc5hGU9yq1SIz574hxbt1izN+tyT6tJ91RtYhtyUf6y+JxxPKYPHdgv77kj2rqcChzLY+dpYv074RbP/Ryf9TfHOFDoJPOcGzStjt7YD9Wf+lhg+62Wzrhy2FNnjZ3YofkuDS5tbYKJV/V4d8XEzcLF0+HAOwr1utDcrzd9gfaPjsoy0G/CFzfVeNtV65uZy8gnzoDlQGUn2ePn3Lenj56wjK12jddljLZkC3ZyNxKRNwgZMDHYSAERc8UnwxhnwlZCAF7hvb3mW8QYyrCF6T5Vu5uu21YmcytxJTuPAlJ/smshfxJnZHB/cCzAPdNj/ssI42aisnEVy/+Fr0gAFYVvxv1CWB50FO0lGPzkieDdP8EQhGPmZgRE3Eg+NBAJPe0ebIM25yp5diKNB6syC1TYXioxUE025hPLMIvJ49zv2b355ZjwlQeiRGg84NOLkoRNZLTEo2vz/8FIi7JXKETk2x+9Vgh7jvX/BdKxFv+azL64Jjl6JbiAAAAAElFTkSuQmCC",
+ "mebuki": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAiCAYAAABbXymAAAADrUlEQVR4XqVWXUiTYRR+vrXpQJOtoJ9N58AsjOkWVHjR+iOJLOgmsyDrRi+CLiICg6AoCDQkuoku6qYfCLEugtIoyXKGaTeTWWEmLdGiqDTTsoTeOOfb923f76Kei33v3nPOc857znl/JPwF8ly5IlNtZu6nlM3MVkEhHOk+ruEpWX+GDadtHJgSWxHqQQ4IZiswEBOpPsJsIAd6ckc2o3+FhliJtmDFXpUvc6xAL6cV6gvsNItoaugGT38efWYmZjnJFgbWqLp6qBHnu3JF3/UtWnnWpkqDbPNdbrUtLXP8abQPbxIV/NWDZYNhg0wg3e5MnJeTK970NrH9PGcBHK4CHu9pakFlXScTKPP0rdzXiT1NZ2V9V1o/2dvEK6d5iZI+Fr+kBjWeaIW/vBaFkQY033zK8xt/nIC/vIbH44NteOQ+zePGXZUgW8VGAdk6qP9ooKD9/msEIg3o6B/GzFAdKgJeJJ+HMT7YCmeeDxIEz30fqkNH/ysURerZJpOUONWucOb7WVa9dRngEIhGihB0elAUKsbdWwLJRATJRBeAMLbvLkax04NAKIATB4KoripV7RVwjsmDr6RanSRFQlEoZiicgkBKJuvKRSMOZQdyQxW43GJs+A4kSQKErJTsO4+3gxE2WhAoZEWR+v0yOkblQXEojuDaw7IvhwQhBApLd2BqbpaYZCg758rJzfx/y/ZGeb4woEZ5LiKv6ki8HTNjozzuvNvM3wOnHvJXE3Em5qfa5TeAyfEXAK8CaFlVrTY9EdOc17+Si0n4pjtC/+o8bm08qnFe29yiic4MWYjdoq3rKpaMTBtsN9QfNESZCUtiyvn7iSTrxuLdqk3V8tWQJAEIiVNhdYtY3iBtXdewLhI1RBqLxzRGNZvqTG8Q02PTDtGUMzpwJEigVfm8QaGP3HC60SFCxfp9b8DWwZN4j63cEDE1j6+0BNH6g3h37JC67PDWBlxo3p8mEwI98RgXVvM2SEGTYyrY5LvnSLR3MzFh0doq08g+9j+QC3v5IkLbNnAhMy9UE+KX8PjKNKSLlwY15B/ey92ikNNG8uiINakgj15fmZj+NYv8HLeBUAE5ouV/pEfLr1nMz3EbOsOy3cp3ps9oOyRuXzJtN8s7739hu/Mod4mOx+xDKSYVi1C+bSM8/jLTaAm2xN5wlBUmBnowPTfLutTnNE85nhiIWRJbpoIKOTmg3CDGTv1qQ0qwzbFKZ7ID6Ly2g+2xScsmzsy3MF0Eih+79/Ef4KCFJCB0C0QAAAAASUVORK5CYII=",
+ "yasuko": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAhCAYAAAAswACjAAAEd0lEQVR4XqVWa0xURxT+dmVho6yALQukvCIsLGARhdQNBZtgUwF/aJvWQAyxtUmJmJparP1R+KVNWmPTH01qremDGOv2qYbIw9g2oZbQpGvSdMsCaxMoFQGtgEWySuo059w7t3eXe3cx/bKTM3POzHfOnDkzd4EIrLIlCFIlqvJBoK2NVzgMQcQTvl9Fos0uCHKRBNkdtgQhpZ6EdASyT/h+4TnSHic7RHih6RAPu5peCwtCOst/siFMH7zkZaI7i3ctkpE5hBVdTYdQd+qoIJvmhLDCYH/kwBVBLiH10pkZLGQgovl7IQgBWCzA9St+uDwVGslyEbzkRXDgZ6RvXKcQA3DE22GVBJ6MHHZA8v+iUuUgLkojO6TDun0vpHALIDHBjsLaBpS4C/Hb0AirS9wF8A8Nw6LFCKxjnWIvdhdicGgIwz1ezN8NqczKTiz6nHcdOcgLKFUbtjfp6JaPK+dPccoI9W3HWLKT2l170XP6uMZUuXPP8lkN0P/Fx5qWuK3SAZUaNTV9cMQpLfD7BOpvjbNcbUsIa4rtGpJsylyykyQSyUfBh5WwRHVfNy5vrkNVXzd6x0fRJg3uvWFxz/h6NNuRzFxcfqIO1T9042JEouPIk9xBJNrGR/H2VwOa+vuzHWFT9LbXn/WgVlrpLqggbus/K2RF/4d3nIVIu/A1Kx7NXoOZlmaUZqegavKqNqlqKsi6m/sUG4EyQGsjGa2hUGiJl9bpYXTmbeCFm8uyudary3LgqliPFzJXcXOVl7HOKhTb7mQnjjkLee2yQBWXuWmH2JeaJYS4zz9C/8njYr8zX+x35on+kx8oShUtqVki07N9yaPKJWzklZz8MXAWL713kaMmPJSThTNvKHUv0fjmQfw1Ns7DT/68gw9ffgrZnqeXnLGhE4K8P58eeI7H79e/aJiFlq6PWP/8u1/yXTMqIu3tMkNGRQ3saamauXrLJlRveUwbky29oibqMUTdSUr5Vsz4ejWC1OSVcKZlaOPpqeu4MbvA4zXlW3HL12t6HUzB71p+KR+mK69ULE4Oi9bmctHavJH7pKPHtUCdY0ZkevC04LuOE7gxGOS1uQ2NeGbHrjCeb86dxqjXi22HD7M+Md7O0uxya6CoC/LXi8XJEd5BZ3s7S7/fz61vTzs3OXbEKfNpDu2O+rQ7fTSGb5fg66eg8a2jLEtKSuD3+5Hy6k7tm0I6YQEmxobCUmKaNz0oKv0/FeqbQR915DoJ0+qSSLTFi8aHc3noSl6J4OwCSwL1CZ/dHIt6DlGdUGSfP+5BYPJvuNMd/EAMTt5GcfpqNQaBwNQcitKS0PDjgKkjwzPRIzA9h5G5BQjLfVZfnVuARe3zbmaU3USD6U7oH+CZSg+/bhytM4l5BqfnUJyWzP3A1CyKuC9A35DG/p8wr35d9YiZrkdy3GELrqmV9G3HiTB9ze7m2PfDCPqqor5RJdHdoBb5v/mBQGk7sNZtSELEr6wtiukg5itMF+uc+lwYoTM+IWbQMe+JPg2Rb1I0mx7/AnIvHRNYySdiAAAAAElFTkSuQmCC",
+ "mochiko": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAiCAYAAABfqvm9AAAEfElEQVR4XqVWD0icZRj/fefNi5164s5lsqmXS7fzbP7JXGXN7CaRpKwYU5jlWjC7k1YUbEE5Bv3BEMbKaSMqwUHFYhXkwiGZZUyhiWlTt9bOizZG2xzndJdt+MbzfPe+d9+drqIfvHzP97zv8/99n/fV8A9IXGYRAgANE4BrN+a1W4mYl5q0LrOQDng27jUsaevfx/y5JRTHWEsIKfrQe4gVRS/4cewCivPTsf3gTp6bjVJsWE9edYYU/Vs0HNxp8JbS8r+RmJjEaSAohYlmizjZM/KflZOMCM4rOaVwQQME11NHfnUJf13V98YYkXMEkonMG9OUu/0N7yA1JTFGOBKDJ6f4d0NxFn8Hh/3YUJSJOEsc6t56inNpyKHZYuaxPCle0ZJHyjIyTvOQvLL7splvscQpu2ofkqvxFl2/f+oqfj13CRUVOUwrUEa08DoJ/9SVWIW0loVDQkaEcysNLoWIHLbxmt6+IZwP6rkiNHsa8U3fGQ6VkJm+CltbWtV808a9yHak8v9LnU0w0cnYH1JGOObvQl3727BYcxFvzcEHnT1K0Z6uT1DX0opSx7NoOTIIDQJt/cajaTYGAzyWtQ3e6kLMHrqTFRU8kIm+vjNMf7z7Zfw8nMK0t6YA32U+jY5PN+O52qNwl5cy30SlfrGzCWd9l/Bk4x3YUvUguptfQ17xNA/bysuo2ZqC7wetWJGxWvG/an4V0ARMuBnqRcACYOw2ntovcMzXheMdB1SOiqrKmS6u0lnD3d+qua99rWispcLrW5v2iCoKJZfg859D91QXpv0/KUFXaT1e2OTEjtdfUaciJXO9oSAUJUXL+5CI9v59glrWPa50bEEZCxDS0vIxPnSYaWdpPS5eHGW6KqseFQ/nMB25D2PaFy2gFnakewCth/ewwPnRXhU6eVt423rsaHg0pOwqb5dbdnI62/7BX8RvQ2dFMBAUJ95/T8xfmOSxZnWJuD4TFD1vfCZ2u98UsrNLxPRD2bGhaVi5dpVKOHnmKt0GR9oa1DzyjF6gwJhSJKFCpsuIyn5/wRM892XvR8qagEC+6yFkpWUrA8ST1T0xclRdBeFLSgAJyU5lKdVuw5XLAf6325MV/bh7O/PGfPpRJGjRp4Py4C6pE+6SWkEh03+qvVBQF6dBuSR+MPCnGnLd7aF1UnnENSrYqtXmxGxgHNcD45j44ZTyYnzgFOx2m/pPsIWjoW6vFJI3lLdR36QhwTLcPyZ/V/yJgbABZ1keGyeYIkI2xcQfBao0jWiQxxRFNEzkrXxqEOZmxpV3kVhcceyrxHTt5rxGZb/bkRtjbTGQYnJgXVkeFkKdnHIoN3jM28aa5IR9hQ09He/qvguBSu8u1n28/QDvTXlxysLkri3H6Um9Cy36WLImO1HpacK0X28E8Bp93eR5Xr8yZybE8qR1hhcQHz2aHBr5HPmOXA6Cts3cjb806jh0IiToUnd7dqm3jJyLfCAYQHmgjSrzQd+CuzbzfyQthSS/yFWpZBZtX/LtJ893NOQ8nRZ6zskvrfsb88Hcm9Jj3jUAAAAASUVORK5CYII="
+};
+
+// SPDX-License-Identifier: MIT
+// KATANA 宠物（玩具）：くるみ、芽吹、やす子、萌智子，跟着盈亏换表情、动作和台词。
+// 角色原图由团队用 GPT 生成（pets/source/），scripts/build-pets.py 还原原生像素网格并写出 sprites.js。
+// 用法：
+//   import { mountPet, moodFromPnl } from '@katana-icons/pets'
+//   const pet = mountPet(canvasEl, { pet: 'kurumi', onState: (s) => { banner.textContent = s.banner; dialog.textContent = s.line } })
+//   pet.setMood(moodFromPnl(-4.2))   // 或直接 pet.setMood('scream')
+//   pet.shock()                       // 急跌：惊呆约 2 秒，打断一切
+//   pet.setTalking(true)              // 台词打字时嘴会动
+//   pet.destroy()
+// 画布原生 96×52 像素；CSS 放大时用 image-rendering: pixelated。
+
+const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SPR = SPRITES;
+// ---------- face templates ----------
+// k skin, T eye top, W white, I iris, D line, B blush, M mouth dark, R mouth red, G tongue, S tear, '.' keep original
+const T10={
+ calm:['TTTkkkkTTT','WIWkkkkWIW','WIWkkkkWIW','WWWkkkkWWW','BBkkkkkkBB','kkkkDDkkkk','kkkkkkkkkk'],
+ focus:['DDDkkkkDDD','@@@kkkk@@@','kkkkkkkkkk','kkkkkkkkkk','kkkkkkkkkk','kkkDDDDkkk','kkkkkkkkkk'],
+ happy:['kkkkkkkkkk','kDkkkkkkDk','DkDkkkkDkD','kkkMMMMkkk','BBkMRRMkBB','kkkkMMkkkk','kkkkkkkkkk'],
+ smug:['kkkkkkkkkk','DDDkkkkDDD','WWIkkkkWWI','kkkkkkkkkk','BBkkkkDkBB','kkkkDDkkkk','kkkkkkkkkk'],
+ loss:['TTTkkkkTTT','WWWkkkkWWW','WIWkkkkWIW','WIWkkkkWIW','kkkkkkkkkk','kkkkDkDkkk','kkkDkDkkkk'],
+ shock:['TTTkkkkTTT','WWWkkkkWWW','WIWkkkkWIW','WWWkkkkWWW','kkkkkkkkkk','kkkkMMkkkk','kkkkMMkkkk'],
+ scream:['kkkkkkkkkk','DkkkkkkkkD','kDkMMMMkDk','DkkMRRMkkD','BBkMRRMkBB','kkkMGGMkkk','kkkkMMkkkk'],
+ despair:['TTTkkkkTTT','WWWkkkkWWW','WWWkMMkWWW','WWWMRRMWWW','kSkMRRMkSk','kSkkMMkkSk','kSkkkkkkSk'],
+ sleep:['kkkkkkkkkk','kkkkkkkkkk','DkDkkkkDkD','kDkkkkkkDk','BBkkkkkkBB','kkkkDDkkkk','kkkkkkkkkk']
+};
+const T11={
+ calm:['DDDD...DDDD','TIIW...WIIT','kkkk...kkkk','kBBkkkkkBBk','kkkkkkkkkkk','kkkkDDkkkkk','kkkkkkkkkkk'],
+ focus:['DDDD...DDDD','@@@@...@@@@','kkkk...kkkk','kkkkkkkkkkk','kkkkkkkkkkk','kkkDDDDkkkk','kkkkkkkkkkk'],
+ happy:['kkkk...kkkk','kDDk...kDDk','DkkD...DkkD','kBBkkkkkBBk','kkkMMMMkkkk','kkkMRRMkkkk','kkkkMMkkkkk'],
+ smug:['DDDD...DDDD','WWII...WWII','kkkk...kkkk','kBBkkkkkBBk','kkkkkkDkkkk','kkkkDDkkkkk','kkkkkkkkkkk'],
+ loss:['DDDD...DDDD','WWWW...WWWW','WIIW...WIIW','kkkkkkkkkkk','kkkkDkDkkkk','kkkDkDkkkkk','kkkkkkkkkkk'],
+ shock:['TTTT...TTTT','WWWW...WWWW','WWIW...WIWW','kWWkkkkkWWk','kkkkkkkkkkk','kkkkMMkkkkk','kkkkMMkkkkk'],
+ scream:['DDkk...kkDD','kkDD...DDkk','DDkk...kkDD','kBBkkkkkBBk','kkMMMMMMkkk','kkMRRRRMkkk','kkkMGGMkkkk'],
+ despair:['TTTT...TTTT','WWWW...WWWW','WWWW...WWWW','kSkkkkkkkSk','kSkMMMMkkSk','kSkMRRMkkSk','kSkkMMkkkSk'],
+ sleep:['kkkk...kkkk','DkkD...DkkD','kDDk...kDDk','kBBkkkkkBBk','kkkkkkkkkkk','kkkkDDkkkkk','kkkkkkkkkkk']
+};
+const SHAPE={10:{eyes:[[0,1,2],[7,8,9]],eyeRows:[0,1,2,3],blinkRow:2,mouthCols:[3,4,5,6]},
+             11:{eyes:[[0,1,2,3],[7,8,9,10]],eyeRows:[0,1,2],blinkRow:1,mouthCols:[2,3,4,5,6,7]}};
+const R=(a,b)=>{const o=[];for(let i=a;i<=b;i++)o.push(i);return o};
+const PETS=[
+ {id:'kurumi',name:'くるみ',role:'盯盘',desc:'粉发。一直盯着图，利润一缩水就第一个慌。原图的脸用在「绝叫」。',orig:'scream',
+  tpl:10,ox:6,oy:10,mask:{10:R(6,15),11:R(6,15),12:R(6,15),13:R(6,15),14:R(6,15),15:R(6,15),16:R(7,14)},
+  pal:{k:'#f9e6d5',T:'#94b1cf',W:'#ffffff',I:'#a0266f',D:'#0b0507',B:'#e4b5b0',M:'#8f484c',R:'#a33332',G:'#d0706f',S:'#7cc8ff'}},
+ {id:'mebuki',name:'芽吹',role:'仓位与保证金',desc:'金发。满仓高杠杆的那个，强平线离得最近。原图的脸用在「爆仓」。',orig:'despair',
+  tpl:10,ox:6,oy:10,mask:{10:[7,8,13,14],11:[6,7,8,13,14,15],12:R(6,15),13:R(6,15),14:R(6,15),15:R(6,15),16:R(7,14)},
+  pal:{k:'#fbebde',T:'#94b1cf',W:'#ffffff',I:'#c9b52c',D:'#0b0507',B:'#efc3b4',M:'#891b28',R:'#b9464f',G:'#e08a8a',S:'#7cc8ff'}},
+ {id:'yasuko',name:'やす子',role:'情绪与行情',desc:'兔耳。行情一动就对着 K 线吼。原图的脸用在「绝叫」。',orig:'scream',
+  tpl:10,ox:8,oy:11,mask:{11:[8,9,10,15,16,17],12:[8,9,10,15,16,17],13:R(8,17),14:R(8,17),15:R(8,17),16:R(8,17),17:R(9,16)},
+  pal:{k:'#fbe8da',T:'#94b1cf',W:'#ffffff',I:'#821b36',D:'#0b0507',B:'#e9b8b0',M:'#6e1624',R:'#a32436',G:'#d0707a',S:'#7cc8ff'}},
+ {id:'mochiko',name:'萌智子',role:'风控与复盘',desc:'紫发。冷眼看你乱操作，开口就是吐槽。原图的脸用在「冒汗」。',orig:'loss',
+  tpl:11,ox:5,oy:11,mask:{11:[5,6,7,8,12,13,14,15],12:[5,6,7,8,12,13,14,15],13:[5,6,7,8,12,13,14,15],14:[5,6,7,8,9,11,12,13,14],15:R(5,14),16:R(6,13),17:R(8,11)},
+  pal:{k:'#f9e6d8',T:'#94b0cf',W:'#ffffff',I:'#42266b',D:'#0b0507',B:'#e2b3b0',M:'#251d35',R:'#8a3550',G:'#c06a80',S:'#7cc8ff'}}
+];
+const MOODS=[['calm','平静'],['focus','盯盘'],['happy','狂喜'],['smug','得意'],['loss','冒汗'],['shock','惊呆'],['scream','绝叫'],['despair','爆仓'],['sleep','打盹']];
+const L={
+ kurumi:{calm:['様子を見ている','チャート、見てるよ……'],focus:['監視している','じーっ……'],happy:['喜んでいる','利益きた……！！'],smug:['得意げだ','ふふ、計画通り。'],loss:['焦っている','あれ、含み損……？'],shock:['固まっている','えっ、今の何！？'],scream:['負けている','利益どこいった……！？'],despair:['泣いている','口座が……からっぽ……'],sleep:['眠っている','すぅ……すぅ……']},
+ mebuki:{calm:['待機している','ポジション、異常なし。'],focus:['監視している','証拠金維持率、チェック中。'],happy:['浮かれている','上がれ上がれ〜！'],smug:['調子に乗っている','レバ100倍は正義。'],loss:['青ざめている','証拠金……足りる？'],shock:['固まっている','ちょ、ヒゲ長っ！？'],scream:['混乱している','追証！？追証って何！？'],despair:['絶望している','0.1円でも上がったら強制ロスカット…！？'],sleep:['うなされている','ロスカットの夢見てる……']},
+ yasuko:{calm:['にらんでいる','動けェ……動けェ……'],focus:['監視している','板、見てんぞォ……'],happy:['勝ち誇っている','ほら見ろォ！上げたァ！！'],smug:['ドヤっている','アタシの読み通りだろォ？'],loss:['怒っている','下げんなって言ってんだろォ！'],shock:['固まっている','はァ！？なんだ今の！？'],scream:['絶叫している','上げんなら、下げんなヤァ！！！'],despair:['燃え尽きている','もう……知らん……'],sleep:['寝ている','……起こすなよォ……']},
+ mochiko:{calm:['見下している','……で？'],focus:['監視している','黙って見てなさい。'],happy:['照れている','……べ、別に嬉しくないし。'],smug:['すましている','ふーん、まあ当然でしょ。'],loss:['呆れている','バッッカじゃねーの！？'],shock:['固まっている','……は？'],scream:['キレている','は？は？は？！何この下げ！！'],despair:['黙り込んでいる','……全部、あんたのせいだから。'],sleep:['寝ている','……くー。']}
+};
+const CW = 44, CH = 50, BASE = {};
+
+// ---------- face painter ----------
+// ---------- face painter ----------
+function faceRows(p,mood,o){
+  const sh=SHAPE[p.tpl];let rows=(p.tpl===10?T10:T11)[mood].map(r=>r.split(''));
+  if(mood==='focus'){const n=sh.eyes[0].length,pos=o.look??1;
+    const eye=n===3?['IWW','WIW','WWI'][pos]:['IIWW','WIIW','WWII'][pos];
+    sh.eyes.forEach(cols=>cols.forEach((c,i)=>rows[1][c]=eye[i]))}
+  if(o.blink&&['calm','focus','smug','loss','shock'].includes(mood)){
+    sh.eyes.forEach(cols=>cols.forEach(c=>sh.eyeRows.forEach(r=>rows[r][c]=r===sh.blinkRow?'D':'k')))}
+  if(o.talk){
+    const open=rows.some(r=>sh.mouthCols.some(c=>'RG'.includes(r[c])));
+    if(open){let last=-1;rows.forEach((r,i)=>{if(sh.mouthCols.some(c=>'MRG'.includes(r[c])))last=i});
+      if(last>0){sh.mouthCols.forEach(c=>{if('MRG'.includes(rows[last][c]))rows[last][c]='k';if('RG'.includes(rows[last-1][c]))rows[last-1][c]='M'})}}
+    else{const c0=p.tpl===10?4:4;rows[5][c0]='M';rows[5][c0+1]='M';rows[6][c0]='R';rows[6][c0+1]='R'}}
+  return rows;
+}
+function paint(p,mood,o={}){
+  const b=BASE[p.id],c=document.createElement('canvas');c.width=b.width;c.height=b.height;
+  const g=c.getContext('2d');g.drawImage(b,0,0);
+  if(mood!==p.orig||o.forceFace){
+    const rows=faceRows(p,mood,o);
+    rows.forEach((r,ri)=>{const y=p.oy+ri,m=p.mask[y];if(!m)return;
+      r.forEach((ch,ci)=>{const x=p.ox+ci;if(ch==='.'||!m.includes(x))return;g.fillStyle=p.pal[ch]||p.pal.k;g.fillRect(x,y,1,1)})});
+  }else if(o.talk&&mood===p.orig){/* original face: no repaint */}
+  if(mood==='despair'){const d=g.getImageData(0,0,c.width,c.height),a=d.data;
+    for(let i=0;i<a.length;i+=4){const l=.3*a[i]+.59*a[i+1]+.11*a[i+2];a[i]=(a[i]*.35+l*.65)*.8;a[i+1]=(a[i+1]*.35+l*.65)*.8;a[i+2]=(a[i+2]*.35+l*.65)*.88}
+    g.putImageData(d,0,0)}
+  return c;
+}
+
+// ---------- rig: arms / head / body / legs ----------
+const RIG={
+ kurumi:{split:18,legY:29,legX:11,erase:[[0,12,4,17],[17,12,21,17]],sh:[[5,18],[16,18]],col:{o:'#0b0507',s:'#f6f0f6',k:'#f6e4d2',c:'#c69696',cuff:'#963666'},def:'pray'},
+ mebuki:{split:18,legY:29,legX:11,erase:[[2,22,5,27],[16,23,19,27]],sh:[[6,22],[15,22]],col:{o:'#0b0507',s:'#f0f0e4',k:'#f6ead8',c:'#cc9c9c'},def:'hips'},
+ yasuko:{split:19,legY:28,legX:12,erase:[[2,19,7,23],[17,19,22,23]],sh:[[8,21],[16,21]],col:{o:'#0b0507',s:'#24242a',k:'#f6e4d8',c:'#d2d2d2'},def:'spread'},
+ mochiko:{split:19,legY:29,legX:10,erase:[],sh:[null,[14,21]],col:{o:'#0b0507',s:'#423054',k:'#f6e4d8',c:'#121230'},def:'down'}
+};
+// left-arm coords [elbowX, elbowY, handX, handY] relative to shoulder; negative x = outward
+const AP={down:[-1,3,-1,6],clasp:[1,4,4,5],hips:[-3,2,-1,5],up:[-2,-3,-3,-6],up2:[-2,-3,-2,-7],spread:[-2,0,-4,1],spread2:[-2,-1,-4,-1],
+ cheek:[-1,-1,1,-4],cheek2:[-1,-1,1,-3],head:[-2,-3,0,-7],cross:[1,3,5,2],point:[-3,-1,-6,-2],point2:[-3,-1,-7,-3],fist:[-1,-3,-1,-6],fist2:[-1,-2,-1,-4],
+ chin:[1,3,4,-1],limp:[-1,4,-1,7],wave1:[-2,-3,-2,-6],wave2:[-2,-3,-4,-5],startle:[-3,-2,-4,-4],swingA:[-1,3,1,5],swingB:[-1,3,-3,5],
+ face:[2,2,5,-5],hair:[-3,-2,-2,-7],shrug:[-3,0,-4,-3],pray:[0,2,3,-2],eyes:[1,1,3,-6]};
+function line(x0,y0,x1,y1){const p=[];let dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1,e=dx+dy;
+  for(;;){p.push([x0,y0]);if(x0===x1&&y0===y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx}if(e2<=dx){e+=dx;y0+=sy}}return p}
+function drawArms(g,arms,col){
+  const segs=arms.map(a=>{const[sx,sy,v]=a,m=a[3];const E=[sx+v[0]*m,sy+v[1]],H=[sx+v[2]*m,sy+v[3]];
+    return{up:line(sx,sy,E[0],E[1]),lo:line(E[0],E[1],H[0],H[1]),H}});
+  g.fillStyle=col.o;
+  segs.forEach(s=>{[...s.up,...s.lo].forEach(([x,y])=>{g.fillRect(x-1,y,3,1);g.fillRect(x,y-1,1,3)});g.fillRect(s.H[0]-1,s.H[1]-1,4,4)});
+  segs.forEach(s=>{g.fillStyle=col.s;s.up.forEach(([x,y])=>g.fillRect(x,y,1,1));s.lo.forEach(([x,y],i)=>{const n=s.lo.length;g.fillStyle=i>=n-2?col.k:(col.cuff&&i===n-3?col.cuff:col.s);g.fillRect(x,y,1,1)});
+    g.fillStyle=col.k;g.fillRect(s.H[0],s.H[1],2,2);g.fillStyle=col.c;g.fillRect(s.H[0],s.H[1]+1,1,1)});
+}
+function prepared(p,mood,o){
+  const c=paint(p,mood,o),g=c.getContext('2d'),r=RIG[p.id];if(!r.erase.length||o.orig)return c;
+  const d=g.getImageData(0,0,c.width,c.height),a=d.data,W=c.width,H=c.height,cut=new Set();
+  r.erase.forEach(([x0,y0,x1,y1])=>{for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(x<0||y<0||x>=W||y>=H)continue;a[(y*W+x)*4+3]=0;cut.add(y*W+x)}});
+  cut.forEach(k=>{const x=k%W,y=(k-x)/W;const nb=[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>{const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=H)return false;const j=(ny*W+nx)*4;return a[j+3]>0&&!cut.has(ny*W+nx)&&(a[j]+a[j+1]+a[j+2])>60});
+    if(nb){const j=k*4;a[j]=11;a[j+1]=5;a[j+2]=7;a[j+3]=255}});
+  g.putImageData(d,0,0);return c;
+}
+// ---------- acts (behaviour vocabulary) ----------
+const ACTS={
+ breathe:{n:'呼吸',d:[20,30],f:(t,a)=>({dyBody:t%10<5?0:1,tilt:a.tilt||0})},
+ look:{n:'东张西望',d:[18,24],f:t=>({tilt:t<5?0:t<11?-1:t<17?1:0,dyBody:t%10<5?0:1})},
+ walk:{n:'走来走去',d:[18,30],walk:.5,f:(t)=>{const ph=t%4;return{lift:[ph===0?1:0,ph===2?1:0],dyBody:ph%2,L:ph<2?'swingA':'swingB',R:ph<2?'swingB':'swingA'}}},
+ pace:{n:'来回踱步',d:[16,24],walk:1,f:(t)=>{const ph=t%4;return{lift:[ph===0?1:0,ph===2?1:0],dyBody:ph%2,L:'head',R:'head'}}},
+ run:{n:'抱头乱跑',d:[16,22],walk:1.5,f:(t,a)=>{const ph=t%2;return{lift:[ph,1-ph],dyAll:-ph,L:a.arms||'up',R:a.arms||'up'}}},
+ hop:{n:'蹦跳',d:[16,24],f:t=>({dyAll:[0,-2,-4,-5,-4,-2,0,0][t%8],L:'up',R:'up'})},
+ banzai:{n:'万岁',d:[20,28],f:t=>({L:t%4<2?'up':'up2',R:t%4<2?'up2':'up',dyAll:t%8<2?-2:0})},
+ fistpump:{n:'握拳',d:[16,24],f:t=>({R:t%4<2?'fist':'fist2',dyAll:t%4<2?-1:0})},
+ wave:{n:'挥手',d:[16,22],f:t=>({R:t%4<2?'wave1':'wave2',tilt:1})},
+ cheeks:{n:'双手捧脸',d:[20,30],f:(t,a)=>({L:t%4<2?'cheek':'cheek2',R:t%4<2?'cheek2':'cheek',tilt:t%12<6?-1:1,dx:a.shake?(t%2?1:-1):0})},
+ hugself:{n:'抱紧自己',d:[20,28],f:t=>({L:'cross',R:'cross',dx:t%3===0?1:0,dyBody:1})},
+ headhold:{n:'抱头',d:[20,28],f:(t,a)=>({L:'head',R:'head',tilt:t%10<5?-1:1,dx:a.shake?(t%2?1:-1):0})},
+ stomp:{n:'跺脚',d:[14,20],f:t=>{const ph=t%6;return{lift:[ph<2?2:0,ph>=3&&ph<5?2:0],dyAll:ph===2||ph===5?1:0,L:'fist2',R:'fist2'}}},
+ shakefists:{n:'挥拳',d:[16,24],f:t=>({L:t%4<2?'fist':'fist2',R:t%4<2?'fist2':'fist',dx:t%2?1:-1})},
+ point:{n:'指着K线',d:[18,26],face:1,f:t=>({R:t%6<3?'point':'point2',tilt:1,dx:t%6<3?1:0})},
+ lean:{n:'凑近看盘',d:[24,36],f:(t)=>({tilt:1,R:'chin',dyBody:t%14<7?0:1})},
+ startle:{n:'吓一跳',d:[12,13],f:t=>({L:'startle',R:'startle',dyAll:t<3?-3:0})},
+ collapse:{n:'瘫坐',d:[40,60],f:t=>({sit:Math.min(4,t),L:'limp',R:'limp',tilt:t%20<10?-1:0,dyHead:t>4?1:0})},
+ limpsway:{n:'摇摇晃晃',d:[24,32],f:t=>({L:'limp',R:'limp',tilt:t%16<8?-1:1,dyBody:1,dx:t%16<8?0:1})},
+ sitnod:{n:'坐着打瞌睡',d:[40,60],f:t=>({sit:4,L:'clasp',R:'clasp',dyHead:t%12<6?0:1,tilt:-1})},
+ foottap:{n:'抖腿',d:[20,28],f:t=>({lift:[0,t%4<2?1:0],dyBody:0})},
+ hairflip:{n:'撩头发',d:[14,18],f:t=>({R:t<10?'hair':'down',tilt:t<10?-1:0})},
+ shrug:{n:'摊手',d:[16,20],f:t=>({R:'shrug',tilt:1,dyBody:t>2&&t<10?-1:0})},
+ facepalm:{n:'扶额',d:[20,28],f:()=>({R:'face',tilt:1,dyHead:1})},
+ sigh:{n:'叹气',d:[18,24],f:t=>({dyBody:t>4&&t<14?1:0,dyHead:t>4&&t<14?1:0,tilt:-1})},
+ lookaway:{n:'别过头去',d:[20,28],flip:1,f:t=>({tilt:-1,R:t<12?'hair':'down'})},
+ spin:{n:'转圈',d:[12,12],f:t=>({flip:t%4<2,dyAll:t%4<2?-1:0,L:'up',R:'up'})},
+ bounce:{n:'原地蹦',d:[16,24],f:t=>({dyAll:t%4<2?0:-1})},
+ // transitions
+ notice:{n:'↳ 愣住，盯着K线',d:[6,6],tr:1,keepSit:1,f:()=>({tilt:1,L:'keep',R:'keep'})},
+ tocheek:{n:'↳ 手捂上脸',d:[4,4],tr:1,keepSit:1,f:()=>({L:'cheek',R:'cheek'})},
+ escalate:{n:'↳ 越想越慌',d:[6,6],tr:1,f:t=>({dx:t%2?1:-1,L:'keep',R:'keep'})},
+ buckle:{n:'↳ 腿一软坐下',d:[10,10],tr:1,f:t=>({sit:Math.min(4,t>>1),L:'limp',R:'limp',dyHead:t>6?1:0})},
+ standup:{n:'↳ 爬起来',d:[10,10],tr:1,f:t=>({sit:Math.max(0,4-(t>>1)),L:'down',R:'down',tilt:t<6?-1:0})},
+ yawn:{n:'↳ 打哈欠',d:[8,8],tr:1,f:t=>({R:'face',tilt:-1,sit:t>4?Math.min(4,t-4):0})},
+ wake:{n:'↳ 伸懒腰起身',d:[12,12],tr:1,f:t=>({L:'up2',R:'up2',sit:t<6?4:Math.max(0,4-(t-6)),tilt:t<6?-1:0})},
+ relief:{n:'↳ 松一口气',d:[10,10],tr:1,f:t=>({dyBody:t<6?1:0,dyHead:t<6?1:0,L:'down',R:'down',tilt:-1})},
+ hopin:{n:'↳ 一下跳起来',d:[8,8],tr:1,f:t=>({dyAll:[0,-2,-4,-5,-4,-2,0,0][t],L:'up',R:'up'})},
+ // seated loops
+ sitidle:{n:'无聊，坐下晃腿',d:[40,56],f:(t,a,D)=>{const s=t<8?t>>1:t>D-8?Math.max(0,(D-t)>>1):4;return{sit:s,dyHead:t%12<6?0:1,tilt:t%24<12?-1:0}}},
+ sitcry:{n:'坐在地上哭',d:[30,40],seated:1,f:t=>({sit:4,L:'eyes',R:'eyes',dyHead:t%6<3?0:1,dx:t%6===0?1:0})},
+ sitlimp:{n:'瘫坐发呆',d:[30,40],seated:1,f:t=>({sit:4,L:'limp',R:'limp',tilt:t%20<10?-1:0,dyHead:1})},
+ sitpound:{n:'坐着捶地',d:[20,28],seated:1,f:t=>({sit:4,L:t%4<2?'fist':'limp',R:t%4<2?'limp':'fist',dyAll:t%4===1?1:0})}
+};
+ACTS.sitnod.seated=1;
+// per-character repertoire: [act, weight, params]
+const REP={
+ kurumi:{calm:[['breathe',3],['look',2],['walk',1],['sitidle',1]],focus:[['lean',3,{arms:'pray'}],['look',1]],happy:[['banzai',2],['hop',2],['spin',1]],smug:[['breathe',2,{tilt:1}],['wave',1]],
+  loss:[['cheeks',3,{orig:1}],['look',1,{orig:1}]],shock:[['startle',1,{orig:1}]],scream:[['cheeks',3,{shake:1,orig:1}],['run',1,{orig:1}]],despair:[['sitcry',2,{orig:1}],['sitlimp',2]],sleep:[['sitnod',1,{orig:1}]]},
+ mebuki:{calm:[['breathe',2],['bounce',1],['walk',2],['sitidle',1]],focus:[['point',2],['lean',1]],happy:[['fistpump',3],['banzai',1],['spin',1],['hop',1]],smug:[['breathe',2,{tilt:1}],['wave',1],['bounce',1]],
+  loss:[['headhold',2],['pace',2]],shock:[['startle',1]],scream:[['headhold',3,{shake:1}],['run',1,{arms:'head'}]],despair:[['sitlimp',2],['sitcry',1]],sleep:[['sitnod',1]]},
+ yasuko:{calm:[['breathe',2],['look',2],['stomp',1]],focus:[['point',3],['lean',1]],happy:[['banzai',2],['fistpump',2],['hop',1]],smug:[['fistpump',1],['breathe',2,{tilt:1}]],
+  loss:[['shakefists',3],['stomp',2]],shock:[['startle',1]],scream:[['point',2],['shakefists',2],['stomp',2]],despair:[['sitpound',2],['sitlimp',1]],sleep:[['sitnod',1]]},
+ mochiko:{calm:[['breathe',2],['foottap',2],['hairflip',1],['look',1]],focus:[['lean',2],['breathe',1]],happy:[['hairflip',2],['lookaway',2]],smug:[['shrug',2],['hairflip',2]],
+  loss:[['facepalm',2],['foottap',2],['sigh',1]],shock:[['startle',1]],scream:[['point',2],['stomp',1]],despair:[['sigh',2],['lookaway',2]],sleep:[['sitnod',1]]}
+};
+
+function armTarget(p,name){const n=name||RIG[p.id].def;return n==='orig'?null:(AP[n]||AP.down)}
+
+// ---------- composition ----------
+const LW = 48, LH = 52, PW = 96, PH = 52;
+function compose(g,p,mood,t,pose,armState,o){
+  o.orig=pose.L==='orig'&&pose.R==='orig'||(!pose.Lv&&!pose.Rv&&!armTarget(p,pose.L)&&!armTarget(p,pose.R));
+  const r=RIG[p.id],src=prepared(p,mood,o),w=src.width,h=src.height;
+  g.clearRect(0,0,LW,LH);
+  const sit=pose.sit||0,dyAll=(pose.dyAll||0)+sit,dyB=(pose.dyBody||0)+dyAll,dyH=(pose.dyHead??0)+(pose.dyBody||0)+dyAll,dx=pose.dx||0;
+  const ox=Math.floor((LW-w)/2)+dx,oy=LH-1-h;
+  const lift=pose.lift||[0,0];
+  if(sit<3){
+    const hop=Math.min(0,pose.dyAll||0);
+    g.drawImage(src,0,r.legY,r.legX,h-r.legY,ox,oy+r.legY-lift[0]+hop,r.legX,h-r.legY);
+    g.drawImage(src,r.legX,r.legY,w-r.legX,h-r.legY,ox+r.legX,oy+r.legY-lift[1]+hop,w-r.legX,h-r.legY);
+  }
+  g.drawImage(src,0,r.split,w,r.legY-r.split,ox,oy+r.split+dyB,w,r.legY-r.split);
+  const tilt=pose.tilt||0;
+  for(let y=0;y<r.split;y++){const s=Math.round(tilt*(r.split-y)/r.split);g.drawImage(src,0,y,w,1,ox+s,oy+y+dyH,w,1)}
+  const arms=[];
+  r.sh.forEach((s,i)=>{if(!s)return;const m=i===0?1:-1;arms.push([ox+s[0],oy+s[1]+dyB,armState[i],m])});
+  if(!o.orig)drawArms(g,arms,r.col);
+  return{ox,top:oy+dyH,w,h};
+}
+function fx(g,mood,t,b,p){
+  const P=(x,y,col)=>{g.fillStyle=col;g.fillRect(x,y,1,1)};const{ox,top,w}=b,cx=ox+Math.floor(w/2);
+  if(mood==='happy'){[[ox-3,top+5],[ox+w+2,top+9],[ox+w,top-1],[ox-1,top+16]].forEach(([x,y],i)=>{if((i+t)%3===0)return;const c=(i+t)%2?'#ffd84a':'#fff3b0';P(x,y,c);P(x-1,y,c);P(x+1,y,c);P(x,y-1,c);P(x,y+1,c)})}
+  if(mood==='smug'&&t%12<4){const x=ox+p.ox+(p.tpl===10?8:9),y=top+p.oy;P(x,y,'#fff');P(x-1,y,'#fff');P(x+1,y,'#fff');P(x,y-1,'#fff');P(x,y+1,'#fff')}
+  if(mood==='loss'){[[ox+w-4,6,0],[ox+2,9,4]].forEach(([x,base,off])=>{const k=(t+off)%10;if(k>7)return;const y=top+base+k;P(x,y,'#7cc8ff');P(x,y+1,'#7cc8ff');P(x-1,y+1,'#7cc8ff');P(x+1,y+1,'#7cc8ff');P(x,y+2,'#7cc8ff')})}
+  if(mood==='shock'){for(let k=0;k<4;k++)P(cx,top-6+k,'#ff5555');P(cx,top-1,'#ff5555');for(let i=4;i<w-4;i+=2)for(let k=0;k<3;k++)P(ox+i,top+5+k,'rgba(74,120,200,.7)')}
+  if(mood==='scream'){const x=ox+w+1,y=top+2;for(let k=0;k<4;k++){P(x,y+k,'#ff5555');P(x+2,y+k,'#ff5555')}P(x,y+5,'#ff5555');P(x+2,y+5,'#ff5555')}
+  if(mood==='despair'){for(let i=2;i<w-2;i+=3)for(let k=0;k<4;k++)P(ox+i,top+2+k,'rgba(74,120,200,.9)');
+    if(!reduce){const k=t%24,sy=top-2-Math.floor(k/2),sx=cx+(k%8<4?0:1),al=1-k/24,s=`rgba(235,240,255,${al.toFixed(2)})`;
+      [[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[2,2],[1,3]].forEach(([a,c])=>P(sx-1+a,sy+c,s));P(sx-1,sy+1,'rgba(30,30,40,'+al+')');P(sx+1,sy+1,'rgba(30,30,40,'+al+')')}}
+}
+function zzz(g,x,top,t){const P=(x,y)=>{g.fillStyle='#cfe2ff';g.fillRect(x,y,1,1)};
+  [0,6].forEach(d=>{const kk=(t+d)%18;if(kk>14)return;const zx=x+Math.floor(kk/3),zy=top+2-Math.floor(kk/2);['###','.#.','###'].forEach((r,ri)=>[...r].forEach((ch,ci)=>{if(ch==='#')P(zx+ci,zy+ri)}))})}
+
+// ---------- behaviour engine ----------
+function pickAct(id,mood,prev){const list=REP[id][mood];let tot=0;list.forEach(e=>tot+=e[1]*(e[0]===prev&&list.length>1?.25:1));
+  let r=Math.random()*tot;for(const e of list){r-=e[1]*(e[0]===prev&&list.length>1?.25:1);if(r<=0)return e}return list[0]}
+const CALMISH=['calm','focus','smug','happy'],PANIC=['loss','scream','shock'];
+const seatedMood=(id,m)=>REP[id][m].every(e=>ACTS[e[0]].seated);
+const origMood=(id,m)=>REP[id][m].every(e=>e[2]&&e[2].orig);
+// transition rules: from -> to => clips played before the target state's loop
+function transitions(id,from,to,seated,orig){
+  if(from==null)return[];const q=[];
+  if(seated&&!seatedMood(id,to))q.push(from==='sleep'?'wake':'standup');
+  if(to==='happy'&&!PANIC.includes(from))q.push('hopin');
+  else if(to==='loss'&&CALMISH.includes(from))q.push('notice');
+  else if(to==='scream'&&from==='loss')q.push('escalate');
+  else if(CALMISH.includes(to)&&PANIC.includes(from))q.push('relief');
+  if(to==='sleep')q.push('yawn');
+  else if(seatedMood(id,to)&&!seated)q.push('buckle');
+  if(origMood(id,to)&&!orig&&to!=='shock')q.push('tocheek');
+  return q;
+}
+const TRDOC=[['任意 → 狂喜','一下跳起来'],['平静/盯盘/得意/狂喜 → 冒汗','愣住，盯着K线'],['冒汗 → 绝叫','越想越慌'],['冒汗/绝叫/惊呆 → 平静类','松一口气'],['站着 → 爆仓（坐地类）','腿一软坐下'],['坐着 → 站着的状态','爬起来（从打盹醒来是伸懒腰）'],['任意 → 打盹','打哈欠，坐下'],['画的手 → 原图捂脸手（くるみ）','手先捂上脸，再切回原图'],['任意 → 惊呆','直接打断，吓一跳']];
+
+// ---------- public API ----------
+const SIZE = { width: PW, height: PH };
+
+/** 盈亏（%）→ 状态。agent：Agent 盯盘中；closed：休市。惊呆用 pet.shock() 触发。 */
+function moodFromPnl(pnl, { agent = false, closed = false } = {}) {
+  if (closed) return 'sleep';
+  if (pnl >= 4) return 'happy';
+  if (pnl >= 2) return 'smug';
+  if (pnl > -1) return agent ? 'focus' : 'calm';
+  if (pnl > -3) return 'loss';
+  if (pnl > -6) return 'scream';
+  return 'despair';
+}
+
+let loading;
+/** 预加载四张精灵（mountPet 会自动调用）。 */
+function loadSprites() {
+  if (!loading) loading = Promise.all(PETS.map((p) => new Promise((ok, bad) => {
+    const im = new Image(); im.onload = () => { BASE[p.id] = im; ok(); }; im.onerror = bad; im.src = SPR[p.id];
+  })));
+  return loading;
+}
+
+/** 静态单帧：某个角色某个状态的代表姿势，画到 48×52 的画布上（做图标、精灵表用）。 */
+async function still(canvas, petId, mood) {
+  await loadSprites();
+  const p = PETS.find((x) => x.id === petId); canvas.width = LW; canvas.height = LH;
+  const e = REP[p.id][mood][0], pose = ACTS[e[0]].f(12, e[2] || {}, 40);
+  if (e[2] && e[2].orig) pose.L = pose.R = 'orig'; else if (e[2] && e[2].arms) pose.L = pose.R = e[2].arms;
+  const tgt = (n) => { const k = n || RIG[p.id].def; return k === 'orig' ? AP.limp : (AP[k] || AP.down); };
+  const g = canvas.getContext('2d'); const b = compose(g, p, mood, 3, pose, [tgt(pose.L), tgt(pose.R)], { look: 1, age: 9 }); fx(g, mood, 3, b, p);
+}
+
+function mountPet(canvas, { pet = 'kurumi', mood: startMood = 'calm', onState } = {}) {
+  canvas.width = PW; canvas.height = PH; canvas.style.imageRendering = 'pixelated';
+  const pg = canvas.getContext('2d');
+  const lc = document.createElement('canvas'); lc.width = LW; lc.height = LH; const lg = lc.getContext('2d');
+  const B={x:PW/2,face:1,act:null,par:{},t:0,dur:0,mood:null,target:PW/2,arms:[[0,0,0,0],[0,0,0,0]],queue:[],seated:false,orig:false};
+function startAct(e){B.act=e[0];B.par=e[2]||{};B.t=0;const d=ACTS[B.act].d;B.dur=d[0]+Math.floor(Math.random()*(d[1]-d[0]+1));
+  if(ACTS[B.act].walk){let tx;do{tx=24+Math.random()*(PW-48)}while(Math.abs(tx-B.x)<14);B.target=tx}
+  if(ACTS[B.act].flip)B.face=-B.face;if(ACTS[B.act].face)B.face=1}
+function stepBehaviour(p,mood){
+  if(B.mood!==mood){B.queue=(mood==='shock'?[]:transitions(p.id,B.mood,mood,B.seated,B.orig)).map(n=>[n,1,{}]);if(mood==='shock'&&B.seated)B.queue=[['standup',1,{}]];B.mood=mood;B.act=null}
+  if(!B.act||B.t>=B.dur){startAct(B.queue.length?B.queue.shift():pickAct(p.id,mood,B.act))}
+  const A=ACTS[B.act],pose=reduce?{}:A.f(B.t,B.par,B.dur);
+  if(A.keepSit&&B.seated)pose.sit=4;
+  if(B.par.orig){pose.L=pose.R='orig'}else if(B.par.arms){pose.L=pose.R=B.par.arms}
+  if(A.walk&&!reduce){const dir=Math.sign(B.target-B.x);if(Math.abs(B.target-B.x)>1){B.x+=dir*A.walk;B.face=dir}else{pose.lift=[0,0];pose.dyBody=0;pose.L=pose.R=undefined}}
+  const tgt=[pose.L==='keep'?(B.orig?null:B.arms[0]):armTarget(p,pose.L),pose.R==='keep'?(B.orig?null:B.arms[1]):armTarget(p,pose.R)];
+  if(pose.L==='keep'&&B.orig)pose.L='orig';if(pose.R==='keep'&&B.orig)pose.R='orig';
+  if(pose.L==='keep')pose.L=undefined,pose.Lv=tgt[0];if(pose.R==='keep')pose.R=undefined,pose.Rv=tgt[1];
+  B.orig=!tgt[0]&&!tgt[1];
+  B.arms=B.arms.map((v,i)=>tgt[i]?v.map((c,j)=>{const d=tgt[i][j]-c;return reduce?tgt[i][j]:c+Math.sign(d)*Math.min(2,Math.abs(d))}):AP.cheek.slice());
+  B.seated=(pose.sit||0)>=3;B.t++;return pose;
+}
+  let cur = PETS.find((p) => p.id === pet) || PETS[0], mood = startMood, tick = 0, talking = false, shockAt = -99, look = 1, timer, last = '';
+  const current = () => (tick - shockAt < 13 ? 'shock' : mood);
+  function emit(m) {
+    const [verb, line] = L[cur.id][m];
+    onState && onState({ pet: cur.id, name: cur.name, mood: m, verb, line, banner: cur.name + ' が ' + verb + '！！！',
+      act: ACTS[B.act].n, next: B.queue.map((q) => ACTS[q[0]].n.replace('↳ ', '')) });
+  }
+  function frame() {
+    tick++; const m = current();
+    if (m === 'focus' && tick % 9 === 0) look = (look + 1 + (Math.random() < 0.5 ? 1 : 0)) % 3;
+    const pose = stepBehaviour(cur, m);
+    const blink = !reduce && (tick % 26 === 0 || tick % 26 === 1);
+    const b = compose(lg, cur, m, tick, pose, B.arms, { blink, look, talk: talking && tick % 2 === 0, age: tick - shockAt });
+    fx(lg, m, tick, b, cur);
+    pg.clearRect(0, 0, PW, PH); const x = Math.round(B.x - LW / 2), y = PH - LH, flip = (B.face < 0) !== !!pose.flip;
+    if (flip) { pg.save(); pg.translate(x + LW, y); pg.scale(-1, 1); pg.drawImage(lc, 0, 0); pg.restore(); } else pg.drawImage(lc, x, y);
+    if (m === 'sleep') zzz(pg, x + (flip ? LW - b.ox - b.w : b.ox) + b.w - 2, y + b.top, tick);
+    const key = cur.id + m + B.act + B.queue.length; if (key !== last) { last = key; emit(m); }
+  }
+  loadSprites().then(() => { if (timer !== null) timer = setInterval(frame, reduce ? 1000 : 150); });
+  return {
+    setMood(m) { if (!REP[cur.id][m]) throw new Error('没有这个状态：' + m); mood = m; },
+    setPet(id) { const p = PETS.find((x) => x.id === id); if (!p) throw new Error('没有这个角色：' + id); cur = p; B.act = null; B.mood = null; last = ''; },
+    shock() { shockAt = tick; },
+    setTalking(v) { talking = !!v; },
+    get state() { return { pet: cur.id, mood: current(), act: B.act, seated: B.seated }; },
+    destroy() { clearInterval(timer); timer = null; },
+  };
+}
+
+const LINES = L, REPERTOIRE = REP, TRANSITIONS = TRDOC;
+
+// 预览页的交互（不进包）：演示行情、按钮、表格。宠物本身全走 @katana-icons/pets 的公开 API。
+{
+const $=(id)=>document.getElementById(id);
+const reduceUI=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let pnl=-4,manual=null,auto=null,agent=false,closed=false,typed='';
+const pet=mountPet($('pet'),{pet:'kurumi',onState:(s)=>{
+  $('banner').textContent=s.banner;$('tab').textContent=s.name;
+  $('act').textContent=MOODS.find(z=>z[0]===s.mood)[1]+' · '+s.act+(s.next.length?'（接着：'+s.next.join(' → ')+'）':'');
+  if(s.line!==typed){typed=s.line;const el=$('dlg');if(reduceUI){el.textContent=s.line;return}
+    let i=0;pet.setTalking(true);clearInterval(type.t);type.t=setInterval(()=>{el.textContent=s.line.slice(0,++i);if(i>=s.line.length){clearInterval(type.t);pet.setTalking(false)}},55)}
+}});
+function type(){}
+const moodNow=()=>manual||moodFromPnl(pnl,{agent,closed});
+function ui(){
+  pet.setMood(moodNow());
+  $('pv').textContent=(pnl>0?'+':'')+pnl.toFixed(1)+'%';$('pv').style.color=pnl>=0?'#2fae6a':'#e04b4b';
+  $('pm').textContent='→ '+MOODS.find(x=>x[0]===moodNow())[1]+(manual?'（手动）':'');
+  document.querySelectorAll('#moods button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===manual));
+  document.querySelectorAll('#pick button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===pet.state.pet));
+}
+// candles
+let candles=[];
+function seed(){let v=100;for(let i=0;i<20;i++){const d=(i<8?Math.sin(i)*1.4:-1.1)+(Math.random()-.5)*2.2;const o=v,c=v+d;candles.push({o,c,h:Math.max(o,c)+Math.random()*1.6,l:Math.min(o,c)-Math.random()*1.6});v=c}}
+function pushCandle(d0){const last=candles[candles.length-1].c;const d=d0*1.6+(Math.random()-.5)*1.2;const o=last,c=last+d;candles.push({o,c,h:Math.max(o,c)+Math.random()*1.5,l:Math.min(o,c)-Math.random()*1.5});if(candles.length>20)candles.shift()}
+const bg=$('bg'),bx=bg.getContext('2d');
+function drawBg(){const W=bg.clientWidth,H=bg.clientHeight,dpr=devicePixelRatio||1;bg.width=W*dpr;bg.height=H*dpr;bx.setTransform(dpr,0,0,dpr,0,0);bx.clearRect(0,0,W,H);
+  let hi=-1e9,lo=1e9;candles.forEach(k=>{hi=Math.max(hi,k.h);lo=Math.min(lo,k.l)});
+  const top=H*.3,bot=H*1.02,y=v=>Math.round(top+(hi-v)/(hi-lo||1)*(bot-top))+.5,step=W/16,bw=Math.max(8,step*.62),lw=Math.max(2,W/360);
+  bx.strokeStyle='#fff';bx.lineWidth=lw;
+  candles.forEach((k,i)=>{const x=Math.round(-step*2+i*step)+.5,m=x+bw/2;bx.beginPath();bx.moveTo(m,y(k.h));bx.lineTo(m,y(Math.max(k.o,k.c)));bx.moveTo(m,y(Math.min(k.o,k.c)));bx.lineTo(m,y(k.l));bx.stroke();
+    const t=y(Math.max(k.o,k.c)),b=Math.max(y(Math.min(k.o,k.c)),t+lw*2);bx.strokeRect(x,t,bw,b-t)})}
+$('moods').innerHTML=MOODS.map(([k,n])=>`<button data-m="${k}" aria-pressed="false">${n}</button>`).join('');
+$('pick').innerHTML=PETS.map(p=>`<button data-p="${p.id}" aria-pressed="false">${p.name}</button>`).join('');
+$('moods').onclick=e=>{const b=e.target.closest('button');if(!b)return;manual=manual===b.dataset.m?null:b.dataset.m;if(manual==='shock'){pet.shock();manual=null}ui()};
+const choose=id=>{pet.setPet(id);typed='';ui()};
+$('pick').onclick=e=>{const b=e.target.closest('button');if(b)choose(b.dataset.p)};
+$('sl').oninput=e=>{pnl=+e.target.value;manual=null;ui()};
+const tog=(id,fn)=>{$(id).onclick=()=>{const v=fn();$(id).setAttribute('aria-pressed',v);manual=null;ui()}};
+tog('agent',()=>agent=!agent);tog('closed',()=>closed=!closed);
+$('auto').onclick=()=>{if(auto){clearInterval(auto);auto=null;$('auto').setAttribute('aria-pressed','false');return}
+  $('auto').setAttribute('aria-pressed','true');manual=null;
+  auto=setInterval(()=>{let d=(Math.random()-.5)*1.4;if(Math.random()<.08)d=-1.6-Math.random();pnl=Math.max(-12,Math.min(8,pnl+d));if(d<-1.5)pet.shock();$('sl').value=pnl;pushCandle(d);drawBg();ui()},900)};
+// roster, sheet, tables
+PETS.forEach(p=>{const b=document.createElement('button');b.className='pc';const im=document.createElement('img');im.src=SPRITES[p.id];im.alt=p.name;b.appendChild(im);
+  const t=document.createElement('div');t.innerHTML=`<strong>${p.name}</strong><span>${p.role}</span><span>${p.desc}</span>`;b.appendChild(t);
+  b.onclick=()=>{choose(p.id);$('stage').scrollIntoView({behavior:reduceUI?'auto':'smooth',block:'center'})};$('roster').appendChild(b)});
+const tb=$('sheet');tb.innerHTML='<thead><tr><th></th>'+MOODS.map(m=>`<th scope="col">${m[1]}</th>`).join('')+'</tr></thead>';
+const body=document.createElement('tbody');
+PETS.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=`<th scope="row">${p.name}</th>`;
+  MOODS.forEach(([k])=>{const td=document.createElement('td');const c=document.createElement('canvas');still(c,p.id,k);c.setAttribute('role','img');c.setAttribute('aria-label',p.name+' '+k);td.appendChild(c);tr.appendChild(td)});body.appendChild(tr)});
+tb.appendChild(body);
+$('sm').innerHTML='<thead><tr><th>状态</th>'+PETS.map(p=>`<th>${p.name}</th>`).join('')+'</tr></thead><tbody>'+
+  MOODS.map(([k,n])=>`<tr><td>${n}</td>`+PETS.map(p=>`<td>${REPERTOIRE[p.id][k].map(e=>ACTS[e[0]].n+(e[2]&&e[2].shake?'（发抖）':'')+(e[2]&&e[2].orig?'（原图手）':'')+' ×'+e[1]).join('、')}</td>`).join('')+'</tr>').join('')+'</tbody>';
+$('tr').innerHTML='<thead><tr><th>状态切换</th><th>先播放的过渡动作</th></tr></thead><tbody>'+TRANSITIONS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')+'</tbody>';
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify({rig:RIG,repertoire:REPERTOIRE,lines:LINES}));$('cmsg').textContent='已复制。'}catch(e){$('cmsg').textContent='浏览器拒绝了剪贴板。'}};
+seed();new ResizeObserver(()=>drawBg()).observe($('stage'));$('sl').value=pnl;ui();
+}
+
+}
+</script>
+</body>
+</html>

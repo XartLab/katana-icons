@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.0] - 2026-11-26
+
+### Added
+
+- **Desk pets.** Four pixel characters, くるみ, 芽吹, やす子 and 萌智子, live in a corner of the workbench and react to the day's P&L. Each has nine states with redrawn faces, arms that move, walking, sitting and a few lines of Japanese per state, and moves between states with short transitions like freezing, panicking, sitting down or getting back up. It is a toy, not an alert. Mount one with `mountPet()` from `@katana-icons/pets`; the native sprites are also in `@katana-icons/static/pets/`.
+
 ## [0.9.0] - 2026-11-26
 
 ### Added
