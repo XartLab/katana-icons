@@ -101,15 +101,20 @@ export declare function createGeneralIcon(name: GeneralIconName): GeneralIcon
 export declare const generalIconNames: GeneralIconName[]
 ${ourNames.map((n) => `/** ${defs[n].zh ?? n} */\nexport declare const ${pascal(n)}: GeneralIcon`).join('\n')}
 `);
-// lucide 同名出口：换掉 lucide 时只改 import 路径
-const lucideNames = names.map((l) => [pascal(l), alias[l]]);
-fs.writeFileSync(path.join(out, 'lucide.js'), `// 生成文件，勿手改：node scripts/build-general.mjs。lucide 的图标名 → 我们的通用图标，换掉 lucide 时只改 import 路径。
+// lucide 同名出口：换掉 lucide 时只改 import 路径。
+// 界面里常用的小图标（line/small/defs.mjs）优先用 KATANA 小图标，其余用通用线性图标。
+const { default: SMALL } = await import(pathToFileURL(path.join(root, 'line/small/defs.mjs')));
+const lucideNames = [...new Set([...names, ...Object.keys(SMALL)])].sort()
+  .map((l) => [pascal(l), SMALL[l] ? ['small', l] : ['general', alias[l]]]);
+fs.writeFileSync(path.join(out, 'lucide.js'), `// 生成文件，勿手改：node scripts/build-general.mjs。lucide 的图标名 → 我们的图标，换掉 lucide 时只改 import 路径。
 import { createGeneralIcon } from './index.js'
-${lucideNames.map(([p, o]) => `export const ${p} = createGeneralIcon('${o}')\nexport const ${p}Icon = ${p}`).join('\n')}
+import { createSmallIcon } from '../small/index.js'
+${lucideNames.map(([p, [k, o]]) => `export const ${p} = ${k === 'small' ? 'createSmallIcon' : 'createGeneralIcon'}('${o}')\nexport const ${p}Icon = ${p}`).join('\n')}
 `);
 fs.writeFileSync(path.join(out, 'lucide.d.ts'), `// 生成文件，勿手改：node scripts/build-general.mjs
 import type { GeneralIcon } from './index'
-${lucideNames.map(([p]) => `export declare const ${p}: GeneralIcon\nexport declare const ${p}Icon: GeneralIcon`).join('\n')}
+import type { SmallIcon } from '../small/index'
+${lucideNames.map(([p, [k]]) => { const t = k === 'small' ? 'SmallIcon' : 'GeneralIcon'; return `export declare const ${p}: ${t}\nexport declare const ${p}Icon: ${t}`; }).join('\n')}
 `);
 
 // 4. 静态 SVG：每种变体 light 一档，currentColor

@@ -36,6 +36,17 @@ import { Trash, Settings, RefreshCw } from '@katana-icons/react/general'        
 
 123 come from the Kubai Icons line library (MIT), 6 are ours (`line/general/own.mjs`). Regenerate with `KUBAI_ICONS=<path> node scripts/build-general.mjs`.
 
+### Small icons
+
+The 86 interface icons KATANAview and KatanaUI use most (lucide names used twice or more), redrawn in the KATANA style for 16 and 24 px: square ends and sharp joins, a 45° cut on the top-left corner of framed shapes with superellipse corners elsewhere, octagons instead of circles, and one vermilion cockpit light only where it means something (lock, alert, today, recording, the bot's antenna, the newest message). `general/lucide` already uses them for these names; the rest stay in the line style.
+
+```tsx
+import { Lock, Settings } from '@katana-icons/react/small'
+<Lock size={16} />            // lit={false} turns the light off; the light reads --katana-shu
+```
+
+Sources in `line/small/defs.mjs`, regenerate with `node scripts/build-small.mjs`, preview in `preview/small.html`.
+
 ### Trading icons
 
 ```tsx

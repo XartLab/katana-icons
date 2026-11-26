@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.0] - 2026-11-26
+
+### Added
+
+- **Small icons in the KATANA style.** The 86 interface icons the product uses most, redrawn for 16 and 24 px with square ends, a cut top-left corner, octagons for circles and a vermilion light where it means something. Import them from `@katana-icons/react/small`; the lucide-named import picks them up automatically.
+
 ## [0.7.0] - 2026-11-26
 
 ### Added

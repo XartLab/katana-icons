@@ -1,6 +1,6 @@
 {
   "name": "@katana-icons/react",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -30,6 +30,10 @@
     "./general/lucide": {
       "types": "./src/general/lucide.d.ts",
       "default": "./src/general/lucide.js"
+    },
+    "./small": {
+      "types": "./src/small/index.d.ts",
+      "default": "./src/small/index.js"
     }
   },
   "files": [

@@ -41,6 +41,10 @@ license: MIT
 
 范围是产品里用到的 lucide 图标（`line/general/names.txt`）。Kubai 线性库（`icons-line/`，MIT）有的直接取，名字不同的写进 `map.json`，库里没有的照 icons-line 的格式在 `own.mjs` 里自己画。`KUBAI_ICONS=<路径> node scripts/build-general.mjs` 出 `@katana-icons/react/general`（我们的名字）和 `general/lucide`（lucide 同名，换库只改 import）。
 
+### 2c. 小图标（86 个，16/24px）
+
+只画产品里常用的：KATANAview、KatanaUI 用了 2 次以上的 lucide 名字（只用 1 次的大多是图表绘图工具栏 `drawings.ts` 里的，那些归画图工具，不在这里）。规矩：24 网格、线宽 1.5、方头尖角；带框的左上切 45°，另三角超椭圆圆角（`frame()`）；圆改八边形（`oct()` / `octArc()`）；座舱灯是朱红方点，只放在有意义的地方（`lit`）。改 `line/small/defs.mjs`，跑 `node scripts/build-small.mjs` 出 `@katana-icons/react/small`、静态 SVG 和 `preview/small.html`；再跑 `build-general.mjs`，`general/lucide` 里同名的就换成小图标。加新的先看它在产品里用了几次，用得少的留给通用线性图标。
+
 ### 3. 汉字代号（33 个）
 
 `line/kanji-map.json` 是"图标名 → 汉字"。改完跑 `python3 scripts/kanji-outlines.py <DelaGothicOne-Regular.ttf>` 再 `node scripts/build-kanji.mjs`。最小用 20px。
