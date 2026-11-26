@@ -5,7 +5,7 @@ Functional icons for the Katana ecosystem, drawn in one style: a 24 grid, 1.5 st
 | Part | What you get |
 | --- | --- |
 | Agent skill | `SKILL.md` + `docs/rules.md` (Chinese). Drop the repo into your agent's skills folder and ask for icons. |
-| Icons | 71 to start: 63 interface icons and 8 `kt-` icons for Katana products. |
+| Icons | 71 to start (63 interface + 8 `kt-` product icons), each in 4 styles: line, two-tone line, filled line and solid. |
 | Packages | `@katana-icons/react` (components + `styles.css` for motion) and `packages/static/svg`. |
 
 ## Use
@@ -17,10 +17,11 @@ import '@katana-icons/react/styles.css'
 <Bell />
 <Lock size={16} strokeWidth={1.25} />
 <Bell light animated title="Alerts" />
+<Lock variant="solid" />          // line | line-duo | line-fill | solid
 <button data-kti-hover><Bell /> Alerts</button>
 ```
 
-Set the light colour with the CSS variable `--kti-light`.
+Set the light colour with `--kti-light` and the two-tone accent with `--kti-accent`. Static files are in `packages/static/svg/<style>/<name>.svg`.
 
 ## Develop
 

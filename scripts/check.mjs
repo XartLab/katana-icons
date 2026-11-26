@@ -6,7 +6,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { loadIcons } from './load.mjs'
-import { LIVE, MOTIONS, LIGHT_SIZE, renderSvg, MOTION_CSS } from '../src/kit.mjs'
+import { LIVE, MOTIONS, LIGHT_SIZE, renderSvg, MOTION_CSS, VARIANTS } from '../src/kit.mjs'
 
 const t0 = performance.now()
 const args = process.argv.slice(2)
@@ -114,12 +114,15 @@ for (const icon of icons) {
 
 if (sheet) {
   mkdirSync(dirname(sheet), { recursive: true })
-  const cells = icons.map((i) => `<figure><div class="big">${renderSvg(i, { size: 48, light: true, animated: true })}</div><div class="small">${renderSvg(i, { size: 24 })}${renderSvg(i, { size: 16 })}</div><figcaption>${i.name}<br>${i.zh}</figcaption></figure>`).join('')
+  const vs = Object.keys(VARIANTS)
+  const cells = icons.map((i) => `<figure><div class="v">${vs.map((v) => `<span>${renderSvg(i, { size: 40, light: !!i.light, animated: true, variant: v })}${renderSvg(i, { size: 16, variant: v })}</span>`).join('')}</div><figcaption>${i.name} · ${i.zh}</figcaption></figure>`).join('')
   writeFileSync(sheet, `<!doctype html><meta charset="utf-8"><title>katana-icons sheet</title><style>${MOTION_CSS}
-body{margin:0;padding:32px;background:#121416;color:#e4e2dc;font:12px ui-monospace,monospace;--kti-light:#3fb8af}
-main{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
-figure{margin:0;padding:12px;border:1px solid #2a2f34;display:flex;flex-direction:column;align-items:center;gap:8px}
-.small{display:flex;gap:10px;align-items:center}figcaption{text-align:center;color:#8a9096}</style><main>${cells}</main>`)
+body{margin:0;padding:24px;background:#121416;color:#e4e2dc;font:12px ui-monospace,monospace;--kti-light:#3fb8af;--kti-accent:#3fb8af;--kti-bg:#121416}
+header{display:flex;gap:46px;padding:0 0 12px 14px;color:#8a9096}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+figure{margin:0;padding:10px 12px;border:1px solid #2a2f34}
+.v{display:flex;gap:14px}.v span{display:flex;flex-direction:column;align-items:center;gap:6px}figcaption{color:#8a9096;margin-top:6px}</style>
+<header>${vs.map((v) => `<span>${v}</span>`).join('')}</header><main>${cells}</main>`)
 }
 
 const ms = performance.now() - t0

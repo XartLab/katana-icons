@@ -7,6 +7,8 @@ export interface KatanaIconProps extends Omit<SVGProps<SVGSVGElement>, 'ref'> {
   size?: number | string
   /** 线宽 1–2，默认 1.5；跟旁边文字的字重走 */
   strokeWidth?: number
+  /** 风格：单色线性、双色线性（主部件用 --kti-accent）、线性填充、单色面性；默认 line */
+  variant?: 'line' | 'line-duo' | 'line-fill' | 'solid'
   /** 点亮座舱灯（颜色读 --kti-light，没设就跟文字色） */
   light?: boolean
   /** 自己悬停时播放动作；或在祖先上写 data-kti-hover */

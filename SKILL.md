@@ -1,6 +1,6 @@
 ---
 name: katana-icons
-description: 按 KATANA 的统一风格画功能图标（24 网格、1.5 线宽、方头斜切、一颗座舱灯、悬停时做物体本身的动作），并导出 React 组件与静态 SVG。要给 KATANAview、KatanaUI 或其他 Katana 生态项目加图标、换掉 lucide 图标、或画产品自有图标时使用。
+description: 按 KATANA 的统一风格画功能图标（24 网格、1.5 线宽、方头斜切、一颗座舱灯、悬停时做物体本身的动作；一份定义自动出单色线性、双色线性、线性填充、单色面性四种风格），并导出 React 组件与静态 SVG。要给 KATANAview、KatanaUI 或其他 Katana 生态项目加图标、换掉 lucide 图标、或画产品自有图标时使用。
 license: MIT
 ---
 
@@ -34,7 +34,8 @@ import '@katana-icons/react/styles.css'
 <Bell />                              // 24px，跟文字色
 <Lock size={16} strokeWidth={1.25} /> // 跟小号文字
 <Bell light animated title="提醒" />   // 点灯、悬停摆动、读屏可读
+<Lock variant="solid" />             // line | line-duo | line-fill | solid
 <button data-kti-hover><Bell /> 提醒</button>  // 悬停整个按钮时图标动
 ```
 
-静态文件在 `packages/static/svg/<名字>.svg`。灯的颜色用 CSS 变量 `--kti-light` 设。
+静态文件在 `packages/static/svg/<风格>/<名字>.svg`。灯的颜色用 `--kti-light`，双色的强调色用 `--kti-accent`。

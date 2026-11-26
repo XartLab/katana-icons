@@ -29,7 +29,7 @@ export default [
   },
   {
     name: 'bell', zh: '提醒', keywords: ['alert', 'notification'],
-    parts: [{ id: 'body', d: 'M6 17 V11 A6 6 0 0 1 18 11 V17 M4 17 H20 M10 20 H14', motion: 'swing', origin: [12, 5] }],
+    parts: [{ id: 'body', d: 'M6 17 V11 A6 6 0 0 1 18 11 V17 Z M4 17 H20 M10 20 H14', motion: 'swing', origin: [12, 5] }],
     light: [16, 7],
   },
   {
@@ -150,7 +150,7 @@ export default [
     name: 'settings', zh: '设置', keywords: ['gear', 'preferences', 'nut'],
     parts: [{ id: 'nut', d: `M12 3 L19.5 7.5 V16.5 L12 21 L4.5 16.5 V7.5 Z ${C(12, 12, 3)}`, motion: 'spin' }],
   },
-  { name: 'pin', zh: '固定', keywords: ['pin', 'attach'], parts: [{ id: 'pin', d: 'M9.5 4 H14.5 M10.5 4 V10 L7.5 14 H16.5 L13.5 10 V4 M12 14 V20.5', motion: 'press', origin: [12, 14] }] },
+  { name: 'pin', zh: '固定', keywords: ['pin', 'attach'], parts: [{ id: 'pin', d: 'M10.5 4 V10 L7.5 14 H16.5 L13.5 10 V4 Z M9 4 H15 M12 14 V20.5', motion: 'press', origin: [12, 14] }] },
   { name: 'pencil', zh: '编辑', keywords: ['edit', 'draw'], parts: [{ id: 'pencil', d: 'M15 4.5 L19.5 9 L9 19.5 H4.5 V15 Z M13 6.5 L17.5 11', motion: 'nudge-diag' }] },
   {
     name: 'paperclip', zh: '附件', keywords: ['attach', 'file'],
@@ -162,7 +162,7 @@ export default [
   },
   {
     name: 'trash', zh: '删除', keywords: ['delete', 'remove', 'bin'],
-    parts: [{ id: 'lid', d: 'M5 7 H19 M9.5 7 V4.5 H14.5 V7', motion: 'lift' }, { id: 'can', d: 'M6.5 7 L7.5 20 H16.5 L17.5 7 M10.5 10.5 V16.5 M13.5 10.5 V16.5' }],
+    parts: [{ id: 'lid', d: 'M5 7 H19 M9.5 7 V4.5 H14.5 V7', motion: 'lift' }, { id: 'can', d: 'M6.5 7 L7.5 20 H16.5 L17.5 7 Z M10.5 10.5 V16.5 M13.5 10.5 V16.5' }],
   },
   {
     name: 'eye', zh: '显示', keywords: ['show', 'visible', 'watch'],
@@ -184,7 +184,7 @@ export default [
   },
   {
     name: 'user', zh: '用户', keywords: ['account', 'profile', 'person'],
-    parts: [{ id: 'head', d: C(12, 8.5, 3.5), motion: 'nudge-up' }, { id: 'body', d: 'M5 20.5 V18 L8 15 H16 L19 18 V20.5' }],
+    parts: [{ id: 'head', d: C(12, 8.5, 3.5), motion: 'nudge-up' }, { id: 'body', d: 'M5 20.5 V18 L8 15 H16 L19 18 V20.5 Z' }],
   },
   {
     name: 'clock', zh: '时间', keywords: ['time', 'schedule', 'session'],
