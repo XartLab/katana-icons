@@ -67,19 +67,12 @@ license: MIT
 
 `hud/hud.mjs`：七段管、模板字、刻度带、准星、弧形仪表、读数框、锁定框、警示带、警告牌，每个函数返回 SVG 片段。`node hud/board.mjs` 出样张。
 
-### 7. 数据可视化 @katana-icons/viz
-
-先按 dataviz 方法定形式，颜色最后定。颜色只认 KatanaUI 的图表 token：分类色按 `--series-1..7` 的固定顺序取，涨跌用 `--pnl-*`，热力图用分档的深浅，朱红只标「现在」这一个点。
-- **改分类色：** 改了 KatanaUI 的分类色，先跑 dataviz 技能的 `validate_palette.js`，亮底暗底两套都要跑。
-- **加图形：** 在 `packages/viz/src/index.js` 里写纯函数，返回 SVG 字符串，每个记号都带 `data-tip`。
-- **看效果：** `node scripts/build-viz.mjs` 出预览页；在地址后面加 `?probe`，会自动在一张图上悬停，可以截图核对十字线和提示。
-
-### 8. 像素特效 @katana-icons/fx
+### 7. 像素特效 @katana-icons/fx
 
 底层是 pixelfx（MIT，已复制进 `packages/fx/src/vendor/pixelfx/`），只放界面用得上、不需要角色的特效。挂受击、状态这类效果的角色特效不收。
 - **加一个时刻：** 先在 pixelfx 检出里跑 `node tools/list.mjs <词>` 找候选，再用 `render.mjs --opts` 套上 `PALETTES` 看接触表。选定后，把它的文件和同目录的 `_lib.js` 复制进来，在 `MOMENTS` 里写 `source`、`zh` 和 `opts`。
 - **重新导出：** `PIXELFX=<检出> node scripts/build-fx.mjs` 出 `packages/static/fx/` 的精灵图。
-- **要新特效：** 照 pixelfx 的 `docs/AUTHORING.md` 写。同样的输入每次画出一样的结果，不用 `Math.random`。
+- **要新特效：** 照 pixelfx 的 `docs/AUTHORING.md` 写，以它的特效为参照（细节、光、节奏要跟它的一样足）。同样的输入每次画出一样的结果，不用 `Math.random`。
 - **不要复制：** 它的 Patch Pixel 字体文件不能拿。
 
 ## 用

@@ -37,6 +37,3 @@ Pixel effects (packages/fx/src/vendor/pixelfx, packages/static/fx): pixelfx 0.3.
 files, MIT License, Copyright (c) 2026 Patch (https://github.com/patch-gg/pixelfx, read 2026-11-26); parts adapt
 Sprite Fusion's pixel art VFX (Hugo Duprez, MIT) and Hollow Crown (rehan-remade, MIT), see vendor/pixelfx/NOTICE.md.
 The Patch Pixel font is not included. Colors are KATANA's.
-
-Data visualization (packages/viz): written by KATANA; the method (form first, color last, fixed categorical
-order, one axis, validated palettes) follows Anthropic's dataviz skill.
