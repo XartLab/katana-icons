@@ -3,7 +3,7 @@
   "family": "KT Stencil",
   "weight": 400,
   "slices": 1,
-  "bytes": 3004,
+  "bytes": 3008,
   "use": "标题、加载页、驾驶舱面板（断缝）"
  },
  {
@@ -17,63 +17,119 @@
   "family": "Michroma",
   "weight": 400,
   "slices": 1,
-  "bytes": 24688,
+  "bytes": 24732,
   "use": "拉丁字母和编号，超椭圆字形"
  },
  {
   "family": "Dela Gothic One",
   "weight": 400,
   "slices": 14,
-  "bytes": 1280756,
+  "bytes": 1280808,
   "use": "汉字代号、粗标题"
  },
  {
   "family": "Shippori Mincho",
   "weight": 400,
   "slices": 19,
-  "bytes": 3530284,
+  "bytes": 3529628,
   "use": "原研哉风格的标题（明朝体）"
  },
  {
   "family": "Shippori Mincho",
   "weight": 600,
   "slices": 19,
-  "bytes": 3621840,
+  "bytes": 3621532,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 400,
   "slices": 14,
-  "bytes": 1134768,
+  "bytes": 1134476,
   "use": "正文黑体"
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 700,
   "slices": 14,
-  "bytes": 1159200,
+  "bytes": 1159196,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 900,
   "slices": 14,
-  "bytes": 1132332,
+  "bytes": 1132252,
   "use": ""
  },
  {
   "family": "Shippori Mincho B1",
   "weight": 800,
   "slices": 19,
-  "bytes": 5160896,
+  "bytes": 5160904,
   "use": "EVA 式标题卡（顶替 Matisse EB，配 eva.css 的机械压扁）"
  },
  {
   "family": "Archivo",
   "weight": "100 900",
   "slices": 1,
-  "bytes": 184008,
+  "bytes": 183908,
   "use": "EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%"
+ },
+ {
+  "family": "KT Pixel",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 2584,
+  "use": "像素风标题、加载页（自绘，骨架同 KT Stencil）"
+ },
+ {
+  "family": "KT Dot",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 6300,
+  "use": "点阵屏读数（自绘，骨架同 KT Stencil）"
+ },
+ {
+  "family": "DotGothic16",
+  "weight": 400,
+  "slices": 14,
+  "bytes": 580068,
+  "use": "中日文点阵正文（16 点阵）"
+ },
+ {
+  "family": "Doto",
+  "weight": "100 900",
+  "slices": 1,
+  "bytes": 7948,
+  "use": "拉丁点阵大字（可调圆点 ROND 轴）"
+ },
+ {
+  "family": "Silkscreen",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 8632,
+  "use": "拉丁小号像素字"
+ },
+ {
+  "family": "Silkscreen",
+  "weight": 700,
+  "slices": 1,
+  "bytes": 7744,
+  "use": ""
+ },
+ {
+  "family": "Pixelify Sans",
+  "weight": "400 700",
+  "slices": 1,
+  "bytes": 21108,
+  "use": "拉丁像素正文（有小写）"
+ },
+ {
+  "family": "VT323",
+  "weight": 400,
+  "slices": 1,
+  "bytes": 29540,
+  "use": "终端 / 命令行风格等宽"
  }
 ]

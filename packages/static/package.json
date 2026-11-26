@@ -1,6 +1,6 @@
 {
   "name": "@katana-icons/static",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "files": ["svg"],
   "exports": { "./svg/*": "./svg/*" }

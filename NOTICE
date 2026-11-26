@@ -17,5 +17,7 @@ packages/fonts/ also redistributes, as WOFF2 subsets, these fonts under the SIL 
 (sources: https://github.com/google/fonts, read 2026-11-26; licence texts in packages/fonts/licenses/):
 Michroma (The Michroma Project Authors), Dela Gothic One (The Dela Gothic Project Authors),
 Shippori Mincho and Shippori Mincho B1 (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors),
-Archivo (The Archivo Project Authors).
+Archivo (The Archivo Project Authors), DotGothic16 (The DotGothic16 Project Authors), Doto (The Doto Project Authors),
+Silkscreen (The Silkscreen Project Authors), Pixelify Sans (The Pixelify Sans Project Authors), VT323 (The VT323 Project Authors).
+KT Pixel and KT Dot (type/dist/) are drawn by KATANA from the KT Stencil skeleton and released under the SIL OFL 1.1.
 Subsetting changes no glyph; the Reserved Font Names are kept.

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0] - 2026-11-26
+
+### Added
+
+- **Pixel and dot-matrix type.** Two more fonts of ours, KT Pixel and KT Dot, made from the same skeleton as KT Stencil, plus self-hosted DotGothic16, Doto, Silkscreen, Pixelify Sans and VT323.
+- **One skill for every asset.** `SKILL.md` now covers icons, kanji codes, our fonts, font packaging and HUD parts, so any of them can be made again on demand.
+
 ## [0.4.0] - 2026-11-26
 
 ### Added

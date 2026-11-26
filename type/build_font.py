@@ -143,14 +143,43 @@ def outline(strokes, to_font, w, stencil, gap=0.45, closed_min=0):
     return drop_crumbs(out, (w * w) * 0.2)
 
 
+def seg_dist(px, py, ax, ay, bx, by):
+    dx, dy = bx - ax, by - ay
+    L2 = dx * dx + dy * dy or 1e-9
+    t = max(0, min(1, ((px - ax) * dx + (py - ay) * dy) / L2))
+    return math.hypot(ax + t * dx - px, ay + t * dy - py)
+
+
+def raster_outline(strokes, cols, rows, step, half, to_font, cell, dot):
+    """骨架落到格子上：格子中心离任何一笔不超过 half（网格单位）就点亮。
+    Pixel 版每格一个方块（相邻的会连成一片），Dot 版每格一个圆点。"""
+    segs = [(a, b) for pl in strokes for a, b in zip(pl, pl[1:])] + [(pl[0], pl[0]) for pl in strokes if len(pl) == 1]
+    out = pathops.Path()
+    for j in range(rows):
+        for i in range(cols):
+            gx, gy = i * step, j * step
+            if any(seg_dist(gx, gy, *a, *b) <= half for a, b in segs):
+                cx, cy = to_font(gx, gy)
+                if dot:
+                    r = cell * 0.42
+                    pts = [(cx + r * math.cos(k * math.pi / 4 + math.pi / 8), cy + r * math.sin(k * math.pi / 4 + math.pi / 8)) for k in range(8)]
+                    shape = poly(pts)
+                else:
+                    h = cell / 2
+                    shape = poly([(cx - h, cy - h), (cx + h, cy - h), (cx + h, cy + h), (cx - h, cy + h)])
+                out = pathops.op(out, shape, pathops.PathOp.UNION)
+    return out
+
+
 def tt_glyph(path):
     pen = TTGlyphPen(None)
     path.draw(pen)
     return pen.glyph()
 
 
-def build(stencil: bool):
-    style = 'Stencil' if stencil else 'Solid'
+def build(style: str):
+    stencil = style == 'Stencil'
+    raster = style in ('Pixel', 'Dot')
     order, glyphs, metrics, cmap = ['.notdef', 'space'], {}, {}, {}
     empty = TTGlyphPen(None); glyphs['.notdef'] = empty.glyph(); metrics['.notdef'] = (600, 0)
     glyphs['space'] = TTGlyphPen(None).glyph(); metrics['space'] = (int((3 + TRACK) * S_LAT), 0); cmap[32] = 'space'
@@ -162,7 +191,10 @@ def build(stencil: bool):
         cw = WIDTH.get(ch, 6)
         lsb_grid = TRACK / 2
         to_font = lambda x, y, l=lsb_grid: ((x + l) * S_LAT + W_LAT / 2, (8 - y) * S_LAT)
-        g = tt_glyph(outline(strokes, to_font, W_LAT, stencil))
+        if raster:   # 拉丁 6×8 网格按半格取样：13×17 个格子，线宽两格
+            g = tt_glyph(raster_outline(strokes, int(cw * 2) + 1, 17, 0.5, 0.55, to_font, S_LAT / 2, style == 'Dot'))
+        else:
+            g = tt_glyph(outline(strokes, to_font, W_LAT, stencil))
         order.append(name); glyphs[name] = g
         metrics[name] = (int((cw + TRACK) * S_LAT + W_LAT), 0)
         cmap[ord(ch)] = name
@@ -172,7 +204,11 @@ def build(stencil: bool):
         name = f'uni{ord(ch):04X}'
         w = WEIGHT_K.get(ch, 0.115) * 920
         to_font = lambda x, y: (40 + x * S_KAN, KAN_TOP - y * S_KAN)
-        order.append(name); glyphs[name] = tt_glyph(outline(strokes, to_font, w, stencil))
+        if raster:   # 汉字 12 网格按整格取样：13×13 个格子
+            g = tt_glyph(raster_outline(strokes, 13, 13, 1, 0.62, to_font, S_KAN, style == 'Dot'))
+        else:
+            g = tt_glyph(outline(strokes, to_font, w, stencil))
+        order.append(name); glyphs[name] = g
         metrics[name] = (UPM, 0); cmap[ord(ch)] = name
 
     # 左边距 = 外轮廓最左点
@@ -187,7 +223,7 @@ def build(stencil: bool):
         hm[n] = (metrics[n][0], getattr(g, 'xMin', 0) or 0)
     fb.setupHorizontalMetrics(hm)
     fb.setupHorizontalHeader(ascent=900, descent=-200)
-    family = 'KT Stencil' if stencil else 'KT Stencil Solid'
+    family = {'Stencil': 'KT Stencil', 'Solid': 'KT Stencil Solid', 'Pixel': 'KT Pixel', 'Dot': 'KT Dot'}[style]
     fb.setupNameTable({
         'familyName': family, 'styleName': 'Regular',
         'uniqueFontIdentifier': f'KATANA:{family}:0.1', 'fullName': family, 'psName': family.replace(' ', '') + '-Regular',
@@ -199,13 +235,13 @@ def build(stencil: bool):
     fb.setupPost()
     fb.setupHead(unitsPerEm=UPM, created=0x0E4B3B1C0, modified=0x0E4B3B1C0)
     out = here / 'dist'; out.mkdir(exist_ok=True)
-    stem = f'KTStencil-{style}'
+    stem = {'Stencil': 'KTStencil-Stencil', 'Solid': 'KTStencil-Solid', 'Pixel': 'KTPixel-Regular', 'Dot': 'KTDot-Regular'}[style]
     fb.save(out / f'{stem}.ttf')
     f = TTFont(out / f'{stem}.ttf'); f.flavor = 'woff2'; f.save(out / f'{stem}.woff2')
     return out / f'{stem}.ttf', len(order)
 
 
 if __name__ == '__main__':
-    for st in (True, False):
+    for st in ('Stencil', 'Solid', 'Pixel', 'Dot'):
         p, n = build(st)
         print(p.name, n, 'glyphs', p.stat().st_size // 1024, 'KB')

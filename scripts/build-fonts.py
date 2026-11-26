@@ -28,6 +28,15 @@ FONTS = [
     ('Shippori Mincho B1', 800, src / 'ShipporiMinchoB1-ExtraBold.ttf', True, 'EVA 式标题卡（顶替 Matisse EB，配 eva.css 的机械压扁）'),
     # EVA 的英文标题卡和 HUD 用全大写 Helvetica（Rebuild 里还有窄体）；Helvetica 不开源，用带宽度轴的 Archivo 顶替，压窄就是窄体
     ('Archivo', '100 900', src / 'Archivo[wdth,wght].ttf', False, 'EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%'),
+    # 像素与点阵：我们自己的两款从 KT Stencil 同一份骨架落格子得到；其余是开源的
+    ('KT Pixel', 400, root / 'type/dist/KTPixel-Regular.ttf', False, '像素风标题、加载页（自绘，骨架同 KT Stencil）'),
+    ('KT Dot', 400, root / 'type/dist/KTDot-Regular.ttf', False, '点阵屏读数（自绘，骨架同 KT Stencil）'),
+    ('DotGothic16', 400, src / 'DotGothic16-Regular.ttf', True, '中日文点阵正文（16 点阵）'),
+    ('Doto', '100 900', src / 'Doto[ROND,wght].ttf', False, '拉丁点阵大字（可调圆点 ROND 轴）'),
+    ('Silkscreen', 400, src / 'Silkscreen-Regular.ttf', False, '拉丁小号像素字'),
+    ('Silkscreen', 700, src / 'Silkscreen-Bold.ttf', False, ''),
+    ('Pixelify Sans', '400 700', src / 'PixelifySans[wght].ttf', False, '拉丁像素正文（有小写）'),
+    ('VT323', 400, src / 'VT323-Regular.ttf', False, '终端 / 命令行风格等宽'),
 ]
 
 

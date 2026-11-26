@@ -55,6 +55,12 @@ import '@katana-icons/fonts/fonts.css'
 | Zen Kaku Gothic New | 400, 700, 900 | Body text |
 | Shippori Mincho B1 | 800 | EVA-style title cards (stands in for Matisse EB, with `eva.css`) |
 | Archivo | 100–900, width 62–125% | EVA-style all-caps titles and HUD labels (stands in for Helvetica / Helvetica Condensed) |
+| KT Pixel / KT Dot | 400 | Pixel-style titles / dot-matrix readouts (ours, same skeleton as KT Stencil) |
+| DotGothic16 | 400 | CJK dot-matrix text |
+| Doto | 100–900 | Latin dot-matrix display |
+| Silkscreen | 400, 700 | Small Latin pixel labels |
+| Pixelify Sans | 400–700 | Latin pixel text with lowercase |
+| VT323 | 400 | Terminal / command-line monospace |
 
 `eva.css` adds the Evangelion way of setting type: `.kt-eva-title` squeezes an extra-bold Mincho to 62% width with tight tracking (TV series), `.kt-eva-wide` stretches it instead (1997 films), `.kt-eva-caps` sets narrow all-caps sans. Matisse EB itself is a commercial Fontworks font and is not included.
 
