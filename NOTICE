@@ -7,3 +7,8 @@ https://github.com/google/fonts/tree/main/ofl/delagothicone (read 2026-11-26).
 
 The squircle corners in line/set/katana.mjs follow the algorithm of figma-squircle
 (https://github.com/phamfoo/figma-squircle, MIT, read 2026-11-26).
+
+KT Stencil (type/dist/*.ttf, *.woff2) and the stencil icons (packages/static/svg/stencil) are drawn
+by KATANA, following the publicly described approach of mecha-cockpit screen type (straight
+strokes, stencil bridges, readability first). No glyphs were copied from any existing font.
+The fonts are released under the SIL Open Font License 1.1.
