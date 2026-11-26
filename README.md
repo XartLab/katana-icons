@@ -85,6 +85,20 @@ const stop = play(canvas, 'filled', { scale: 2 })   // pixelated scaling; return
 
 Without the runtime, the same effects are exported as sprite sheets (PNG + Aseprite JSON) in `packages/static/fx/`. Regenerate them with `PIXELFX=<pixelfx checkout> node scripts/build-fx.mjs`. The Patch Pixel font from pixelfx is not included.
 
+## Desk pets
+
+`@katana-icons/pets` puts one of four pixel characters on a 96×52 canvas. She follows the P&L through nine states (calm, watching, delighted, smug, sweating, stunned, screaming, wiped out, dozing), with redrawn faces, moving arms, walking and sitting, a Japanese line per state, and short transitions between states. It is a toy: use it for atmosphere, never to carry information.
+
+```js
+import { mountPet, moodFromPnl } from '@katana-icons/pets'
+
+const pet = mountPet(canvas, { pet: 'kurumi', onState: (s) => { banner.textContent = s.banner; dialog.textContent = s.line } })
+pet.setMood(moodFromPnl(-4.2, { agent: true }))
+pet.shock() // a sudden drop: stunned for about two seconds
+```
+
+Scale the canvas with `image-rendering: pixelated`. The character art comes from images the team generated with GPT (`pets/source/`); `python3 scripts/build-pets.py` recovers the native pixel sprites and rebuilds `preview/pets.html`, and `node scripts/check-pets.mjs` checks the data.
+
 ## Fonts
 
 Every font KATANA uses is self-hosted in `packages/fonts/` (`@katana-icons/fonts`): no Google Fonts at run time.

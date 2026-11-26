@@ -6,7 +6,11 @@
   "scripts": {
     "check": "node scripts/check.mjs",
     "sheet": "node scripts/check.mjs --sheet out/sheet.html",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "check:pets": "node scripts/check-pets.mjs",
+    "pets": "python3 scripts/build-pets.py"
   },
-  "engines": { "node": ">=22.13" }
+  "engines": {
+    "node": ">=22.13"
+  }
 }
