@@ -4,6 +4,34 @@
 // addition to a local copy of the skill.
 import { n, P, S, D, shell, line, solid } from '../parts.mjs';
 
+// 超椭圆圆角（连续曲率，苹果图标那种）：照 figma-squircle 的算法（MIT，phamfoo/figma-squircle，
+// 2026-11-26 读），改成绝对坐标，四个角同一个半径。sm 是平滑度 0–1，0 就是普通圆角。
+const SMOOTH = 0.6;
+function squircle(x, y, w, h, R, sm = SMOOTH) {
+  const pt = ([px, py]) => `${n(px)} ${n(py)}`;
+  if (R <= 0) return `M${pt([x, y])}H${n(x + w)}V${n(y + h)}H${n(x)}Z`;
+  const budget = Math.min(w, h) / 2;
+  R = Math.min(R, budget);
+  let p = (1 + sm) * R;
+  if (p > budget) { sm = Math.max(0, Math.min(sm, budget / R - 1)); p = Math.min((1 + sm) * R, budget); }
+  const rad = (v) => (v * Math.PI) / 180, arc = 90 * (1 - sm);
+  const L = Math.sin(rad(arc / 2)) * R * Math.SQRT2;
+  const p34 = R * Math.tan(rad((90 - arc) / 4)), beta = 45 * sm;
+  const c = p34 * Math.cos(rad(beta)), d = c * Math.tan(rad(beta));
+  const b = (p - L - c - d) / 3, a = 2 * b;
+  // 一个角，局部坐标：沿来向 u 走到角，再沿去向 v 离开；从离角 p 处进，到离角 p 处出
+  const corner = ([sx, sy], [ux, uy], [vx, vy]) => {
+    const P = (i, j) => [sx + ux * i + vx * j, sy + uy * i + vy * j];
+    const X = a + b + c + L, Y = d + L;
+    return `L${pt(P(0, 0))}C${pt(P(a, 0))} ${pt(P(a + b, 0))} ${pt(P(a + b + c, d))}A${n(R)} ${n(R)} 0 0 1 ${pt(P(X, Y))}C${pt(P(X + d, Y + c))} ${pt(P(X + d, Y + b + c))} ${pt(P(p, p))}`;
+  };
+  return `M${pt([x + p, y])}` + corner([x + w - p, y], [1, 0], [0, 1]) + corner([x + w, y + h - p], [0, 1], [-1, 0]) +
+    corner([x + p, y + h], [-1, 0], [0, -1]) + corner([x, y + p], [0, -1], [1, 0]) + 'Z';
+}
+// 跟 g.box / g.area 同样的参数：sbox 给外缘（描边线在里面），sarea 给实心
+const sbox = (g, x, y, w, h, c = 0) => squircle(x + g.h, y + g.h, w - g.s, h - g.s, Math.max(c - g.h, 0));
+const sarea = (g, x, y, w, h, c = 0) => squircle(x, y, w, h, c);
+
 // A drawing-tool handle: a small ring whose outer edge has radius 2.25.
 const HR = 2.25;
 const handle = (g, x, y, o = {}) => line(g.ring(x, y, HR), { role: S, ...o });
@@ -164,7 +192,7 @@ export default {
     weights: { [P]: 0.64, [D]: 0.36 },
     draw(g) {
       return [
-        shell(g.box(3, 3, 18, 18, 4), { n: 'box', role: P }),
+        shell(sbox(g, 3, 3, 18, 18, 4), { n: 'box', role: P }),
         line(g.span(3, 15, 21, 15), { n: 'entry', role: D, on: 'box' }),
         ...posLayers(g, 15, -1)
       ];
@@ -180,7 +208,7 @@ export default {
     weights: { [P]: 0.64, [D]: 0.36 },
     draw(g) {
       return [
-        shell(g.box(3, 3, 18, 18, 4), { n: 'box', role: P }),
+        shell(sbox(g, 3, 3, 18, 18, 4), { n: 'box', role: P }),
         line(g.span(3, 9, 21, 9), { n: 'entry', role: D, on: 'box' }),
         ...posLayers(g, 9, 1)
       ];
@@ -253,7 +281,7 @@ export default {
     draw(g) {
       return [
         line(g.span(2, 11, 22, 11), { n: 'beam', role: P }),
-        solid(g.area(3, 4, 5, 7, 1), { n: 'weight', role: S }),
+        solid(sarea(g, 3, 4, 5, 7, 1.5), { n: 'weight', role: S }),
         shell(g.polygon([[12, 11], [16.5, 20 - g.h], [7.5, 20 - g.h]], 1), { n: 'pivot', role: S })
       ];
     },
@@ -267,7 +295,7 @@ export default {
     weights: { [P]: 0.68, [D]: 0.32 },
     draw(g) {
       return [
-        shell(g.box(2, 4, 20, 16, 4), { n: 'box', role: P }),
+        shell(sbox(g, 2, 4, 20, 16, 4.5), { n: 'box', role: P }),
         line(g.ring(9.5, 12, 3) + g.ring(14.5, 12, 3), { n: 'coins', role: D, on: 'box', only: 'outline' }),
         solid(g.area(6.5, 9, 6, 6, 3) + g.area(11.5, 9, 6, 6, 3), { n: 'coins', role: D, on: 'box', only: 'fill' })
       ];
@@ -327,9 +355,9 @@ export default {
     draw(g) {
       return [
         line(g.span(7, 3, 7, 8) + g.span(7, 17, 7, 21), { n: 'wk0', role: P, part: 'c0' }),
-        shell(g.box(3, 8, 8, 9, 1.5), { n: 'bd0', role: P, part: 'c0' }),
+        shell(sbox(g, 3, 8, 8, 9, 2), { n: 'bd0', role: P, part: 'c0' }),
         line(g.span(17, 3, 17, 6) + g.span(17, 15, 17, 19), { n: 'wk1', role: P, part: 'c1' }),
-        solid(g.area(13, 6, 8, 9, 1.5), { n: 'bd1', role: P, part: 'c1' })
+        solid(sarea(g, 13, 6, 8, 9, 2), { n: 'bd1', role: P, part: 'c1' })
       ];
     },
     light: ['wk0', 'bd0'],
@@ -358,7 +386,7 @@ export default {
     weights: { [P]: 0.84, [S]: 0.16 },
     draw(g) {
       return [
-        solid(g.area(3, 14, 4, 7, 1) + g.area(10, 10, 4, 7, 1) + g.area(17, 6, 4, 7, 1), { n: 'bodies', role: P }),
+        solid(sarea(g, 3, 14, 4, 7, 1.5) + sarea(g, 10, 10, 4, 7, 1.5) + sarea(g, 17, 6, 4, 7, 1.5), { n: 'bodies', role: P }),
         line(g.span(5, 11, 5, 14) + g.span(12, 7, 12, 10) + g.span(19, 3, 19, 6), { n: 'wicks', role: S, part: 'bodies' })
       ];
     },
@@ -369,7 +397,7 @@ export default {
     plan: '主体：三块等大的方砖沿对角线一级级上去，角挨着角（砖形图只看价格走够一格，不看时间）',
     weights: { [P]: 1 },
     draw(g) {
-      return [shell(g.box(3, 15, 6, 6, 1) + g.box(9, 9, 6, 6, 1) + g.box(15, 3, 6, 6, 1), { n: 'bricks', role: P })];
+      return [shell(sbox(g, 3, 15, 6, 6, 1.75) + sbox(g, 9, 9, 6, 6, 1.75) + sbox(g, 15, 3, 6, 6, 1.75), { n: 'bricks', role: P })];
     },
     allow: { optical: 'the bricks climb on a diagonal' },
     fx: { t: 'keys', on: ['bricks'], y: [-1.5] }
@@ -397,7 +425,7 @@ export default {
     draw(g) {
       const L = 3 + g.s + g.clear;
       return [
-        shell(g.box(3, 3, 18, 18, 3.5), { n: 'box', role: P }),
+        shell(sbox(g, 3, 3, 18, 18, 4), { n: 'box', role: P }),
         line(g.span(8.5, 8, 10.5, 8) + g.span(L, 12, 10.5, 12) + g.span(7.5, 16, 10.5, 16), { n: 'bid', role: D, on: 'box' }),
         line(g.span(13.5, 8, 15.5, 8) + g.span(13.5, 12, 24 - L, 12) + g.span(13.5, 16, 16.5, 16), { n: 'ask', role: D, on: 'box' })
       ];
