@@ -3,13 +3,29 @@
   "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "exports": {
-    ".": { "types": "./src/index.d.ts", "default": "./src/index.js" },
-    "./styles.css": "./styles.css"
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./trading": {
+      "types": "./src/trading.d.ts",
+      "default": "./src/trading.js"
+    },
+    "./styles.css": "./styles.css",
+    "./trading.css": "./trading.css"
   },
-  "files": ["src", "styles.css"],
-  "peerDependencies": { "react": ">=18" }
+  "files": [
+    "src",
+    "styles.css",
+    "trading.css"
+  ],
+  "peerDependencies": {
+    "react": ">=18"
+  }
 }

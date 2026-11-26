@@ -1,0 +1,60 @@
+/* SPDX-License-Identifier: MIT */
+/* 生成文件，勿手改：node scripts/build-trading.mjs */
+.kti-t [data-l]{transform-box:view-box}
+.kti-anim:hover.kti-t-trend-line [data-l="line"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-trend-line [data-l="line"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-ray [data-l="line"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-ray [data-l="line"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-t-horizontal-line [data-l="all"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-horizontal-line [data-l="all"],[data-kti-hover]:hover .kti.kti-t-horizontal-line [data-l="all"]{animation:kti-horizontal-line-all 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-vertical-line [data-l="all"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-vertical-line [data-l="all"],[data-kti-hover]:hover .kti.kti-t-vertical-line [data-l="all"]{animation:kti-vertical-line-all 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-anim:hover.kti-t-parallel-channel [data-l="l0"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-parallel-channel [data-l="l0"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-parallel-channel [data-l="l1"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-parallel-channel [data-l="l1"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 120ms both}
+.kti-anim:hover.kti-t-fib-retracement [data-l="f0"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-fib-retracement [data-l="f0"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-fib-retracement [data-l="f1"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-fib-retracement [data-l="f1"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 90ms both}
+.kti-anim:hover.kti-t-fib-retracement [data-l="f2"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-fib-retracement [data-l="f2"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 180ms both}
+.kti-anim:hover.kti-t-fib-retracement [data-l="f3"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-fib-retracement [data-l="f3"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 270ms both}
+.kti-t-price-range [data-l="arrow"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-price-range [data-l="arrow"],[data-kti-hover]:hover .kti.kti-t-price-range [data-l="arrow"]{animation:kti-price-range-arrow 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-date-range [data-l="arrow"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-date-range [data-l="arrow"],[data-kti-hover]:hover .kti.kti-t-date-range [data-l="arrow"]{animation:kti-date-range-arrow 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-long-position [data-l="arrow"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-long-position [data-l="arrow"],[data-kti-hover]:hover .kti.kti-t-long-position [data-l="arrow"]{animation:kti-long-position-arrow 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-short-position [data-l="arrow"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-short-position [data-l="arrow"],[data-kti-hover]:hover .kti.kti-t-short-position [data-l="arrow"]{animation:kti-short-position-arrow 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-order-limit [data-l="arrow"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-order-limit [data-l="arrow"],[data-kti-hover]:hover .kti.kti-t-order-limit [data-l="arrow"]{animation:kti-order-limit-arrow 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-order-market [data-l="all"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-order-market [data-l="all"],[data-kti-hover]:hover .kti.kti-t-order-market [data-l="all"]{animation:kti-order-market-all 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-order-stop [data-l="bar"]{transform-origin:12px 12px}
+.kti-anim:hover.kti-t-order-stop [data-l="bar"],[data-kti-hover]:hover .kti.kti-t-order-stop [data-l="bar"]{animation:kti-order-stop-bar 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-anim:hover.kti-t-order-bracket [data-l="tp"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-bracket [data-l="tp"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-order-bracket [data-l="sl"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-bracket [data-l="sl"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 80ms both}
+.kti-t-leverage [data-l="beam"],.kti-t-leverage [data-l="weight"]{transform-origin:12px 11px}
+.kti-anim:hover.kti-t-leverage [data-l="beam"],[data-kti-hover]:hover .kti.kti-t-leverage [data-l="beam"],.kti-anim:hover.kti-t-leverage [data-l="weight"],[data-kti-hover]:hover .kti.kti-t-leverage [data-l="weight"]{animation:kti-leverage-beam-weight 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-margin-cross [data-l="coins"]{transform-origin:12px 15px}
+.kti-anim:hover.kti-t-margin-cross [data-l="coins"],[data-kti-hover]:hover .kti.kti-t-margin-cross [data-l="coins"]{animation:kti-margin-cross-coins 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-margin-isolated [data-l="c0"]{transform-origin:5.5px 15.5px}
+.kti-anim:hover.kti-t-margin-isolated [data-l="c0"],[data-kti-hover]:hover .kti.kti-t-margin-isolated [data-l="c0"]{animation:kti-margin-isolated-c0 560ms cubic-bezier(.2,.8,.2,1) 0ms both}
+.kti-t-margin-isolated [data-l="c1"]{transform-origin:18.5px 15.5px}
+.kti-anim:hover.kti-t-margin-isolated [data-l="c1"],[data-kti-hover]:hover .kti.kti-t-margin-isolated [data-l="c1"]{animation:kti-margin-isolated-c1 560ms cubic-bezier(.2,.8,.2,1) 90ms both}
+.kti-anim:hover.kti-t-order-book [data-l="a0"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-book [data-l="a0"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-order-book [data-l="a1"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-book [data-l="a1"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 70ms both}
+.kti-anim:hover.kti-t-order-book [data-l="b0"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-book [data-l="b0"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 140ms both}
+.kti-anim:hover.kti-t-order-book [data-l="b1"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-order-book [data-l="b1"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 210ms both}
+.kti-anim:hover.kti-t-depth-chart [data-l="bids"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-depth-chart [data-l="bids"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 0ms both}
+.kti-anim:hover.kti-t-depth-chart [data-l="asks"] path[pathLength],[data-kti-hover]:hover .kti.kti-t-depth-chart [data-l="asks"] path[pathLength]{stroke-dasharray:1;animation:kti-draw 420ms cubic-bezier(.3,.7,.2,1) 100ms both}
+@keyframes kti-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes kti-horizontal-line-all{0%,100%{transform:none}45%{transform:translate(0px,-2.5px)}}
+@keyframes kti-vertical-line-all{0%,100%{transform:none}45%{transform:translate(2.5px,0px)}}
+@keyframes kti-price-range-arrow{0%,100%{transform:none}45%{transform:scale(1,1.12)}}
+@keyframes kti-date-range-arrow{0%,100%{transform:none}45%{transform:scale(1.12,1)}}
+@keyframes kti-long-position-arrow{0%,100%{transform:none}45%{transform:translate(0px,-1.5px)}}
+@keyframes kti-short-position-arrow{0%,100%{transform:none}45%{transform:translate(0px,1.5px)}}
+@keyframes kti-order-limit-arrow{0%,100%{transform:none}45%{transform:translate(0px,1.5px)}}
+@keyframes kti-order-market-all{0%,60%,100%{transform:none}20%{transform:scale(1.14)}40%{transform:scale(.96)}}
+@keyframes kti-order-stop-bar{0%,100%{transform:none}45%{transform:scale(0.6,1)}}
+@keyframes kti-leverage-beam-weight{0%,100%{transform:none}45%{transform:rotate(-9deg)}}
+@keyframes kti-margin-cross-coins{0%,100%{transform:none}30%{transform:translateY(-2.4000000000000004px)}55%{transform:translateY(0) scale(1.08,.9)}75%{transform:translateY(-0.8000000000000002px)}}
+@keyframes kti-margin-isolated-c0{0%,100%{transform:none}30%{transform:translateY(-2.4000000000000004px)}55%{transform:translateY(0) scale(1.08,.9)}75%{transform:translateY(-0.8000000000000002px)}}
+@keyframes kti-margin-isolated-c1{0%,100%{transform:none}30%{transform:translateY(-2.4000000000000004px)}55%{transform:translateY(0) scale(1.08,.9)}75%{transform:translateY(-0.8000000000000002px)}}
+@media (prefers-reduced-motion: reduce){.kti-t [data-l],.kti-t path{animation:none!important}}
