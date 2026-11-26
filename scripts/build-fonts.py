@@ -24,6 +24,10 @@ FONTS = [
     ('Zen Kaku Gothic New', 400, src / 'ZenKakuGothicNew-Regular.ttf', True, '正文黑体'),
     ('Zen Kaku Gothic New', 700, src / 'ZenKakuGothicNew-Bold.ttf', True, ''),
     ('Zen Kaku Gothic New', 900, src / 'ZenKakuGothicNew-Black.ttf', True, ''),
+    # EVA 的字：日文标题卡用的 Matisse EB 是 Fontworks 的商用字，授权不能放进产品；用开源的特粗明朝顶替
+    ('Shippori Mincho B1', 800, src / 'ShipporiMinchoB1-ExtraBold.ttf', True, 'EVA 式标题卡（顶替 Matisse EB，配 eva.css 的机械压扁）'),
+    # EVA 的英文标题卡和 HUD 用全大写 Helvetica（Rebuild 里还有窄体）；Helvetica 不开源，用带宽度轴的 Archivo 顶替，压窄就是窄体
+    ('Archivo', '100 900', src / 'Archivo[wdth,wght].ttf', False, 'EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%'),
 ]
 
 
@@ -95,13 +99,14 @@ def main():
                      '/* 生成文件，勿手改：python3 scripts/build-fonts.py */'], []
     for family, weight, path, sliced, use in FONTS:
         cps = set(TTFont(path).getBestCmap().keys())
-        stem = family.replace(' ', '') + f'-{weight}'
+        stem = family.replace(' ', '') + '-' + str(weight).replace(' ', '-')
         parts = slices(cps) if sliced else [('all', sorted(cps))]
         total = 0
         for name, chunk in parts:
             f = woff2(path, chunk, f'{stem}.{name}')
             total += f.stat().st_size
-            css.append(f"@font-face{{font-family:'{family}';font-style:normal;font-weight:{weight};font-display:swap;"
+            stretch = 'font-stretch:62% 125%;' if family == 'Archivo' else ''
+            css.append(f"@font-face{{font-family:'{family}';font-style:normal;font-weight:{weight};{stretch}font-display:swap;"
                        f"src:url(./files/{f.name}) format('woff2');unicode-range:{urange(chunk)}}}")
         manifest.append({'family': family, 'weight': weight, 'slices': len(parts), 'bytes': total, 'use': use})
         print(f'{family} {weight}: {len(parts)} 片, {total // 1024} KB')

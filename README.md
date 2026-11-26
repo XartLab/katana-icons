@@ -53,6 +53,10 @@ import '@katana-icons/fonts/fonts.css'
 | Dela Gothic One | 400 | Kanji codes, heavy titles |
 | Shippori Mincho | 400, 600 | Hara-style headings |
 | Zen Kaku Gothic New | 400, 700, 900 | Body text |
+| Shippori Mincho B1 | 800 | EVA-style title cards (stands in for Matisse EB, with `eva.css`) |
+| Archivo | 100–900, width 62–125% | EVA-style all-caps titles and HUD labels (stands in for Helvetica / Helvetica Condensed) |
+
+`eva.css` adds the Evangelion way of setting type: `.kt-eva-title` squeezes an extra-bold Mincho to 62% width with tight tracking (TV series), `.kt-eva-wide` stretches it instead (1997 films), `.kt-eva-caps` sets narrow all-caps sans. Matisse EB itself is a commercial Fontworks font and is not included.
 
 The CJK fonts are cut into `unicode-range` slices (common characters first, rare ones last), so a page only downloads the slices its text needs. File names carry a content hash: serve `files/` with `Cache-Control: public, max-age=31536000, immutable`. The repo is private, so the files ship inside the app bundle (KatanaUI depends on this repo by git tag) rather than from a public CDN. Rebuild with `python3 scripts/build-fonts.py <dir with the source TTFs>`; sources and licences are listed in `NOTICE` and `packages/fonts/licenses/`.
 

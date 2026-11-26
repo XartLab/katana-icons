@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2026-11-26
+
+### Added
+
+- **EVA-style type.** Two more self-hosted fonts, Shippori Mincho B1 ExtraBold and Archivo (with a width axis), plus `eva.css` for Evangelion-style title cards: squeezed extra-bold Mincho, stretched Mincho, and narrow all-caps labels.
+
 ## [0.3.0] - 2026-11-26
 
 ### Added

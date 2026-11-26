@@ -16,5 +16,6 @@ The fonts are released under the SIL Open Font License 1.1.
 packages/fonts/ also redistributes, as WOFF2 subsets, these fonts under the SIL Open Font License 1.1
 (sources: https://github.com/google/fonts, read 2026-11-26; licence texts in packages/fonts/licenses/):
 Michroma (The Michroma Project Authors), Dela Gothic One (The Dela Gothic Project Authors),
-Shippori Mincho (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors).
+Shippori Mincho and Shippori Mincho B1 (The Shippori Mincho Project Authors), Zen Kaku Gothic New (The Zen Kaku Gothic Project Authors),
+Archivo (The Archivo Project Authors).
 Subsetting changes no glyph; the Reserved Font Names are kept.

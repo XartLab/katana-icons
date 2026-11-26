@@ -10,56 +10,70 @@
   "family": "KT Stencil Solid",
   "weight": 400,
   "slices": 1,
-  "bytes": 2876,
+  "bytes": 2880,
   "use": "小字、数字读数（不断缝）"
  },
  {
   "family": "Michroma",
   "weight": 400,
   "slices": 1,
-  "bytes": 24716,
+  "bytes": 24688,
   "use": "拉丁字母和编号，超椭圆字形"
  },
  {
   "family": "Dela Gothic One",
   "weight": 400,
   "slices": 14,
-  "bytes": 1280860,
+  "bytes": 1280756,
   "use": "汉字代号、粗标题"
  },
  {
   "family": "Shippori Mincho",
   "weight": 400,
   "slices": 19,
-  "bytes": 3530400,
+  "bytes": 3530284,
   "use": "原研哉风格的标题（明朝体）"
  },
  {
   "family": "Shippori Mincho",
   "weight": 600,
   "slices": 19,
-  "bytes": 3621964,
+  "bytes": 3621840,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 400,
   "slices": 14,
-  "bytes": 1134424,
+  "bytes": 1134768,
   "use": "正文黑体"
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 700,
   "slices": 14,
-  "bytes": 1159772,
+  "bytes": 1159200,
   "use": ""
  },
  {
   "family": "Zen Kaku Gothic New",
   "weight": 900,
   "slices": 14,
-  "bytes": 1131984,
+  "bytes": 1132332,
   "use": ""
+ },
+ {
+  "family": "Shippori Mincho B1",
+  "weight": 800,
+  "slices": 19,
+  "bytes": 5160896,
+  "use": "EVA 式标题卡（顶替 Matisse EB，配 eva.css 的机械压扁）"
+ },
+ {
+  "family": "Archivo",
+  "weight": "100 900",
+  "slices": 1,
+  "bytes": 184008,
+  "use": "EVA 式英文大写标题和 HUD（顶替 Helvetica / Helvetica Condensed），宽度 62%–125%"
  }
 ]

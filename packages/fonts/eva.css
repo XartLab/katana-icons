@@ -1,0 +1,21 @@
+/* SPDX-License-Identifier: MIT */
+/* EVA 式排字：照 Evangelion 标题卡的做法（fontsinuse.com 第 28760 条，2026-11-26 读）——
+   特粗明朝体机械压扁、字距收紧；英文全大写无衬线。字体用 fonts.css 里的开源替身。 */
+.kt-eva-title {
+  display: inline-block;
+  font-family: 'Shippori Mincho B1', serif;
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  transform: scaleX(var(--kt-eva-squeeze, 0.62)); /* TV 版标题卡：压扁 */
+  transform-origin: left center;
+}
+.kt-eva-wide { --kt-eva-squeeze: 1.45; } /* 1997 年剧场版：拉宽 */
+.kt-eva-caps {
+  font-family: 'Archivo', 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 700;
+  font-stretch: 75%;            /* Rebuild 里的窄体 */
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.kt-eva-card { background: #000; color: #fff; }

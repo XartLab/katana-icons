@@ -1,12 +1,21 @@
 {
   "name": "@katana-icons/fonts",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT AND OFL-1.1",
-  "sideEffects": ["*.css"],
-  "files": ["fonts.css", "files", "licenses", "manifest.json"],
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "fonts.css",
+    "files",
+    "licenses",
+    "manifest.json",
+    "eva.css"
+  ],
   "exports": {
     "./fonts.css": "./fonts.css",
     "./files/*": "./files/*",
-    "./manifest.json": "./manifest.json"
+    "./manifest.json": "./manifest.json",
+    "./eva.css": "./eva.css"
   }
 }
